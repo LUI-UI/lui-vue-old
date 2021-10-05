@@ -1,5 +1,10 @@
 <template>
-  <button type="button" :class="classes" :style="style" @click="onClick">
+  <button
+    type="button"
+    :class="classes"
+    :style="style"
+    @click="onClick"
+  >
     {{ label }}
   </button>
 </template>
@@ -10,7 +15,6 @@ import { reactive, computed } from 'vue'
 
 export default {
   name: 'MyButton',
-
   props: {
     label: {
       type: String,

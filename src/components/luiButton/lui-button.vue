@@ -11,9 +11,7 @@
 </template>
 <script>
 import './lui-button.css'
-export default {
-  name: 'LuiButton',
-}
+export default {}
 </script>
 <script setup>
 import { defineEmits, defineProps, computed } from 'vue'
