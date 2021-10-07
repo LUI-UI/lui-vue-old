@@ -86,6 +86,20 @@ module.exports = {
       light: '#EBECED',
       white: '#FFFFFF',
     },
+    borderRadius: {
+      sm: '6px',
+      md: '8px',
+      lg: '10px',
+      xlg: '12px',
+      xxlg: '16px',
+    },
+    boxShadow: {
+      default: '0px 0px 16px rgba(0,0,0,0.1)',
+      sm: '0px 4px 6px rgba(0,0,0,0.08)',
+      md: '0px 6px 12px rgba(0,0,0,0.08)',
+      lg: '0px 12px 24px rgba(0,0,0,0.08)',
+      xlg: '0px 20px 32px rgba(0,0,0,0.12)',
+    },
   },
   variants: {
     extend: {},
