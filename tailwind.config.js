@@ -15,18 +15,6 @@ module.exports = {
         info: color.cyan,
         secondary: color.gray,
       },
-      spacing: {
-        40: '10rem',
-        44: '11rem',
-        48: '12rem',
-        52: '13rem',
-        56: '14rem',
-        60: '15rem',
-        64: '16rem',
-        72: '18rem',
-        80: '20rem',
-        96: '24rem',
-      },
       boxShadow: {
         DEFAULT: '0px 0px 16px rgba(0,0,0,0.1)',
         sm: '0px 4px 6px rgba(0,0,0,0.08)',
@@ -48,7 +36,7 @@ module.exports = {
     },
     colors: color,
     fontFamily: {
-      wsans: ['Work Sans', 'sans-serif'],
+      worksans: ['"Work Sans"', 'sans-serif'],
     },
   },
   variants: {

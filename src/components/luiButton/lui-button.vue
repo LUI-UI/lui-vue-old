@@ -1,7 +1,7 @@
 <template>
   <button
     type="button"
-    class="text-wsan"
+    class="font-worksans"
     :class="classes"
     :style="style"
     @click="onClick"
@@ -39,10 +39,8 @@ const props = defineProps({
 const emit = defineEmits(['click', 'test'])
 
 const classes = computed(() => ({
-  'storybook-button': true,
   'bg-blue-500': props.primary,
   'bg-gray-400': !props.primary,
-  [`storybook-button--${props.size || 'medium'}`]: true,
 }))
 function onClick() {
   emit('click')

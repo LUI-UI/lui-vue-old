@@ -1,4 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+@font-face {
+  font-family: 'Work Sans';
+  src: url('./assets/font/Work-Sans-Regular.ttf') format('truetype'),
+    url('./assets/font/WorkSans-Medium.ttf') format('truetype'),
+    url('./assets/font/WorkSans-MediumItalic.ttf') format('truetype'),
+    url('./assets/font/Bold.ttf') format('truetype'),
+    url('./assets/font/SemiBold.ttf') format('truetype'),
+    url('./assets/font/WorkSans-Italic.ttf') format('truetype');
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
