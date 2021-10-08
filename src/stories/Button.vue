@@ -58,3 +58,8 @@ export default {
   },
 }
 </script>
+<style lang="postcss" scoped>
+button{
+  @apply font-wsans
+}
+</style>

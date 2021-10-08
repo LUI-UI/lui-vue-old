@@ -1,10 +1,10 @@
 <template>
   <button
     type="button"
+    class="text-wsan"
     :class="classes"
     :style="style"
     @click="onClick"
-    @mouseover="onOver($event)"
   >
     {{ label }}
   </button>
