@@ -1,7 +1,7 @@
 <template>
   <button
     type="button"
-    class="font-worksans"
+    class="font-worksans bg-primary-500 p-2"
     :class="classes"
     :style="style"
     @click="onClick"
