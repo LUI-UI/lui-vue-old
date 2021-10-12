@@ -9,8 +9,8 @@ module.exports = {
       colors: {
         dark: color.gray[800],
         light: color.gray[100],
-        warning: color.yellow[400],
-        danger: color.red[400],
+        warning: color.yellow,
+        danger: color.red,
         primary: color.blue,
         success: color.green,
         info: color.cyan,

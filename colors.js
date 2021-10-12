@@ -171,7 +171,7 @@ module.exports = {
     900: '#365314',
   },
   yellow: {
-    DEFAULT: '#E69A00',
+    DEFAULT: '#FFB31A',
     50: '#FFEECC',
     100: '#FFE6B3',
     200: '#FFD580',
@@ -210,7 +210,7 @@ module.exports = {
     900: '#331101',
   },
   red: {
-    DEFAULT: '#DB3030',
+    DEFAULT: '#E35B5B',
     50: '#FDF3F3',
     100: '#F9DEDE',
     200: '#F2B2B2',
