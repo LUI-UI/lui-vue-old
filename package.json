@@ -22,6 +22,8 @@
     "@storybook/addon-actions": "^6.4.0-beta.2",
     "@storybook/addon-essentials": "^6.4.0-beta.2",
     "@storybook/addon-links": "^6.4.0-beta.2",
+    "@storybook/addons": "^6.3.12",
+    "@storybook/theming": "^6.3.12",
     "@storybook/vue3": "^6.4.0-beta.2",
     "@vitejs/plugin-vue": "^1.9.2",
     "autoprefixer": "^10.3.6",
