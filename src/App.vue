@@ -16,17 +16,46 @@ import LBadge from './components/Badge/LBadge.vue'
 
 <template>
   <div class="badge-container">
-    <LBadge size="xs" variant="primary" />
-    <LBadge size="sm" variant="primary" />
-    <LBadge size="md" variant="primary" />
-    <LBadge size="lg" variant="primary" />
+    <LBadge
+      size="xs"
+      variant="primary"
+    />
+    <LBadge
+      size="sm"
+      variant="primary"
+    />
+    <LBadge
+      size="md"
+      variant="primary"
+    />
+    <LBadge
+      size="lg"
+      variant="primary"
+    />
   </div>
   <div class="badge-container variants">
-    <LBadge size="lg" variant="primary" />
-    <LBadge size="lg" variant="success" :border="true" />
-    <LBadge size="lg" variant="danger" />
-    <LBadge size="lg" variant="warning" :border="true" />
-    <LBadge size="lg" variant="secondary" />
+    <LBadge
+      size="lg"
+      variant="primary"
+    />
+    <LBadge
+      size="lg"
+      variant="success"
+      border
+    />
+    <LBadge
+      size="lg"
+      variant="danger"
+    />
+    <LBadge
+      size="lg"
+      variant="warning"
+      :border="true"
+    />
+    <LBadge
+      size="lg"
+      variant="secondary"
+    />
   </div>
   <!-- <LBadge :size="vars.size" :variant="vars.variant" /> -->
   <!-- <button @click="changeBg">TEST</button> -->
