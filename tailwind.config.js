@@ -1,8 +1,20 @@
 const color = require('./colors')
 
 module.exports = {
-  mode: 'jit',
-  purge: ['./src/**/*.{js,jsx,ts,tsx,vue}'],
+  // mode: 'jit',
+  purge: {
+    // enabled: true,
+    content: ['./src/**/*.{js,jsx,ts,tsx,vue,html}'],
+    options: {
+      safelist: {
+        standard: [/^bg/,/^text/],
+      }
+    }
+    // safelist: {
+    //   standart: [/text$/],
+    // },
+  },
+
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -34,6 +46,9 @@ module.exports = {
         xlg: '.75rem',
         xxlg: '1rem',
       },
+      lineHeight: {
+        4.5: '1.125', // button da kullanildi deigecek mi ?
+      },
     },
     colors: color,
     fontFamily: {
@@ -41,7 +56,12 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      borderWidth: ['hover'],
+      textColor: ['disabled'],
+      backgroundColor: ['disabled'],
+      borderColor: ['disabled'],
+    },
   },
   plugins: [],
 }

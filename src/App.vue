@@ -1,64 +1,22 @@
 <script setup>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import LBadge from './components/Badge/LBadge.vue'
+import LButton from './components/Button/LButton.vue'
+// import LBadge from './components/Badge/LBadge.vue'
 // import { reactive } from 'vue'
-
-// let vars = reactive({
-//   size: 'sm',
-//   variant: 'success',
-// })
-// function changeBg() {
-//   vars.variant = 'danger'
-//   vars.size = 'lg'
-// }
 </script>
 
 <template>
-  <div class="badge-container">
-    <LBadge
-      size="xs"
+  <div class="btn-container">
+    <l-button
+      type="default"
       variant="primary"
-    />
-    <LBadge
-      size="sm"
-      variant="primary"
-    />
-    <LBadge
-      size="md"
-      variant="primary"
-    />
-    <LBadge
       size="lg"
-      variant="primary"
-    />
+      rounded-full
+    >
+      LTEST
+    </l-button>
   </div>
-  <div class="badge-container variants">
-    <LBadge
-      size="lg"
-      variant="primary"
-    />
-    <LBadge
-      size="lg"
-      variant="success"
-      border
-    />
-    <LBadge
-      size="lg"
-      variant="danger"
-    />
-    <LBadge
-      size="lg"
-      variant="warning"
-      :border="true"
-    />
-    <LBadge
-      size="lg"
-      variant="secondary"
-    />
-  </div>
-  <!-- <LBadge :size="vars.size" :variant="vars.variant" /> -->
-  <!-- <button @click="changeBg">TEST</button> -->
 </template>
 
 <style scoped>
@@ -70,6 +28,9 @@ import LBadge from './components/Badge/LBadge.vue'
   color: #2c3e50;
   margin-top: 60px;
 }
+.btn-container {
+  padding: 150px;
+}
 
 .badge-container {
   display: flex;
@@ -77,9 +38,5 @@ import LBadge from './components/Badge/LBadge.vue'
   justify-content: space-between;
   max-width: 350px;
   padding: 100px;
-}
-
-.variants {
-  background: cornflowerblue;
 }
 </style>
