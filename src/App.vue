@@ -9,24 +9,48 @@ import LButton from './components/Button/LButton.vue'
 
 <template>
   <div class="btn-container">
+    <div>
+    <l-button
+      type="outline"
+      variant="primary"
+      size="lg"
+    >Sign up</l-button>
+    </div>
     <l-button
       type="default"
-      variant="secondary"
-      size="md"
-      block
+      variant="primary"
+      size="lg"
+      icon="home"
+    />
+    <l-button
+      type="outline"
+      variant="primary"
+      size="sm"
+      icon="home"
+      class="mt-2"
       rounded-full
+    />
+    <!-- <l-button
+      type="default"
+      variant="primary"
+      size="lg"
+      icon="arrow-right"
+    /> -->
+    <!-- <l-button
+      type="default"
+      variant="primary"
+      size="lg"
+      prefix="home"
     >
-      LTEST
-    </l-button>
-    <!-- <hr>
-    <div class="color: red;">
-      <LIcon
-        name="home"
-        fill
-        class="text-red"
+      Sign up
+    </l-button> -->
+
+    <button class="p-1.5 text-white bg-blue-500 text-xs flex mt-2">
+      <i
+        class="ri-home-fill text-lg leading-none"
       />
-    </div> -->
-    <!-- <i class="ri-admin-fill" /> -->
+    </button>
+    <!-- <button class="tttt">Sign up</button> -->
   </div>
 </template>
 
@@ -41,7 +65,7 @@ import LButton from './components/Button/LButton.vue'
 }
 .btn-container {
   padding: 150px;
-  font-size: 16px;
+  
 }
 
 .badge-container {
@@ -50,5 +74,34 @@ import LButton from './components/Button/LButton.vue'
   justify-content: space-between;
   max-width: 350px;
   padding: 100px;
+}
+.tttt{
+/* position: static;
+width: 59px;
+height: 24px;
+left: 24px;
+top: 12px; */
+
+/* Button & Chips Text/Button MD - LG */
+
+font-family: Work Sans;
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height, or 150% */
+
+display: flex;
+align-items: center;
+text-align: center;
+background-color: blue;
+/* Color Theme/LUI White */
+
+color: #FFFFFF;
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 12px 24px;
 }
 </style>

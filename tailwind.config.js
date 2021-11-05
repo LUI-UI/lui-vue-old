@@ -47,7 +47,7 @@ module.exports = {
         xxlg: '1rem',
       },
       lineHeight: {
-        4.5: '1.125', // button da kullanildi deigecek mi ?
+        4.5: '1.125rem', // button da kullanildi deigecek mi ?
       },
     },
     colors: color,
