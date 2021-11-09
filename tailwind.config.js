@@ -1,18 +1,11 @@
 const color = require('./colors')
+// const _ = require('lodash')
+const plugin = require('tailwindcss/plugin')
 
 module.exports = {
   // mode: 'jit',
   purge: {
-    // enabled: true,
     content: ['./src/**/*.{js,jsx,ts,tsx,vue,html}'],
-    options: {
-      safelist: {
-        standard: [/^bg/,/^text/],
-      }
-    }
-    // safelist: {
-    //   standart: [/text$/],
-    // },
   },
 
   darkMode: false, // or 'media' or 'class'
@@ -61,7 +54,19 @@ module.exports = {
       textColor: ['disabled'],
       backgroundColor: ['disabled'],
       borderColor: ['disabled'],
+      outline: ['hover']
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities, theme }) {
+      const outline = {
+        '.outline': {
+          outlineColor: theme('colors'),
+          outlineStyle: 'solid',
+          outlineWidth: '1px',
+        },
+      }
+      addUtilities(outline)
+    }),
+  ],
 }

@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="classes"
+    :class="[classes, stateClasses]"
     class="flex font-worksans"
     v-bind="$attrs"
     @click="$emit('click')"
@@ -9,14 +9,16 @@
       v-if="prefix !== 'none'"
       :name="prefix"
       fill
-      class="mr-3"
+      :size="iconClasses.size"
+      :class="iconClasses.classes"
     />
     <slot />
     <l-icon
-      v-if="isIcon"
+      v-if="icon !== 'none'"
       :name="icon"
       fill
-      :class="iconClasses"
+      :size="iconClasses.size"
+      :class="iconClasses.classes"
     />
   </button>
 </template>
@@ -73,7 +75,7 @@ export default {
       type: String,
       default: 'none',
       validator(value) {
-        return ['darker', 'lighter', 'none'].includes(value)
+        return ['darker', 'darker', 'none'].includes(value)
       },
     },
     icon: {
@@ -84,104 +86,135 @@ export default {
       type: String,
       default: 'none',
     },
-    
   },
   emits: ['click'],
-  setup(props) {
-    function types(type, variant) {
-      if (type === 'default') return `text-white bg-${variant}`
-      if (type === 'outline')
-        return `text-${variant} bg-white border border-solid border-${variant}`
-      if (type === 'text') return `bg-transparent border-none text-${variant}`
-      if (type === 'link') return `text-${variant} underline`
-    }
-    function states(type, variant) {
-      let classes
-      if (type === 'default') {
-        classes = {
-          hover: `hover:bg-${variant}-50 hover:text-${variant}`,
-          focus: `focus:outline-none focus:ring-2 focus:ring-${variant} ring-offset-2`,
-          // active: `${variant}-600 text-white border-none`,
-          disabled: 'disabled:bg-secondary-300 disabled:text-white',
-        }
+  setup(props, context) {
+    const typeClasses = computed(() => {
+      const padding =
+        props.icon !== 'none' && !context.slots.default
+          ? props.size === 'lg'
+            ? 'p-3'
+            : props.size === 'md'
+            ? 'p-2.5'
+            : 'p-1.5'
+          : props.type === 'link'
+          ? 'p-0'
+          : props.size === 'sm'
+          ? 'px-3 py-1.5'
+          : props.size === 'md'
+          ? 'px-4 py-2'
+          : 'px-6 py-3'
+      return {
+        backgroundColor:
+          props.type === 'default'
+            ? props.filter === 'none'
+              ? `bg-${props.variant}`
+              : props.filter === 'darker'
+              ? `bg-${props.variant}-800`
+              : `bg-${props.variant}-50`
+            : '',
+        fontColor:
+          props.filter === 'none'
+            ? props.type === 'default'
+              ? 'text-white'
+              : `text-${props.variant}`
+            : props.filter === 'darker'
+            ? props.type === 'default'
+              ? 'text-white'
+              : `text-${props.variant}-900`
+            : props.type === 'default'
+            ? `text-${props.variant}`
+            : `text-${props.variant}-50`,
+        fontSize: props.size === 'sm' ? 'text-xs leading-4.5' : 'text-base',
+        border:
+          props.type === 'outline'
+            ? props.filter === 'none'
+              ? `outline outline-${props.variant}`
+              : props.filter === 'darker'
+              ? `outline outline-${props.variant}-900`
+              : `outline outline-${props.variant}-50`
+            : '',
+        borderBottom:
+          props.type === 'link' ? `border-b border-${props.variant}` : '',
+        borderRadius:
+          props.type !== 'link' && (props.rounded || props.roundedFull)
+            ? props.rounded
+              ? `rounded-${props.size}`
+              : 'rounded-full'
+            : '',
+        width: !props.block || props.type === 'link' ? '' : 'w-full',
+        padding,
       }
-      if (type === 'outline') {
-        classes = {
-          hover: `hover:bg-${variant}-50 hover:border-${variant}-50`,
-          focus: `focus:outline-none focus:ring-2 focus:ring-${variant} ring-offset-2`,
-          // active: `focus:border-2 focus:border-dashed`,
-          disabled: `disabled:border-secondary-300 disabled:bg-secondary-100 disabled:text-secondary-300`,
-        }
-      }
-      if (type === 'text') {
-        classes = {
-          hover: `hover:bg-${variant}-50`,
-          focus: `outline-none focus:ring-2 focus:ring-${variant} ring-offset-2`,
-          // active: `active:text-${variant}-600 active:bg-${variant}-50`,
-          disabled: `disabled:text-secondary-300 disabled:bg-white`,
-        }
-        // return Object.values(classes).join(" ").toString()
-      }
-      if (type === 'link') {
-        classes = {
-          hover: `hover:text-${variant}-400`,
-          focus: `outline-none focus:ring-2 focus:ring-${variant} ring-offset-2`,
-          // active: `text-${variant}-600`,
-          disabled: `disabled:text-secondary-300`,
-        }
-        // return Object.values(classes).join(" ").toString()
-      }
-      return Object.values(classes).join(' ').toString()
-    }
-    function sizes(type, size, icon) {
-      if (type === 'link') return 'p-0'
-      if (icon) {
-        if (size === 'sm') return 'p-1.5'
-        if (size === 'md') return 'p-2.5'
-        if (size === 'lg') return 'p-3'
-      }
-      if (size === 'sm') return 'px-3 py-1.5'
-      if (size === 'md') return 'px-4 py-2'
-      if (size === 'lg') return 'px-6 py-3'
-    }
-    function fonts(size, isIcon) {
-      if (isIcon) {
-        if (size === 'sm') return 'text-xs'
-        if (size === 'md') return 'text-xl leading-5'
-        if (size === 'lg') return 'text-2xl leading-6'
-      }
-      if (size === 'sm') return 'text-xs leading-4.5'
-      return 'text-base leading-6 font-medium'
-    }
-    // function filter(filter, variant) {
-    //   if (filter === 'darker') return `bg-${variant}-900`
-    //   if (filter === 'lighter') return `bg-${variant}-50`
-    // }
-    const isIcon = computed(() => {
-      return props.icon !== 'none'
     })
+    const stateClasses = computed(() => {
+      const styles = {
+        hover: {
+          backgroundColor:
+            props.type !== 'link' ? `hover:bg-${props.variant}-50` : '',
+          fontColor:
+            props.type === 'default'
+              ? `hover:text-${props.variant}`
+              : props.type === 'text'
+              ? `hover:bg-${props.variant}-50`
+              : '',
+          borderColor: props.type === 'outline' ? `hover:outline-none` : '',
+        },
+        disabled: {
+          backgroundColor:
+            props.type === 'default' ? 'disabled:bg-secondary-300' : '',
+          fontColor: props.type === 'default' ? 'disabled:text-white' : '',
+          borderColor: 'disabled:border-secondary-300',
+        },
+        focus: {
+          outline: props.type !== 'outline' ? 'focus:outline-none' : '',
+          boxShadow: `focus:ring-2 focus:ring-${props.variant} ring-offset-2`,
+        },
+      }
+      const { disabled, focus, hover } = styles
+      return Object.values({ ...disabled, ...focus, ...hover })
+        .join(' ')
+        .toString()
+        .replace(/\s+/g, ' ')
+    })
+
     const iconClasses = computed(() => {
-      return isIcon.value && props.size === 'sm' ? 'text-lg leading-none' : ''
-    })
-    const classes = computed(() => {
       let styles = {
-        type: types(props.type, props.variant),
-        state: states(props.type, props.variant),
-        size: sizes(props.type, props.size, isIcon.value),
-        font: fonts(props.size, isIcon.value),
-        rounded:
-          !props.rounded || props.type === 'link' || props.type === 'text'
-            ? ''
-            : `rounded-${props.size}`,
-        roundedFull:
-          !props.roundedFull || props.type === 'link' || props.type === 'text'
-            ? ''
-            : 'rounded-full',
-        block: !props.block || props.type === 'link' ? '' : 'w-full',
+        fontSize:
+          props.size === 'sm'
+            ? 'text-lg'
+            : props.size === 'md'
+            ? 'text-xl'
+            : '',
+        size: props.size === 'lg' ? 'xl' : '',
+        prefixMargin:
+          props.prefix !== 'none'
+            ? props.size === 'sm'
+              ? 'mr-1.5 -ml-0.5'
+              : 'mr-2 -ml-1'
+            : '',
+        suffixMargin:
+          props.icon !== 'none' && !!context.slots.default
+            ? props.size === 'sm'
+              ? 'ml-1.5 -mr-0.5'
+              : 'ml-2 -mr-1'
+            : '',
+        lineHeight: 'leading-none',
       }
-      return Object.values(styles).join(' ').toString().replace(/\s+/g, ' ')
+      return {
+        classes: `${styles.lineHeight} ${styles.prefixMargin} ${styles.suffixMargin} ${styles.fontSize}`,
+        size: styles.size,
+      }
     })
-    return { classes, isIcon, iconClasses }
+
+    const classes = computed(() => {
+      return Object.values({
+        ...typeClasses.value,
+      })
+        .join(' ')
+        .toString()
+        .replace(/\s+/g, ' ')
+    })
+    return { classes, iconClasses, stateClasses }
   },
 }
 </script>
