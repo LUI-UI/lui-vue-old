@@ -26,7 +26,7 @@ module.exports = {
         sm: '0px 4px 6px rgba(0,0,0,0.08)',
         md: '0px 6px 12px rgba(0,0,0,0.08)',
         lg: '0px 12px 24px rgba(0,0,0,0.08)',
-        xlg: '0px 20px 32px rgba(0,0,0,0.12)',
+        xlg: '0px 20px 32px rgba(0,0,0,0.12)', // xlg olmamalı XL olmalı.
       },
       fontSize: {
         xxs: '.625rem',
@@ -37,7 +37,7 @@ module.exports = {
         md: '.5rem',
         lg: '.625rem',
         xlg: '.75rem',
-        xxlg: '1rem',
+        xxlg: '1rem', // xlg olmamalı XL olmalı.
       },
       lineHeight: {
         4.5: '1.125rem', // button da kullanildi deigecek mi ?

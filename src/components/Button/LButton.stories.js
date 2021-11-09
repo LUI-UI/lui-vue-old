@@ -8,7 +8,7 @@ export default {
   argTypes: {
     onClick: {},
     label: {
-      defaultValue: 'button',
+      defaultValue: 'button',// 6.3 de kaldırılmış bunun alternatine bakmak lazım.
       control: { type: 'text' },
     },
     size: {
