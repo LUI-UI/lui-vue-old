@@ -1,5 +1,4 @@
 const color = require('./colors')
-// const _ = require('lodash')
 const plugin = require('tailwindcss/plugin')
 
 module.exports = {

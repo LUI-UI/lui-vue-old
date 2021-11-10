@@ -1,7 +1,6 @@
 <template>
   <button
     :class="[classes, stateClasses]"
-    class="flex font-worksans justify-center"
     v-bind="$attrs"
     @click="$emit('click')"
   >
@@ -151,6 +150,9 @@ export default {
             : '',
         width: !props.block || props.type === 'link' ? '' : 'w-full',
         padding,
+        display: props.prefix !== 'none' || props.icon !== 'none' ? 'flex' : '',
+        justifyContent: props.prefix !== 'none' || props.icon !== 'none' ? 'justify-center' : '',
+        alignItems: props.prefix !== 'none' || props.icon !== 'none' ? 'items-center' : '',
       }
     })
     const stateClasses = computed(() => {
