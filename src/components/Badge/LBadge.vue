@@ -32,28 +32,35 @@ export default {
     },
   },
   setup(props) {
-    function size(size) {
-      if(size === 'xs') return 'w-2 h-2'
-      if(size === 'sm') return 'w-3 h-3'
-      if(size === 'md') return 'w-4 h-4'
-      if(size === 'lg') return 'w-5 h-5'
-      // const sizes = { xs: '2', sm: '3', md: '4', lg: '5' }
-      // return `w-${sizes[size]} h-${sizes[size]}`
-    }
-    function bg(color) {
-      return `bg-${color}`
-    }
-    function border(isBordered) {
-      return isBordered ? 'border border-white' : ''
-    }
     const classes = computed(() => {
-      return [
-        'inline-block rounded-full',
-        `${size(props.size)}`,
-        `${bg(props.variant)}`,
-        `${border(props.border)}`,
-      ]
+      const styles = {
+        width:
+          props.size === 'xs'
+            ? 'w-2'
+            : props.size === 'sm'
+            ? 'w-3'
+            : props.size === 'md'
+            ? 'w-4'
+            : 'w-5',
+        height:
+          props.size === 'xs'
+            ? 'h-2'
+            : props.size === 'sm'
+            ? 'h-3'
+            : props.size === 'md'
+            ? 'h-4'
+            : 'h-5',
+        backgroundColor: `bg-${props.variant}`,
+        border: props.border ? 'border border-white' : '',
+        display: 'inline-block',
+        borderRadius: 'rounded-full'
+      }
+      return Object.values({ ...styles })
+        .join(' ')
+        .toString()
+        .replace(/\s+/g, ' ')
     })
+    console.log(classes.value)
     return { classes }
   },
 }
