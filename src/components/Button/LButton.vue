@@ -1,7 +1,7 @@
 <template>
   <button
     :class="[classes, stateClasses]"
-    class="flex font-worksans"
+    class="flex font-worksans justify-center"
     v-bind="$attrs"
     @click="$emit('click')"
   >
@@ -9,16 +9,16 @@
       v-if="prefix !== 'none'"
       :name="prefix"
       fill
-      :size="iconClasses.size"
-      :class="iconClasses.classes"
+      :size="' '"
+      :class="iconClasses"
     />
     <slot />
     <l-icon
       v-if="icon !== 'none'"
       :name="icon"
       fill
-      :size="iconClasses.size"
-      :class="iconClasses.classes"
+      :size="' '"
+      :class="iconClasses"
     />
   </button>
 </template>
@@ -121,7 +121,7 @@ export default {
             : props.filter === 'darker'
             ? props.type === 'default'
               ? 'text-white'
-              : `text-${props.variant}-900`
+              : `text-${props.variant}-800`
             : props.type === 'default'
             ? `text-${props.variant}`
             : `text-${props.variant}-50`,
@@ -131,11 +131,18 @@ export default {
             ? props.filter === 'none'
               ? `outline outline-${props.variant}`
               : props.filter === 'darker'
-              ? `outline outline-${props.variant}-900`
+              ? `outline outline-${props.variant}-800`
               : `outline outline-${props.variant}-50`
             : '',
         borderBottom:
-          props.type === 'link' ? `border-b border-${props.variant}` : '',
+          props.type === 'link'
+            ? props.filter === 'darker'
+              ? `border-b border-${props.variant}-800`
+              : props.filter === 'lighter'
+              ? `border-b border-${props.variant}-100`
+              : `border-b border-${props.variant}`
+            : '',
+        // props.type === 'link' ? `border-b border-${props.variant}` : '',
         borderRadius:
           props.type !== 'link' && (props.rounded || props.roundedFull)
             ? props.rounded
@@ -150,14 +157,37 @@ export default {
       const styles = {
         hover: {
           backgroundColor:
-            props.type !== 'link' ? `hover:bg-${props.variant}-50` : '',
-          fontColor:
-            props.type === 'default'
-              ? `hover:text-${props.variant}`
-              : props.type === 'text'
-              ? `hover:bg-${props.variant}-50`
+            props.type !== 'link'
+              ? props.filter === 'lighter'
+                ? `hover:bg-${props.variant}`
+                : `hover:bg-${props.variant}-50`
               : '',
-          borderColor: props.type === 'outline' ? `hover:outline-none` : '',
+          // props.type !== 'link' ? `hover:bg-${props.variant}-50` : '',
+          fontColor:
+            props.filter === 'darker'
+              ? props.type === 'default'
+                ? `hover:text-${props.variant}-800`
+                : props.type === 'link'
+                ? `hover:text-${props.variant}-700`
+                : ''
+              : props.filter === 'lighter' // lighter
+              ? props.type === 'default'
+                ? 'hover:text-white'
+                : props.type === 'link'
+                ? `hover:text-${props.variant}-100`
+                : ''
+              : props.type === 'default'
+              ? `hover:text-${props.variant}`
+              : props.type === 'link'
+              ? `hover:text-${props.variant}-400`
+              : '',
+          borderColor:
+            props.type === 'outline'
+              ? props.filter === 'darker'
+                ? `hover:outline-${props.variant}-800`
+                : `hover:outline-${props.variant}-100`
+              : '',
+          // props.type === 'outline' ? `hover:outline-none` : '',
         },
         disabled: {
           backgroundColor:
@@ -167,7 +197,12 @@ export default {
         },
         focus: {
           outline: props.type !== 'outline' ? 'focus:outline-none' : '',
-          boxShadow: `focus:ring-2 focus:ring-${props.variant} ring-offset-2`,
+          boxShadow:
+            props.filter === 'darker'
+              ? `focus:ring-2 focus:ring-${props.variant}-800 focus:ring-offset-2`
+              : props.filter === 'lighter'
+              ? `focus:ring-2 focus:ring-${props.variant}-100 focus:ring-offset-2`
+              : `focus:ring-2 focus:ring-${props.variant} focus:ring-offset-2`,
         },
       }
       const { disabled, focus, hover } = styles
@@ -178,14 +213,13 @@ export default {
     })
 
     const iconClasses = computed(() => {
-      let styles = {
+      const styles = {
         fontSize:
           props.size === 'sm'
-            ? 'text-lg'
+            ? 'text-base'
             : props.size === 'md'
             ? 'text-xl'
-            : '',
-        size: props.size === 'lg' ? 'xl' : '',
+            : 'text-2xl',
         prefixMargin:
           props.prefix !== 'none'
             ? props.size === 'sm'
@@ -198,13 +232,23 @@ export default {
               ? 'ml-1.5 -mr-0.5'
               : 'ml-2 -mr-1'
             : '',
-        lineHeight: 'leading-none',
+        lineHeight: props.size === 'lg' ? 'leading-5' : 'leading-none',
       }
-      return {
-        classes: `${styles.lineHeight} ${styles.prefixMargin} ${styles.suffixMargin} ${styles.fontSize}`,
-        size: styles.size,
-      }
+      // `${styles.lineHeight} ${styles.prefixMargin} ${styles.suffixMargin} ${styles.fontSize}`,
+      return Object.values({ ...styles })
+        .join(' ')
+        .toString()
+        .replace(/\s+/g, ' ')
+      // {
+      //   classes: Object.values({ ...styles })
+      //     .join(' ')
+      //     .toString()
+      //     .replace(/\s+/g, ' '),
+      //   size: '',
+      // }
     })
+
+    // console.log('iconClasses', iconClasses.value)
 
     const classes = computed(() => {
       return Object.values({
