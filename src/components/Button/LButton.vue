@@ -11,7 +11,13 @@
       :size="' '"
       :class="iconClasses"
     />
-    <slot />
+    <span 
+      v-if="prefix !== 'none' && icon !== 'none'" 
+      :class="size === 'sm' ? 'mx-1.5' : 'mx-2.5'"
+    >
+      <slot />
+    </span>
+    <slot v-else />
     <l-icon
       v-if="icon !== 'none'"
       :name="icon"
@@ -236,21 +242,11 @@ export default {
             : '',
         lineHeight: props.size === 'lg' ? 'leading-5' : 'leading-none',
       }
-      // `${styles.lineHeight} ${styles.prefixMargin} ${styles.suffixMargin} ${styles.fontSize}`,
       return Object.values({ ...styles })
         .join(' ')
         .toString()
         .replace(/\s+/g, ' ')
-      // {
-      //   classes: Object.values({ ...styles })
-      //     .join(' ')
-      //     .toString()
-      //     .replace(/\s+/g, ' '),
-      //   size: '',
-      // }
     })
-
-    // console.log('iconClasses', iconClasses.value)
 
     const classes = computed(() => {
       return Object.values({
