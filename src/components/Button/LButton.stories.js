@@ -4,13 +4,12 @@ import LButton from './LButton.vue'
 export default {
   title: 'Button',
   component: LButton,
+  args: {
+    label: 'test'
+  },
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   argTypes: {
     onClick: {},
-    label: {
-      defaultValue: 'button',// 6.3 de kaldırılmış bunun alternatine bakmak lazım.
-      control: { type: 'text' },
-    },
     size: {
       control: { type: 'select' },
       options: ['sm', 'md', 'lg'],

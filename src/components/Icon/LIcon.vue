@@ -1,13 +1,10 @@
 <template>
   <i
-    v-bind="$attrs"
-    :class="[
-      `ri-${name}${fill ? '-fill' : ''}${line ? '-line' : ''}`,
-      `ri-${size}`,
-    ]"
+    :class="classes"
   />
 </template>
 <script>
+import { computed } from '@vue/reactivity'
 export default {
   props: {
     name: {
@@ -16,7 +13,7 @@ export default {
     },
     size: {
       type: String,
-      default: '1x',
+      default: 'fw',
       validator(value) {
         return [
           'lg',
@@ -24,7 +21,6 @@ export default {
           'xxs',
           'xs',
           'sm',
-          'md',
           '1x',
           '2x',
           '3x',
@@ -47,6 +43,17 @@ export default {
       type: Boolean,
       default: false,
     },
+  },
+  setup(props) {
+    const classes = computed(() => {
+      return [
+        `ri-${props.name}${props.fill ? '-fill' : ''}${
+          props.line ? '-line' : ''
+        }`,
+        `ri-${props.size}`,
+      ]
+    })
+    return {classes}
   },
 }
 

@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="[classes, stateClasses]"
+    :class="[computedClasses]"
     v-bind="$attrs"
     @click="$emit('click')"
   >
@@ -8,11 +8,10 @@
       v-if="prefix !== 'none'"
       :name="prefix"
       fill
-      :size="' '"
       :class="iconClasses"
     />
-    <span 
-      v-if="prefix !== 'none' && icon !== 'none'" 
+    <span
+      v-if="prefix !== 'none' && icon !== 'none'"
       :class="size === 'sm' ? 'mx-1.5' : 'mx-2.5'"
     >
       <slot />
@@ -22,7 +21,6 @@
       v-if="icon !== 'none'"
       :name="icon"
       fill
-      :size="' '"
       :class="iconClasses"
     />
   </button>
@@ -30,6 +28,7 @@
 <script>
 import { computed } from 'vue'
 import LIcon from '../Icon/LIcon.vue'
+import { generateClasses } from '../../mixins/methods'
 export default {
   components: {
     LIcon,
@@ -94,22 +93,22 @@ export default {
   },
   emits: ['click'],
   setup(props, context) {
-    const typeClasses = computed(() => {
-      const padding =
-        props.icon !== 'none' && !context.slots.default
-          ? props.size === 'lg'
-            ? 'p-3'
+    const computedClasses = computed(() => {
+      const classes = {
+        padding:
+          props.icon !== 'none' && !context.slots.default
+            ? props.size === 'lg'
+              ? 'p-3'
+              : props.size === 'md'
+              ? 'p-2.5'
+              : 'p-1.5'
+            : props.type === 'link'
+            ? 'p-0'
+            : props.size === 'sm'
+            ? 'px-3 py-1.5'
             : props.size === 'md'
-            ? 'p-2.5'
-            : 'p-1.5'
-          : props.type === 'link'
-          ? 'p-0'
-          : props.size === 'sm'
-          ? 'px-3 py-1.5'
-          : props.size === 'md'
-          ? 'px-4 py-2'
-          : 'px-6 py-3'
-      return {
+            ? 'px-4 py-2'
+            : 'px-6 py-3',
         backgroundColor:
           props.type === 'default'
             ? props.filter === 'none'
@@ -147,7 +146,6 @@ export default {
               ? `border-b border-${props.variant}-100`
               : `border-b border-${props.variant}`
             : '',
-        // props.type === 'link' ? `border-b border-${props.variant}` : '',
         borderRadius:
           props.type !== 'link' && (props.rounded || props.roundedFull)
             ? props.rounded
@@ -155,14 +153,17 @@ export default {
               : 'rounded-full'
             : '',
         width: !props.block || props.type === 'link' ? '' : 'w-full',
-        padding,
         display: props.prefix !== 'none' || props.icon !== 'none' ? 'flex' : '',
-        justifyContent: props.prefix !== 'none' || props.icon !== 'none' ? 'justify-center' : '',
-        alignItems: props.prefix !== 'none' || props.icon !== 'none' ? 'items-center' : '',
+        justifyContent:
+          props.prefix !== 'none' || props.icon !== 'none'
+            ? 'justify-center'
+            : '',
+        alignItems:
+          props.prefix !== 'none' || props.icon !== 'none'
+            ? 'items-center'
+            : '',
       }
-    })
-    const stateClasses = computed(() => {
-      const styles = {
+      const stateClasses = {
         hover: {
           backgroundColor:
             props.type !== 'link'
@@ -170,7 +171,6 @@ export default {
                 ? `hover:bg-${props.variant}`
                 : `hover:bg-${props.variant}-50`
               : '',
-          // props.type !== 'link' ? `hover:bg-${props.variant}-50` : '',
           fontColor:
             props.filter === 'darker'
               ? props.type === 'default'
@@ -195,7 +195,6 @@ export default {
                 ? `hover:outline-${props.variant}-800`
                 : `hover:outline-${props.variant}-100`
               : '',
-          // props.type === 'outline' ? `hover:outline-none` : '',
         },
         disabled: {
           backgroundColor:
@@ -213,15 +212,16 @@ export default {
               : `focus:ring-2 focus:ring-${props.variant} focus:ring-offset-2`,
         },
       }
-      const { disabled, focus, hover } = styles
-      return Object.values({ ...disabled, ...focus, ...hover })
-        .join(' ')
-        .toString()
-        .replace(/\s+/g, ' ')
+      const { disabled, focus, hover } = stateClasses
+      return generateClasses([
+        { ...classes },
+        { ...disabled },
+        { ...focus },
+        { ...hover },
+      ])
     })
-
     const iconClasses = computed(() => {
-      const styles = {
+      const classes = {
         fontSize:
           props.size === 'sm'
             ? 'text-base'
@@ -242,21 +242,11 @@ export default {
             : '',
         lineHeight: props.size === 'lg' ? 'leading-5' : 'leading-none',
       }
-      return Object.values({ ...styles })
-        .join(' ')
-        .toString()
-        .replace(/\s+/g, ' ')
+
+      return generateClasses([{ ...classes }])
     })
 
-    const classes = computed(() => {
-      return Object.values({
-        ...typeClasses.value,
-      })
-        .join(' ')
-        .toString()
-        .replace(/\s+/g, ' ')
-    })
-    return { classes, iconClasses, stateClasses }
+    return { computedClasses, iconClasses }
   },
 }
 </script>
