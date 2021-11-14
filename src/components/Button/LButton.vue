@@ -29,10 +29,12 @@
 import { computed } from 'vue'
 import LIcon from '../Icon/LIcon.vue'
 import { generateClasses } from '../../mixins/methods'
+import { variant, rounded, roundedFull, filter } from '../../mixins/props'
 export default {
   components: {
     LIcon,
   },
+  mixins: [variant, rounded, roundedFull, filter],
   inheritAttrs: false,
   props: {
     size: {
@@ -42,20 +44,20 @@ export default {
         return ['sm', 'md', 'lg'].includes(value)
       },
     },
-    variant: {
-      type: String,
-      default: 'primary',
-      validator(value) {
-        return [
-          'primary',
-          'secondary',
-          'info',
-          'success',
-          'warning',
-          'danger',
-        ].includes(value)
-      },
-    },
+    // variant: {
+    //   type: String,
+    //   default: 'primary',
+    //   validator(value) {
+    //     return [
+    //       'primary',
+    //       'secondary',
+    //       'info',
+    //       'success',
+    //       'warning',
+    //       'danger',
+    //     ].includes(value)
+    //   },
+    // },
     block: {
       type: Boolean,
       default: false,
@@ -67,21 +69,21 @@ export default {
         return ['default', 'text', 'outline', 'link'].includes(value)
       },
     },
-    rounded: {
-      type: Boolean,
-      default: false,
-    },
-    roundedFull: {
-      type: Boolean,
-      default: false,
-    },
-    filter: {
-      type: String,
-      default: 'none',
-      validator(value) {
-        return ['darker', 'darker', 'none'].includes(value)
-      },
-    },
+    // rounded: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // roundedFull: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // filter: {
+    //   type: String,
+    //   default: 'none',
+    //   validator(value) {
+    //     return ['darker', 'darker', 'none'].includes(value)
+    //   },
+    // },
     icon: {
       type: String,
       default: 'none',
@@ -93,6 +95,7 @@ export default {
   },
   emits: ['click'],
   setup(props, context) {
+    console.log(props)
     const computedClasses = computed(() => {
       const classes = {
         padding:
