@@ -23,6 +23,9 @@ export default {
     },
     description: {
       control: { type: 'text' },
+    },
+    prefix: {
+      control: {type: 'text' }
     }
   },
 }
