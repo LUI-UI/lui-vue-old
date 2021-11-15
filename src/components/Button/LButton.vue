@@ -29,39 +29,27 @@
 import { computed } from 'vue'
 import LIcon from '../Icon/LIcon.vue'
 import { generateClasses } from '../../mixins/methods'
-import { variant, rounded, roundedFull, filter } from '../../mixins/props'
+import {
+  variant,
+  rounded,
+  roundedFull,
+  filter,
+  block,
+} from '../../mixins/props'
 export default {
   components: {
     LIcon,
   },
-  mixins: [variant, rounded, roundedFull, filter],
+  mixins: [variant, rounded, roundedFull, filter, block],
   inheritAttrs: false,
   props: {
-    size: {
-      type: String,
-      default: 'sm',
-      validator(value) {
-        return ['sm', 'md', 'lg'].includes(value)
+   size: {
+        type: String,
+        default: 'md',
+        validator(value) {
+          return ['sm', 'md', 'lg'].includes(value)
+        },
       },
-    },
-    // variant: {
-    //   type: String,
-    //   default: 'primary',
-    //   validator(value) {
-    //     return [
-    //       'primary',
-    //       'secondary',
-    //       'info',
-    //       'success',
-    //       'warning',
-    //       'danger',
-    //     ].includes(value)
-    //   },
-    // },
-    block: {
-      type: Boolean,
-      default: false,
-    },
     type: {
       type: String,
       default: 'default',
@@ -69,21 +57,6 @@ export default {
         return ['default', 'text', 'outline', 'link'].includes(value)
       },
     },
-    // rounded: {
-    //   type: Boolean,
-    //   default: false,
-    // },
-    // roundedFull: {
-    //   type: Boolean,
-    //   default: false,
-    // },
-    // filter: {
-    //   type: String,
-    //   default: 'none',
-    //   validator(value) {
-    //     return ['darker', 'darker', 'none'].includes(value)
-    //   },
-    // },
     icon: {
       type: String,
       default: 'none',
@@ -95,7 +68,6 @@ export default {
   },
   emits: ['click'],
   setup(props, context) {
-    console.log(props)
     const computedClasses = computed(() => {
       const classes = {
         padding:
@@ -152,9 +124,9 @@ export default {
         borderRadius:
           props.type !== 'link' && (props.rounded || props.roundedFull)
             ? props.rounded
-              ? `rounded-${props.size}`
-              : 'rounded-full'
-            : '',
+              ? `rounded-${props.size}` 
+              : props.roundedFull ? 'rounded-full' : ''
+             : '',
         width: !props.block || props.type === 'link' ? '' : 'w-full',
         display: props.prefix !== 'none' || props.icon !== 'none' ? 'flex' : '',
         justifyContent:

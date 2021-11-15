@@ -16,6 +16,14 @@ export const variant = {
     },
   },
 }
+export const block = {
+  props: {
+    block: {
+      type: Boolean,
+      default: false,
+    },
+  },
+}
 export const rounded = {
   props: {
     rounded: {
@@ -25,17 +33,34 @@ export const rounded = {
   },
 }
 export const roundedFull = {
-  roundedFull: {
-    type: Boolean,
-    default: false,
-  },
-}
-export const filter = {
-  filter: {
-    type: String,
-    default: 'none',
-    validator(value) {
-      return ['darker', 'darker', 'none'].includes(value)
+  props: {
+    roundedFull: {
+      type: Boolean,
+      default: false,
     },
   },
 }
+export const filter = {
+  props: {
+    filter: {
+      type: String,
+      default: 'none',
+      validator(value) {
+        return ['darker', 'lighter', 'none'].includes(value)
+      },
+    },
+  },
+}
+// export function generateSizeProps(componentName) {
+//   if (componentName === 'button') {
+//     return {
+//       size: {
+//         type: String,
+//         default: 'md',
+//         validator(value) {
+//           return ['sm', 'md', 'lg'].includes(value)
+//         },
+//       },
+//     }
+//   }
+// }
