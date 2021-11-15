@@ -1,8 +1,12 @@
 const color = require('./colors')
+const plugin = require('tailwindcss/plugin')
 
 module.exports = {
-  mode: 'jit',
-  purge: ['./src/**/*.{js,jsx,ts,tsx,vue}'],
+  // mode: 'jit',
+  purge: {
+    content: ['./src/**/*.{js,jsx,ts,tsx,vue,html}'],
+  },
+
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -21,18 +25,23 @@ module.exports = {
         sm: '0px 4px 6px rgba(0,0,0,0.08)',
         md: '0px 6px 12px rgba(0,0,0,0.08)',
         lg: '0px 12px 24px rgba(0,0,0,0.08)',
-        xlg: '0px 20px 32px rgba(0,0,0,0.12)',
+        xlg: '0px 20px 32px rgba(0,0,0,0.12)', // xlg olmamalı XL olmalı.
       },
       fontSize: {
-        xxs: '.625rem',
-        base: '1rem',
+        xxs: '.625rem', // 2xs olmalı
+        base: '1rem', // Bu zaten yok mu ?
       },
       borderRadius: {
+        "2xs": '0.125rem',
+        xs: '.25rem',
         sm: '.375rem',
         md: '.5rem',
         lg: '.625rem',
-        xlg: '.75rem',
-        xxlg: '1rem',
+        xlg: '.75rem', // xl olmalı
+        xxlg: '1rem', // olmamalı 2xl olmalı.
+      },
+      lineHeight: {
+        4.5: '1.125rem', // button da kullanildi deigecek mi ?
       },
     },
     colors: color,
@@ -41,7 +50,24 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      borderWidth: ['hover'],
+      textColor: ['disabled'],
+      backgroundColor: ['disabled'],
+      borderColor: ['disabled'],
+      outline: ['hover']
+    },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities, theme }) {
+      const outline = {
+        '.outline': {
+          outlineColor: theme('colors'),
+          outlineStyle: 'solid',
+          outlineWidth: '1px',
+        },
+      }
+      addUtilities(outline)
+    }),
+  ],
 }
