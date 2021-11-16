@@ -32,6 +32,8 @@ module.exports = {
         base: '1rem', // Bu zaten yok mu ?
       },
       borderRadius: {
+        "2xs": '0.125rem',
+        xs: '.25rem',
         sm: '.375rem',
         md: '.5rem',
         lg: '.625rem',
@@ -53,7 +55,8 @@ module.exports = {
       textColor: ['disabled'],
       backgroundColor: ['disabled'],
       borderColor: ['disabled'],
-      outline: ['hover']
+      // outlineColor: ['hover','focus'],
+      ringColor: ['disabled']
     },
   },
   plugins: [
