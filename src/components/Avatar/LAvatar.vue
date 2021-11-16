@@ -1,19 +1,18 @@
 <template>
   <div
     :class="[computedClasses]"
-    class=" text"
+    class="text"
     @click="$emit('click')"
   >
-    <span>
+    <span v-if="icon !== 'none'">
       <l-icon
-        v-if="icon !== 'none'"
-        :name="prefix"
+        :name="icon"
         fill
         :class="iconClasses"
       />
     </span>
-    <span>
-      {{ text.toUpperCase() }}
+    <span v-else>
+      {{ text.toUpperCase().slice(0, 2) }}
     </span>
   </div>
 </template>
@@ -29,11 +28,18 @@ export default {
   mixins: [variant, rounded, roundedFull, filter],
   inheritAttrs: false,
   props: {
+    type: {
+      type: String,
+      default: 'default',
+      validator(value) {
+        return ['border', 'default'].includes(value)
+      },
+    },
     size: {
       type: String,
       default: 'md',
       validator(value) {
-        return ['xxs', 'xs', 'sm', 'md', 'xlg'].includes(value)
+        return ['2xs', 'xs', 'sm', 'md', 'lg'].includes(value)
       },
     },
     icon: {
@@ -53,11 +59,11 @@ export default {
     },
   },
   emits: ['click'],
-  setup(props, context) {
+  setup(props) {
     const computedClasses = computed(() => {
       const classes = {
         width:
-          props.size === 'xxs'
+          props.size === '2xs'
             ? 'w-5'
             : props.size === 'xs'
             ? 'w-6'
@@ -67,9 +73,9 @@ export default {
             ? 'w-12'
             : props.size === 'lg'
             ? 'w-16'
-            : '',
+            : 'w-12',
         height:
-          props.size === 'xxs'
+          props.size === '2xs'
             ? 'h-5'
             : props.size === 'xs'
             ? 'h-6'
@@ -79,17 +85,20 @@ export default {
             ? 'h-12'
             : props.size === 'lg'
             ? 'h-16'
-            : '',
+            : 'h-12',
         display: 'flex',
         justifyContent: 'justify-center',
         alignItems: 'items-center',
         verticalAlign: 'align-middle',
         textAlign: 'text-center',
-        borderRadius:props.rounded || props.roundedFull
-            ? props.rounded
-              ? `rounded-${props.size}` 
-              : props.roundedFull ? 'rounded-full' : 'rounded-sm'
-             : '', // Border radius alınabilir mixin Computed olarak.
+        borderSize: props.type === 'border' ? ['2xs', 'xs', 'sm'].includes(props.size) ? 'border' : 'border-2': '',
+        borderStyle: props.type === 'border' ? 'border-solid' : '',
+        borderColor: props.type === 'border' ? 'border-white' : '',
+        borderRadius: props.roundedFull
+          ? 'rounded-full'
+          : props.rounded
+          ? `rounded-${props.size}`
+          : '',
         backgroundColor:
           props.filter === 'none'
             ? `bg-${props.variant}`
@@ -103,10 +112,10 @@ export default {
             ? `text-${props.variant}-50`
             : `text-${props.variant}-800`,
         fontSize:
-          props.size === 'xxs'
-            ? 'text-xxs'
+          props.size === '2xs'
+            ? 'text-2xs'
             : props.size === 'xs'
-            ? 'text-xxs'
+            ? 'text-2xs'
             : props.size === 'sm'
             ? 'text-sm'
             : props.size === 'md'
@@ -120,25 +129,8 @@ export default {
     })
     const iconClasses = computed(() => {
       const classes = {
-        fontSize:
-          props.size === 'sm'
-            ? 'text-base'
-            : props.size === 'md'
-            ? 'text-xl'
-            : 'text-2xl',
-        prefixMargin:
-          props.prefix !== 'none'
-            ? props.size === 'sm'
-              ? 'mr-1.5 -ml-0.5'
-              : 'mr-2 -ml-1'
-            : '',
-        suffixMargin:
-          props.icon !== 'none' && !!context.slots.default
-            ? props.size === 'sm'
-              ? 'ml-1.5 -mr-0.5'
-              : 'ml-2 -mr-1'
-            : '',
-        lineHeight: props.size === 'lg' ? 'leading-5' : 'leading-none',
+        fontSize: ['2xs','xs'].includes(props.size) ? 'text-2xs' : props.size==='sm' ? 'text-sm': props.size === 'md' ? 'text-xl' : 'text-2xl',
+        // lineHeight: props.size === 'lg' ? 'leading-5' : 'leading-none',
       }
 
       return generateClasses([{ ...classes }])

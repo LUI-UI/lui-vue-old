@@ -28,7 +28,7 @@ module.exports = {
         xlg: '0px 20px 32px rgba(0,0,0,0.12)', // xlg olmamalı XL olmalı.
       },
       fontSize: {
-        xxs: '.625rem', // 2xs olmalı
+        "2xs": '.625rem', // 2xs olmalı
         base: '1rem', // Bu zaten yok mu ?
       },
       borderRadius: {
@@ -37,8 +37,8 @@ module.exports = {
         sm: '.375rem',
         md: '.5rem',
         lg: '.625rem',
-        xlg: '.75rem', // xl olmalı
-        xxlg: '1rem', // olmamalı 2xl olmalı.
+        xl: '.75rem', // xl olmalı
+        "2xlg": '1rem', // olmamalı 2xl olmalı.
       },
       lineHeight: {
         4.5: '1.125rem', // button da kullanildi deigecek mi ?
