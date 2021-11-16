@@ -18,6 +18,9 @@ export default {
       control: { type: 'select' },
       options: [null, 'warning', true, false],
     },
+    clear: {
+      control: { type: 'boolean' },
+    },
     label: {
       control: { type: 'text' },
     },
