@@ -4,9 +4,13 @@ export default {
   component: LAvatar,
   argTypes: {
     onClick: {},
+    type: {
+      control: { type: 'select' },
+      options: ['default', 'border'],
+    },
     size: {
       control: { type: 'select' },
-      options: ['xxs', 'xs', 'sm', 'md', 'lg'],
+      options: ['2xs', 'xs', 'sm', 'md', 'lg'],
     },
     variant: {
       control: { type: 'select' },
@@ -24,7 +28,7 @@ export default {
     },
     icon: {
       control: { type: 'select' },
-      options: ['home', 'arrow-right', 'mail-check', 'none'],
+      options: ['user', 'arrow-right', 'mail-check', 'home', 'user', 'account-circle'],
     },
   },
 }
@@ -39,7 +43,7 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 Default.args = {
-  type: 'default',
+  text: 'BB',
 }
 
 export const Text = Template.bind({})
@@ -48,7 +52,7 @@ Text.args = {
 }
 export const Icon = Template.bind({})
 Icon.args = {
-  icon: 'home',
+  icon: 'user',
 }
 export const Image = Template.bind({})
 Icon.args = {
