@@ -23,7 +23,7 @@ export default {
     },
     type: {
       control: { type: 'select' },
-      options: ['default', 'text', 'outline', 'link'],
+      options: ['default', 'text', 'outline', 'link', 'link-underline'],
     },
     rounded: {
       control: { type: 'boolean' },
