@@ -60,10 +60,10 @@ export default {
       default: 'none',
     },
     disableStates: {
-      type: Array,
-      default: () => [],
+      type: [Array],
+      default: () => [''],
       validator(value) {
-        return ['hover', 'focus', 'disable', 'underline'].includes(value)
+        return ['hover', 'focus', 'disable', 'underline',''].some(r=> value.indexOf(r) >= 0)
       },
     },
   },
