@@ -43,6 +43,10 @@ export default {
       control: { type: 'select' },
       options: ['home', 'arrow-right', 'mail-check','none'],
     },
+    disableStates:{
+      control: { type: 'multi-select' },
+      options: ['hover', 'focus', 'disable', 'underline'],
+    }
   },
 }
 

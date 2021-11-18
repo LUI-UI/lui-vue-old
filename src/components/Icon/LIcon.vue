@@ -13,7 +13,7 @@ export default {
     },
     size: {
       type: String,
-      default: 'fw',
+      default: '1x',
       validator(value) {
         return [
           'lg',

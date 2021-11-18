@@ -59,25 +59,32 @@ export default {
       type: String,
       default: 'none',
     },
+    disableStates: {
+      type: Array,
+      default: () => [],
+      validator(value) {
+        return ['hover', 'focus', 'disable', 'underline'].includes(value)
+      },
+    },
   },
   emits: ['click'],
   setup(props, context) {
     const computedClasses = computed(() => {
       const classes = {
         padding:
-          props.icon !== 'none' && !context.slots.default
+          props.type === 'link' || props.type === 'link-underline'
+            ? 'p-0'
+            : !context.slots.default // text text-icon
             ? props.size === 'lg'
               ? 'p-3'
               : props.size === 'md'
               ? 'p-2.5'
               : 'p-1.5'
-            : props.type === 'link' || props.type === 'link-underline'
-            ? 'p-0'
-            : props.size === 'sm'
-            ? 'px-3 py-1.5'
+            : props.size === 'lg' // icon button
+            ? 'px-6 py-3'
             : props.size === 'md'
             ? 'px-4 py-2'
-            : 'px-6 py-3',
+            : 'px-3 py-1.5',
         backgroundColor:
           props.type === 'default'
             ? props.filter === 'none'
@@ -109,14 +116,15 @@ export default {
               ? `border-${props.variant}-800`
               : `border-${props.variant}-50`
             : '',
-        borderBottom:
-          props.type === 'link-underline'
-            ? props.filter === 'darker'
-              ? `border-b border-${props.variant}-800`
-              : props.filter === 'lighter'
-              ? `border-b border-${props.variant}-100`
-              : `border-b border-${props.variant}`
-            : '',
+        borderBottom: props.disableStates.includes('underline')
+          ? ''
+          : props.type === 'link-underline'
+          ? props.filter === 'darker'
+            ? `border-b border-${props.variant}-800`
+            : props.filter === 'lighter'
+            ? `border-b border-${props.variant}-100`
+            : `border-b border-${props.variant}`
+          : '',
         borderRadius:
           props.type !== 'link' && (props.rounded || props.roundedFull)
             ? props.rounded
@@ -134,31 +142,30 @@ export default {
         hover: {
           backgroundColor:
             props.type === 'link' || props.type === 'link-underline'
-            ? ''
-            : props.type === 'outline'
-            ? props.filter === 'darker'
-            ? `hover:bg-${props.variant}-800`
-            : props.filter === 'lighter'
-            ? `hover:bg-${props.variant}-50`
-            : `hover:bg-${props.variant}`
-            : props.filter === 'lighter' //def,text
-            ? `hover:bg-${props.variant}`
-            : `hover:bg-${props.variant}-50`,
+              ? ''
+              : props.type === 'outline'
+              ? props.filter === 'darker'
+                ? `hover:bg-${props.variant}-800`
+                : props.filter === 'lighter'
+                ? `hover:bg-${props.variant}-50`
+                : `hover:bg-${props.variant}`
+              : props.filter === 'lighter' //def,text
+              ? `hover:bg-${props.variant}`
+              : `hover:bg-${props.variant}-50`,
           fontColor:
-
             props.type === 'default'
-            ? props.filter === 'none'
-            ? `hover:text-${props.variant}`
-            : props.filter === 'darker'
-            ? `hover:text-${props.variant}`
-            : 'hover:text-white'
-            : props.type !== 'outline'
-            ? props.filter === 'none'
-            ? `hover:text-${props.variant}--400` 
-            : props.filter === 'darker'
-            ? `hover:text-${props.variant}--700`
-            : `hover:text-${props.variant}--200` // lighter
-            : 'hover:text-white', // outline
+              ? props.filter === 'none'
+                ? `hover:text-${props.variant}`
+                : props.filter === 'darker'
+                ? `hover:text-${props.variant}`
+                : 'hover:text-white'
+              : props.type !== 'outline'
+              ? props.filter === 'none'
+                ? `hover:text-${props.variant}--400`
+                : props.filter === 'darker'
+                ? `hover:text-${props.variant}--700`
+                : `hover:text-${props.variant}--200` // lighter
+              : 'hover:text-white', // outline
           borderColor:
             props.type === 'outline'
               ? props.filter === 'darker'
@@ -168,7 +175,7 @@ export default {
               ? `hover:border-${props.variant}-50`
               : '',
         },
-        disabled: {
+        disable: {
           backgroundColor: props.type === 'default' ? 'disabled:bg-secondary-300' : '',
           fontColor: props.type === 'default' ? 'disabled:text-white' : '',
           borderColor: 'disabled:border-secondary-300',
@@ -183,6 +190,7 @@ export default {
               : `focus:ring-2 focus:ring-${props.variant} focus:ring-offset-2`,
         },
       }
+      props.disableStates.map((s) => (stateClasses[s] = ''))
       const { disabled, focus, hover } = stateClasses
       return generateClasses([{ ...classes }, { ...disabled }, { ...focus }, { ...hover }])
     })
@@ -196,13 +204,12 @@ export default {
             ? props.size === 'sm'
               ? 'ml-1.5 -mr-0.5'
               : 'ml-2 -mr-1'
-            : '',
+            : 'm-0',
         lineHeight: props.size === 'lg' ? 'leading-5' : 'leading-none',
       }
-
       return generateClasses([{ ...classes }])
     })
-
+    console.log('check slot : ', !context.slots.default)
     return { computedClasses, iconClasses }
   },
 }
