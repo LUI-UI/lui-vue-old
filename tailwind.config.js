@@ -2,10 +2,10 @@ const color = require('./colors')
 const plugin = require('tailwindcss/plugin')
 
 module.exports = {
-  // mode: 'jit',
-  // purge: {
-  //   content: ['./src/**/*.{js,jsx,ts,tsx,vue,html}'],
-  // },
+  mode: 'jit',
+  purge: {
+    content: ['./src/**/*.{js,jsx,ts,tsx,vue,html}', './safelist.txt'],
+  },
 
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -25,7 +25,7 @@ module.exports = {
         sm: '0px 4px 6px rgba(0,0,0,0.08)',
         md: '0px 6px 12px rgba(0,0,0,0.08)',
         lg: '0px 12px 24px rgba(0,0,0,0.08)',
-        xlg: '0px 20px 32px rgba(0,0,0,0.12)', // xlg olmamalı XL olmalı.
+        xl: '0px 20px 32px rgba(0,0,0,0.12)', // xlg olmamalı XL olmalı.
       },
       fontSize: {
         "2xs": '.625rem', // 2xs olmalı
@@ -38,7 +38,7 @@ module.exports = {
         md: '.5rem',
         lg: '.625rem',
         xl: '.75rem', // xl olmalı
-        "2xlg": '1rem', // olmamalı 2xl olmalı.
+        "2xl": '1rem', // olmamalı 2xl olmalı.
       },
       lineHeight: {
         4.5: '1.125rem', // button da kullanildi deigecek mi ?
@@ -61,6 +61,32 @@ module.exports = {
     },
   },
   plugins: [
+    require('tailwind-safelist-generator')({
+      path: 'safelist.txt',
+      patterns: [
+        'bg-{colors}',
+        'hover:bg-{colors}',
+        'focus:bg-{colors}',
+        'disabled:bg-{colors}',
+        'text-{colors}',
+        'hover:text-{colors}',
+        'focus:text-{colors}',
+        'disabled:text-{colors}',
+        'border-{colors}',
+        'hover:border-{colors}',
+        'focus:border-{colors}',
+        'disabled:border-{colors}',
+        'outline-{colors}',
+        'hover:outline-{colors}',
+        'focus:outline-{colors}',
+        'disabled:outline-{colors}',
+        'ring-{colors}',
+        'hover:ring-{colors}',
+        'focus:ring-{colors}',
+        'disabled:ring-{colors}',
+        'rounded-{borderRadius}'
+      ],
+    }),
     plugin(function ({ addUtilities, theme }) {
       const outline = {
         '.outline': {
