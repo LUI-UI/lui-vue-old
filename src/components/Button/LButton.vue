@@ -28,7 +28,7 @@
 <script>
 import { computed } from 'vue'
 import LIcon from '../Icon/LIcon.vue'
-import { generateClasses } from '../../mixins/methods'
+import { generateClasses, generateVariant } from '../../mixins/methods'
 import {
   variant,
   rounded,
@@ -86,11 +86,7 @@ export default {
             : 'px-6 py-3',
         backgroundColor:
           props.type === 'default'
-            ? props.filter === 'none'
-              ? `bg-${props.variant}`
-              : props.filter === 'darker'
-              ? `bg-${props.variant}-800`
-              : `bg-${props.variant}-50`
+            ? generateVariant(props.variant, props.filter).backgroundColor
             : '',
         fontColor:
           props.filter === 'none'

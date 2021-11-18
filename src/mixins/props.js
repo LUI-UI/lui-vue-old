@@ -51,16 +51,3 @@ export const filter = {
     },
   },
 }
-// export function generateSizeProps(componentName) {
-//   if (componentName === 'button') {
-//     return {
-//       size: {
-//         type: String,
-//         default: 'md',
-//         validator(value) {
-//           return ['sm', 'md', 'lg'].includes(value)
-//         },
-//       },
-//     }
-//   }
-// }

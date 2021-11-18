@@ -4,9 +4,8 @@ export default {
   component: LAvatar,
   argTypes: {
     onClick: {},
-    type: {
-      control: { type: 'select' },
-      options: ['default', 'border'],
+    border: {
+      control: { type: 'boolean' },
     },
     size: {
       control: { type: 'select' },
@@ -29,6 +28,10 @@ export default {
     icon: {
       control: { type: 'select' },
       options: ['user', 'arrow-right', 'mail-check', 'home', 'user', 'account-circle'],
+    },
+    img: {
+      control: { type: 'select' },
+      options: ['', 'https://randomuser.me/api/portraits/men/43.jpg'],
     },
   },
 }
@@ -56,5 +59,5 @@ Icon.args = {
 }
 export const Image = Template.bind({})
 Icon.args = {
-  icon: 'home',
+  img: 'https://randomuser.me/api/portraits/men/43.jpg',
 }

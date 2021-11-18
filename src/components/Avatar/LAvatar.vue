@@ -1,39 +1,48 @@
 <template>
   <div
+    class="l-avatar"
     :class="[computedClasses]"
-    class="text"
     @click="$emit('click')"
   >
-    <span v-if="icon !== 'none'">
-      <l-icon
-        :name="icon"
-        fill
-        :class="iconClasses"
-      />
-    </span>
+    <l-icon
+      v-if="icon !== 'none'"
+      :name="icon"
+      fill
+      :class="iconClasses"
+    />
+    <img
+      v-if="img !== ''"
+      :src="img"
+      :class="imgClasses"
+      alt="Lui avatar"
+    >
     <span v-else>
       {{ text.toUpperCase().slice(0, 2) }}
     </span>
+    <LBadge
+      :class="badgeClasses"
+      variant="danger"
+      border
+      :size="['2xs', 'xs', 'sm'].includes(size) ? '2xs' : 'xs'"
+    />
   </div>
 </template>
 <script>
 import { computed } from 'vue'
 import LIcon from '../Icon/LIcon.vue'
-import { generateClasses } from '../../mixins/methods'
+import LBadge from '../Badge/LBadge.vue'
+import { generateClasses, generateVariant } from '../../mixins/methods'
 import { variant, rounded, roundedFull, filter } from '../../mixins/props'
 export default {
   components: {
     LIcon,
+    LBadge,
   },
   mixins: [variant, rounded, roundedFull, filter],
   inheritAttrs: false,
   props: {
-    type: {
-      type: String,
-      default: 'default',
-      validator(value) {
-        return ['border', 'default'].includes(value)
-      },
+    border: {
+      type: Boolean,
     },
     size: {
       type: String,
@@ -56,6 +65,22 @@ export default {
     img: {
       type: String,
       default: '',
+    },
+    badge: {
+      type: Object,
+            default() {
+        return {
+          position: '',
+          variant: '',
+        }
+      },
+      validator(obj) {
+        return (
+          ['', 'primary', 'secondary', 'info', 'success', 'warning', 'danger'].includes(
+            obj.variant
+          ) && ['','top', 'bottom'].includes(obj.position)
+        )
+      },
     },
   },
   emits: ['click'],
@@ -91,26 +116,21 @@ export default {
         alignItems: 'items-center',
         verticalAlign: 'align-middle',
         textAlign: 'text-center',
-        borderSize: props.type === 'border' ? ['2xs', 'xs', 'sm'].includes(props.size) ? 'border' : 'border-2': '',
-        borderStyle: props.type === 'border' ? 'border-solid' : '',
-        borderColor: props.type === 'border' ? 'border-white' : '',
+        position: 'relative',
+        borderSize: props.border
+          ? ['2xs', 'xs', 'sm'].includes(props.size)
+            ? 'border'
+            : 'border-2'
+          : '',
+        borderColor: props.border ? 'border-white' : '',
+        borderStyle: props.border ? 'border-solid' : '',
         borderRadius: props.roundedFull
           ? 'rounded-full'
           : props.rounded
           ? `rounded-${props.size}`
           : '',
-        backgroundColor:
-          props.filter === 'none'
-            ? `bg-${props.variant}`
-            : props.filter === 'darker'
-            ? `bg-${props.variant}-800`
-            : `bg-${props.variant}-50`,
-        fontColor:
-          props.filter === 'none'
-            ? `text-white`
-            : props.filter === 'darker'
-            ? `text-${props.variant}-50`
-            : `text-${props.variant}-800`,
+        backgroundColor: generateVariant(props.variant, props.filter).backgroundColor,
+        fontColor: generateVariant(props.variant, props.filter).fontColor,
         fontSize:
           props.size === '2xs'
             ? 'text-2xs'
@@ -129,14 +149,42 @@ export default {
     })
     const iconClasses = computed(() => {
       const classes = {
-        fontSize: ['2xs','xs'].includes(props.size) ? 'text-2xs' : props.size==='sm' ? 'text-sm': props.size === 'md' ? 'text-xl' : 'text-2xl',
-        // lineHeight: props.size === 'lg' ? 'leading-5' : 'leading-none',
+        fontSize: ['2xs', 'xs'].includes(props.size)
+          ? 'text-2xs'
+          : props.size === 'sm'
+          ? 'text-sm'
+          : props.size === 'md'
+          ? 'text-xl'
+          : 'text-2xl',
       }
-
       return generateClasses([{ ...classes }])
     })
-
-    return { computedClasses, iconClasses }
+    const imgClasses = computed(() => {
+      const classes = {
+        width: 'w-full',
+        height: 'h-full',
+        borderRadius: props.roundedFull
+          ? 'rounded-full'
+          : props.rounded
+          ? `rounded-${props.size}`
+          : '',
+        objectFit: 'object-cover',
+      }
+      return generateClasses([{ ...classes }])
+    })
+    const badgeClasses = computed(() => {
+      const classes = {
+        position: 'absolute',
+        top:props.badge.position === 'top' ? 'top-full' : 'bottom-full',
+        bottom: props.badge.position === 'top' ? 'bottom-full' : '',
+        left: 'left-full',
+        margin: '-mr-2 -mb-2',
+        transform: '-translate-x-1/2 -translate-y-1/2',
+      }
+      return generateClasses([{ ...classes }])
+    })
+    return { computedClasses, iconClasses, imgClasses, badgeClasses }
   },
 }
 </script>
+<style lang="postcss"></style>
