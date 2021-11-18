@@ -28,7 +28,6 @@
 <script>
 import { computed } from 'vue'
 import LIcon from '../Icon/LIcon.vue'
-<<<<<<< HEAD
 import { generateClasses, generateVariant } from '../../mixins/methods'
 import {
   variant,
@@ -37,10 +36,6 @@ import {
   filter,
   block,
 } from '../../mixins/props'
-=======
-import { generateClasses } from '../../mixins/methods'
-import { variant, rounded, roundedFull, filter, block } from '../../mixins/props'
->>>>>>> edd52b70dd722c7b31f5326dce2ecb279cb1d2f8
 export default {
   components: {
     LIcon,
