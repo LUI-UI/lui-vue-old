@@ -56,7 +56,8 @@ module.exports = {
       backgroundColor: ['disabled'],
       borderColor: ['disabled'],
       // outlineColor: ['hover','focus'],
-      ringColor: ['disabled']
+      ringColor: ['disabled'],
+      ringWidth: ['disabled']
     },
   },
   plugins: [

@@ -13,7 +13,7 @@ export default {
     },
     size: {
       type: String,
-      default: 'fw',
+      default: 'fwh',
       validator(value) {
         return [
           'lg',
@@ -32,6 +32,7 @@ export default {
           '9x',
           '10x',
           'fw',
+          'fwh',
         ].includes(value)
       },
     },

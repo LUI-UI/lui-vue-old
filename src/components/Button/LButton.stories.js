@@ -23,7 +23,7 @@ export default {
     },
     type: {
       control: { type: 'select' },
-      options: ['default', 'text', 'outline', 'link'],
+      options: ['default', 'text', 'outline', 'link', 'link-underline'],
     },
     rounded: {
       control: { type: 'boolean' },
@@ -43,6 +43,10 @@ export default {
       control: { type: 'select' },
       options: ['home', 'arrow-right', 'mail-check','none'],
     },
+    disableStates:{
+      control: { type: 'multi-select' },
+      options: ['hover', 'focus', 'disable', 'underline'],
+    }
   },
 }
 

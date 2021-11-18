@@ -18,6 +18,9 @@ export default {
       control: { type: 'select' },
       options: [null, 'warning', true, false],
     },
+    clear: {
+      control: { type: 'boolean' },
+    },
     label: {
       control: { type: 'text' },
     },
@@ -25,7 +28,8 @@ export default {
       control: { type: 'text' },
     },
     prefix: {
-      control: {type: 'text' }
+      control: { type: 'select' },
+      options: ['search', 'search-2', 'search-eye','none'],
     }
   },
 }
@@ -42,13 +46,27 @@ const Template = (args) => ({
   template: `<l-input v-bind="args" :disabled="args.disable" placeholder="Placeholder"> {{ args.label }} </l-input>`,
 })
 
-export const Small = Template.bind({})
+export const Default = Template.bind({})
 // More on args: https://storybook.js.org/docs/vue/writing-stories/args
-Small.args = {
+Default.args = {
   size: 'sm',
+  state: null
 }
-export const Large = Template.bind({})
+export const Warning = Template.bind({})
 // More on args: https://storybook.js.org/docs/vue/writing-stories/args
-Large.args = {
-  size: 'lg',
+Warning.args = {
+  size: 'sm',
+  state: 'warning'
+}
+export const Danger = Template.bind({})
+// More on args: https://storybook.js.org/docs/vue/writing-stories/args
+Danger.args = {
+  size: 'sm',
+  state: false
+}
+export const Success = Template.bind({})
+// More on args: https://storybook.js.org/docs/vue/writing-stories/args
+Success.args = {
+  size: 'sm',
+  state: true
 }
