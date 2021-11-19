@@ -21,7 +21,7 @@
     </span>
     <LBadge
       :class="badgeClasses"
-      variant="danger"
+      :variant="badge.variant"
       border
       :size="['2xs', 'xs', 'sm'].includes(size) ? '2xs' : 'xs'"
     />
@@ -67,20 +67,20 @@ export default {
       default: '',
     },
     badge: {
-      type: Object,
+      type: [Object, String],
             default() {
         return {
           position: '',
           variant: '',
         }
       },
-      validator(obj) {
-        return (
-          ['', 'primary', 'secondary', 'info', 'success', 'warning', 'danger'].includes(
-            obj.variant
-          ) && ['','top', 'bottom'].includes(obj.position)
-        )
-      },
+      // validator(obj) {
+      //   return (
+      //     ['primary', 'secondary', 'info', 'success', 'warning', 'danger'].includes(
+      //       obj.variant
+      //     ) && ['top', 'bottom'].includes(obj.position)
+      //   )
+      // },
     },
   },
   emits: ['click'],
@@ -175,11 +175,11 @@ export default {
     const badgeClasses = computed(() => {
       const classes = {
         position: 'absolute',
-        top:props.badge.position === 'top' ? 'top-full' : 'bottom-full',
+        top:props.badge.position === 'top' ? 'bottom-full' : 'top-full',
         bottom: props.badge.position === 'top' ? 'bottom-full' : '',
         left: 'left-full',
-        margin: '-mr-2 -mb-2',
         transform: '-translate-x-1/2 -translate-y-1/2',
+        // margin: '-mr-2 -mb-2',
       }
       return generateClasses([{ ...classes }])
     })
