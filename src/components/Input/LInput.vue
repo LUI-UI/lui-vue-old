@@ -1,12 +1,12 @@
 <template>
   <div>
-    <label
+    <!-- <label
       v-if="label !== 'none'"
       :for="$attrs.id"
       :class="labelClasses"
     >
       {{ label }}
-    </label>
+    </label> -->
     <div :class="parentClasses">
       <l-icon
         v-if="prefix !== 'none'"
@@ -71,10 +71,10 @@ export default {
         return [null, 'warning', true, false].includes(value)
       },
     },
-    label: {
-      type: String,
-      default: 'none',
-    },
+    // label: {
+    //   type: String,
+    //   default: 'none',
+    // },
     description: {
       type: String,
       default: 'none',
@@ -156,9 +156,9 @@ export default {
       const { focus, disabled } = stateClasses
       return generateClasses([{ ...classes }, { ...focus }, { ...disabled }])
     })
-    const labelClasses = computed(() => {
-      return 'block text-secondary-600 text-xs leading-4.5 mb-1'
-    })
+    // const labelClasses = computed(() => {
+    //   return 'block text-secondary-600 text-xs leading-4.5 mb-1'
+    // })
     const descriptionClasses = computed(() => {
       const textColor =
         props.state === true
@@ -213,7 +213,6 @@ export default {
     const parentClasses = 'relative w-max'
     return {
       computedClasses,
-      labelClasses,
       descriptionClasses,
       iconClasses,
       parentClasses
