@@ -4,14 +4,7 @@ export const variant = {
       type: String,
       default: 'primary',
       validator(value) {
-        return [
-          'primary',
-          'secondary',
-          'info',
-          'success',
-          'warning',
-          'danger',
-        ].includes(value)
+        return ['primary', 'secondary', 'info', 'success', 'warning', 'danger'].includes(value)
       },
     },
   },
@@ -47,6 +40,25 @@ export const filter = {
       default: 'none',
       validator(value) {
         return ['darker', 'lighter', 'none'].includes(value)
+      },
+    },
+  },
+}
+export const border = {
+  props: {
+    border: {
+      type: Boolean,
+      default: false,
+    },
+  },
+}
+export const size = {
+  props: {
+    size: {
+      type: String,
+      default: 'md',
+      validator(value) {
+        return ['2xs', 'xs', 'sm', 'md', 'lg'].includes(value)
       },
     },
   },

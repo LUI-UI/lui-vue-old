@@ -9,7 +9,7 @@ export default {
     onClick: {},
     size: {
       control: { type: 'select' },
-      options: ['xs', 'sm', 'md', 'lg'],
+      options: ['2xs', 'xs', 'sm', 'md', 'lg'],
     },
     variant: {
       control: { type: 'select' },
@@ -17,6 +17,10 @@ export default {
     },
     border: {
       control: { type: 'boolean' },
+    },
+    filter: {
+      control: { type: 'select' },
+      options: ['darker', 'lighter', 'none'],
     },
   },
 }
@@ -41,5 +45,5 @@ Danger.args = {
 export const Large = Template.bind({})
 // More on args: https://storybook.js.org/docs/vue/writing-stories/args
 Large.args = {
-  type: 'lg',
+  size: 'lg',
 }

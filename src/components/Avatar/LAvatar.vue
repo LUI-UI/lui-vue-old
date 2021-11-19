@@ -20,6 +20,7 @@
       {{ text.toUpperCase().slice(0, 2) }}
     </span>
     <LBadge
+      v-if="badge.variant !== '' && badge.position !== ''"
       :class="badgeClasses"
       :variant="badge.variant"
       border
@@ -32,25 +33,15 @@ import { computed } from 'vue'
 import LIcon from '../Icon/LIcon.vue'
 import LBadge from '../Badge/LBadge.vue'
 import { generateClasses, generateVariant } from '../../mixins/methods'
-import { variant, rounded, roundedFull, filter } from '../../mixins/props'
+import { variant, rounded, roundedFull, filter, size, border } from '../../mixins/props'
 export default {
   components: {
     LIcon,
     LBadge,
   },
-  mixins: [variant, rounded, roundedFull, filter],
+  mixins: [variant, rounded, roundedFull, filter, size, border],
   inheritAttrs: false,
   props: {
-    border: {
-      type: Boolean,
-    },
-    size: {
-      type: String,
-      default: 'md',
-      validator(value) {
-        return ['2xs', 'xs', 'sm', 'md', 'lg'].includes(value)
-      },
-    },
     icon: {
       type: String,
       default: 'none',
@@ -67,8 +58,8 @@ export default {
       default: '',
     },
     badge: {
-      type: [Object, String],
-            default() {
+      type: [Object],
+      default() {
         return {
           position: '',
           variant: '',
@@ -175,7 +166,7 @@ export default {
     const badgeClasses = computed(() => {
       const classes = {
         position: 'absolute',
-        top:props.badge.position === 'top' ? 'bottom-full' : 'top-full',
+        top: props.badge.position === 'top' ? 'bottom-full' : 'top-full',
         bottom: props.badge.position === 'top' ? 'bottom-full' : '',
         left: 'left-full',
         transform: '-translate-x-1/2 -translate-y-1/2',
@@ -187,4 +178,3 @@ export default {
   },
 }
 </script>
-<style lang="postcss"></style>

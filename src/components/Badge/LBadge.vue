@@ -4,34 +4,10 @@
 
 <script>
 import { computed } from 'vue'
-import { generateClasses } from '../../mixins/methods'
+import { generateClasses, generateVariant } from '../../mixins/methods'
+import {variant, border, size, filter} from '../../mixins/props'
 export default {
-  props: {
-    size: {
-      type: String,
-      default: 'sm',
-      validator(value) {
-        return ['2xs', 'xs', 'sm', 'md', 'lg'].includes(value)
-      },
-    },
-    variant: {
-      type: String,
-      default: 'primary',
-      validator(value) {
-        return [
-          'primary',
-          'success',
-          'warning',
-          'danger',
-          'secondary',
-        ].includes(value)
-      },
-    },
-    border: {
-      type: Boolean,
-      default: false,
-    },
-  },
+  mixins: [variant, border, size, filter],
   setup(props) {
     const computedClasses = computed(() => {
       const classes = {
@@ -55,7 +31,7 @@ export default {
             : props.size === 'md'
             ? 'h-5'
             : 'h-6',
-        backgroundColor: `bg-${props.variant}`,
+        backgroundColor: generateVariant(props.variant, props.filter).backgroundColor,
         border: props.border ? 'border border-white' : '',
         display: 'inline-block',
         borderRadius: 'rounded-full'
