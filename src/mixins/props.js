@@ -1,13 +1,33 @@
-export const variant = {
-  props: {
-    variant: {
-      type: String,
-      default: 'primary',
-      validator(value) {
-        return ['primary', 'secondary', 'info', 'success', 'warning', 'danger'].includes(value)
-      },
+// helper functions
+const variantProps = {
+  variant: {
+    type: String,
+    default: 'primary',
+    validator(value) {
+      return ['primary', 'secondary', 'info', 'success', 'warning', 'danger'].includes(value)
     },
   },
+}
+const filterProps = {
+  filter: {
+    type: String,
+    default: 'none',
+    validator(value) {
+      return ['darker', 'lighter', 'none'].includes(value)
+    },
+  },
+}
+export const variant = {
+  props: variantProps,
+}
+export const bgVariant = {
+  props: variantProps,
+}
+export const textVariant = {
+  props: variantProps,
+}
+export const borderVariant = {
+  props: variantProps,
 }
 export const block = {
   props: {
@@ -44,6 +64,15 @@ export const filter = {
     },
   },
 }
+export const borderFilter = {
+  props: filterProps,
+}
+export const bgFilter = {
+  props: filterProps
+}
+export const textFilter = {
+  props: filterProps
+}
 export const border = {
   props: {
     border: {
@@ -63,3 +92,13 @@ export const size = {
     },
   },
 }
+export const img = {
+  props: {
+    img: {
+      type: String,
+      default: '',
+    },
+  },
+}
+
+

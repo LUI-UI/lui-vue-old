@@ -34,13 +34,13 @@ import { computed } from 'vue'
 import LIcon from '../Icon/LIcon.vue'
 import LBadge from '../Badge/LBadge.vue'
 import { generateClasses, generateVariant } from '../../mixins/methods'
-import { variant, rounded, roundedFull, filter, size, border } from '../../mixins/props'
+import { variant, rounded, roundedFull, filter, size, border, img } from '../../mixins/props'
 export default {
   components: {
     LIcon,
     LBadge,
   },
-  mixins: [variant, rounded, roundedFull, filter, size, border],
+  mixins: [variant, rounded, roundedFull, filter, size, border, img],
   inheritAttrs: false,
   props: {
     icon: {
@@ -53,10 +53,6 @@ export default {
       validator(value) {
         return value.length <= 2
       },
-    },
-    img: {
-      type: String,
-      default: '',
     },
     badge: {
       type: [Object],

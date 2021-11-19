@@ -20,3 +20,12 @@ export function generateVariant(variant, filter) {
       : `text-${variant}-800`
   return { backgroundColor, fontColor }
 }
+export function generateColorVariant(variant, filter, property) {
+  const colorClasses =
+    filter === 'none'
+      ? `${property}-${variant}`
+      : filter === 'darker'
+      ? `${property}-${variant}-800`
+      : `${property}-${variant}-50`
+  return { colorClasses }
+}

@@ -1,41 +1,24 @@
 import LAvatar from './LAvatar.vue'
+import { variant, rounded, roundedFull, filter, size, border, img } from '../../utils/storyProps'
 export default {
   title: 'Avatar',
   component: LAvatar,
   argTypes: {
     onClick: {},
-    border: {
-      control: { type: 'boolean' },
-    },
-    size: {
-      control: { type: 'select' },
-      options: ['2xs', 'xs', 'sm', 'md', 'lg'],
-    },
-    variant: {
-      control: { type: 'select' },
-      options: ['primary', 'secondary', 'info', 'success', 'warning', 'danger'],
-    },
-    rounded: {
-      control: { type: 'boolean' },
-    },
-    roundedFull: {
-      control: { type: 'boolean' },
-    },
-    filter: {
-      control: { type: 'select' },
-      options: ['darker', 'lighter', 'none'],
-    },
+    variant: variant,
+    rounded: rounded,
+    roundedFull: roundedFull,
+    filter: filter,
+    size: size,
+    border: border,
+    img: img,
     icon: {
       control: { type: 'select' },
       options: ['user', 'arrow-right', 'mail-check', 'home', 'user', 'account-circle'],
     },
-    img: {
-      control: { type: 'select' },
-      options: ['', 'https://randomuser.me/api/portraits/men/43.jpg'],
-    },
-    // badge: {
-    //   control: {type: 'object'}
-    // }
+    badge: {
+      control: {type: 'object'}
+    }
   },
 }
 
