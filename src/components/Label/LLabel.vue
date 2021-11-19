@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { generateClasses } from '../../mixins/methods'
 import { computed } from 'vue'
 export default {
   inheritAttrs: false,
@@ -15,24 +16,22 @@ export default {
     size: {
       type: String,
       default: 'sm',
-      validator(value){
-        return ['sm','lg'].includes(value)
-      }
-    }
+      validator(value) {
+        return ['sm', 'lg'].includes(value)
+      },
+    },
   },
   setup(props) {
-    // const classes = 'inline-block text-secondary-600 text-xs leading-4.5 mb-1';
     const classes = computed(() => {
-      return {
+      const styles = {
         display: 'inline-block',
         margin: 'mb-1',
         fontColor: 'text-secondary-600',
         fontSize: props.size === 'sm' ? 'text-xs' : 'text-sm',
-        lineHeight: props.size === 'sm' ? 'leading-4.5' : ''
+        lineHeight: props.size === 'sm' ? 'leading-4.5' : '',
       }
+      return generateClasses([{ ...styles }])
     })
-    const test = {...classes.value}
-    console.log("TEST : ",test)
     return { classes }
   },
 }

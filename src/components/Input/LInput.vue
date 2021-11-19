@@ -129,7 +129,6 @@ export default {
         fontColor: 'placeholder-secondary-400 text-secondary-600',
       }
       const stateClasses = {
-        // disabled states propu ekle
         focus: {
           ring: props.state === null ? 'focus:ring-4 focus:ring-primary-100' : '',
           outline: 'outline-none',
