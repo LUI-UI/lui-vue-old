@@ -7,7 +7,7 @@
     >
       {{ label }}
     </label>
-    <div class="relative w-max">
+    <div :class="parentClasses">
       <l-icon
         v-if="prefix !== 'none'"
         :name="prefix"
@@ -26,7 +26,7 @@
         variant="secondary"
         icon="close"
         :size="size"
-        :disable-states="['hover', 'focus', 'underline']"
+        disable-styles
         :class="[iconClasses.position, iconClasses.clear]"
         @click="$refs.Linput.value = ''"
       />
@@ -37,7 +37,6 @@
         line
       />
     </div>
-
     <p
       v-if="description !== 'none'"
       :class="descriptionClasses"
@@ -169,7 +168,7 @@ export default {
           : props.state === 'warning'
           ? 'text-warning'
           : 'text-secondary-600'
-      return `${textColor} block text-xs leading-4.5 mt-1`
+      return `${textColor} inline-block text-xs leading-4.5 mt-1`
     })
 
     const iconClasses = computed(() => {
@@ -211,12 +210,13 @@ export default {
             : 'right-8',
       }
     })
-    console.log('disabled : ', !!context.attrs.disabled)
+    const parentClasses = 'relative w-max'
     return {
       computedClasses,
       labelClasses,
       descriptionClasses,
       iconClasses,
+      parentClasses
     }
   },
 }
