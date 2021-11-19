@@ -1,67 +1,44 @@
 <template>
-  <span :class="classes" />
+  <span :class="computedClasses" />
 </template>
 
 <script>
 import { computed } from 'vue'
+import { generateClasses, generateVariant } from '../../mixins/methods'
+import {variant, border, size, filter} from '../../mixins/props'
 export default {
-  props: {
-    size: {
-      type: String,
-      default: 'sm',
-      validator(value) {
-        return ['xs', 'sm', 'md', 'lg'].includes(value)
-      },
-    },
-    variant: {
-      type: String,
-      default: 'theme',
-      validator(value) {
-        return [
-          'primary',
-          'success',
-          'warning',
-          'danger',
-          'secondary',
-        ].includes(value)
-      },
-    },
-    border: {
-      type: Boolean,
-      default: false,
-    },
-  },
+  mixins: [variant, border, size, filter],
   setup(props) {
-    const classes = computed(() => {
-      const styles = {
+    const computedClasses = computed(() => {
+      const classes = {
         width:
-          props.size === 'xs'
+          props.size === '2xs'
             ? 'w-2'
-            : props.size === 'sm'
+            : props.size === 'xs'
             ? 'w-3'
-            : props.size === 'md'
-            ? 'w-4'
-            : 'w-5',
-        height:
-          props.size === 'xs'
-            ? 'h-2'
             : props.size === 'sm'
-            ? 'h-3'
+            ? 'w-4'
             : props.size === 'md'
+            ? 'w-5'
+            : 'w-6',
+        height:
+          props.size === '2xs'
+            ? 'h-2'
+            : props.size === 'xs'
+            ? 'h-3'
+            : props.size === 'sm'
             ? 'h-4'
-            : 'h-5',
-        backgroundColor: `bg-${props.variant}`,
+            : props.size === 'md'
+            ? 'h-5'
+            : 'h-6',
+        backgroundColor: generateVariant(props.variant, props.filter).backgroundColor,
         border: props.border ? 'border border-white' : '',
         display: 'inline-block',
         borderRadius: 'rounded-full'
       }
-      return Object.values({ ...styles })
-        .join(' ')
-        .toString()
-        .replace(/\s+/g, ' ')
+      return generateClasses([{...classes}])
     })
-    console.log(classes.value)
-    return { classes }
+    return { computedClasses }
   },
 }
 </script>
