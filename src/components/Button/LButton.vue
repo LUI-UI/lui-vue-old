@@ -5,13 +5,13 @@
     @click="$emit('click')"
   >
     <l-icon
-      v-if="prefix !== 'none'"
-      :name="prefix"
+      v-if="prepend !== 'none'"
+      :name="prepend"
       fill
       :class="iconClasses"
     />
     <span
-      v-if="prefix !== 'none' && icon !== 'none'"
+      v-if="prepend !== 'none' && icon !== 'none'"
       :class="size === 'sm' ? 'mx-1.5' : 'mx-2.5'"
     >
       <slot />
@@ -35,12 +35,13 @@ import {
   roundedFull,
   filter,
   block,
+  prepend
 } from '../../mixins/props'
 export default {
   components: {
     LIcon,
   },
-  mixins: [variant, rounded, roundedFull, filter, block],
+  mixins: [variant, rounded, roundedFull, filter, block,prepend],
   inheritAttrs: false,
   props: {
     size: {
@@ -61,10 +62,6 @@ export default {
       type: String,
       default: 'none',
     },
-    prefix: {
-      type: String,
-      default: 'none',
-    },
     disableStyles: {
       type: [Array, Boolean],
       default: () => [''],
@@ -73,7 +70,6 @@ export default {
           typeof value === 'boolean' ||
           ['hover', 'focus', 'disable', 'underline', ''].some((r) => value.indexOf(r) >= 0)
         )
-        // if(Array.isArray(value)) return ['hover', 'focus', 'disable', 'underline',''].some(r=> value.indexOf(r) >= 0) || (typeof value === 'boolean')
       },
     },
   },
@@ -142,9 +138,9 @@ export default {
               : ''
             : '',
         width: !props.block || props.type === 'link' ? '' : 'w-full',
-        display: props.prefix !== 'none' || props.icon !== 'none' ? 'flex' : '',
-        justifyContent: props.prefix !== 'none' || props.icon !== 'none' ? 'justify-center' : '',
-        alignItems: props.prefix !== 'none' || props.icon !== 'none' ? 'items-center' : '',
+        display: props.prepend !== 'none' || props.icon !== 'none' ? 'flex' : '',
+        justifyContent: props.prepend !== 'none' || props.icon !== 'none' ? 'justify-center' : '',
+        alignItems: props.prepend !== 'none' || props.icon !== 'none' ? 'items-center' : '',
       }
       let stateClasses = {
         hover: {
@@ -216,7 +212,7 @@ export default {
       const classes = {
         fontSize: props.size === 'sm' ? 'text-base' : props.size === 'md' ? 'text-xl' : 'text-2xl',
         prefixMargin:
-          props.prefix !== 'none' ? (props.size === 'sm' ? 'mr-1.5 -ml-0.5' : 'mr-2 -ml-1') : '',
+          props.prepend !== 'none' ? (props.size === 'sm' ? 'mr-1.5 -ml-0.5' : 'mr-2 -ml-1') : '',
         suffixMargin:
           props.icon !== 'none' && !!context.slots.default
             ? props.size === 'sm'

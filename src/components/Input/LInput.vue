@@ -9,9 +9,9 @@
     </label>
     <div :class="parentClasses">
       <l-icon
-        v-if="prefix !== 'none'"
-        :name="prefix"
-        :class="[iconClasses.size, iconClasses.position, iconClasses.prefix]"
+        v-if="prepend !== 'none'"
+        :name="prepend"
+        :class="[iconClasses.size, iconClasses.position, iconClasses.prepend]"
         line
       />
       <input
@@ -46,8 +46,9 @@
   </div>
 </template>
 <script>
-import { generateClasses } from '../../mixins/methods'
 import { computed } from 'vue'
+import { generateClasses } from '../../mixins/methods'
+import { prepend } from '../../mixins/props'
 import LIcon from '../Icon/LIcon.vue'
 import LButton from '../Button/LButton.vue'
 export default {
@@ -55,6 +56,7 @@ export default {
     LIcon,
     LButton,
   },
+  mixins: [prepend],
   inheritAttrs: false,
   props: {
     size: {
@@ -79,10 +81,10 @@ export default {
       type: String,
       default: 'none',
     },
-    prefix: {
-      type: String,
-      default: 'none',
-    },
+    // prepend: {
+    //   type: String,
+    //   default: 'none',
+    // },
     clear: {
       type: Boolean,
       default: false,
@@ -92,7 +94,7 @@ export default {
     const computedClasses = computed(() => {
       const classes = {
         paddingLeft:
-          props.prefix === 'none'
+          props.prepend === 'none'
             ? props.size === 'lg'
               ? 'pl-3'
               : 'pl-2'
@@ -195,7 +197,7 @@ export default {
             ? 'text-success'
             : '',
         position: 'absolute top-2/4 transform -translate-y-1/2',
-        prefix: props.size === 'lg' ? 'text-secondary-400 left-3' : 'text-secondary-400 left-2',
+        prepend: props.size === 'lg' ? 'text-secondary-400 left-3' : 'text-secondary-400 left-2',
         state: props.size === 'lg' ? 'right-3' : 'right-2',
         clear:
           props.state === null
@@ -216,7 +218,7 @@ export default {
       labelClasses,
       descriptionClasses,
       iconClasses,
-      parentClasses
+      parentClasses,
     }
   },
 }

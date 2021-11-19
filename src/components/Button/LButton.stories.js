@@ -41,7 +41,7 @@ export default {
       control: { type: 'select' },
       options: ['home', 'arrow-right', 'mail-check', 'none'],
     },
-    prefix: {
+    prepend: {
       control: { type: 'select' },
       options: ['home', 'arrow-right', 'mail-check','none'],
     },
