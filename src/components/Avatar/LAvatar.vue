@@ -1,7 +1,8 @@
 <template>
   <div
-    class="l-avatar"
+    class="lui-avatar"
     :class="[computedClasses]"
+    v-bind="$attrs"
     @click="$emit('click')"
   >
     <l-icon
@@ -65,13 +66,13 @@ export default {
           variant: '',
         }
       },
-      // validator(obj) {
-      //   return (
-      //     ['primary', 'secondary', 'info', 'success', 'warning', 'danger'].includes(
-      //       obj.variant
-      //     ) && ['top', 'bottom'].includes(obj.position)
-      //   )
-      // },
+      validator(obj) {
+        return (
+          ['', 'primary', 'secondary', 'info', 'success', 'warning', 'danger'].includes(
+            obj.variant
+          ) && ['', 'top', 'bottom'].includes(obj.position)
+        )
+      },
     },
   },
   emits: ['click'],
@@ -167,10 +168,32 @@ export default {
       const classes = {
         position: 'absolute',
         top: props.badge.position === 'top' ? 'bottom-full' : 'top-full',
-        bottom: props.badge.position === 'top' ? 'bottom-full' : '',
         left: 'left-full',
-        transform: '-translate-x-1/2 -translate-y-1/2',
-        // margin: '-mr-2 -mb-2',
+        transform:
+          props.badge.position === 'top'
+            ? '-translate-x-1/2 translate-y-1/2'
+            : '-translate-x-1/2 -translate-y-1/2',
+        margin: props.roundedFull
+          ? props.badge.position === 'top'
+            ? props.size === 'lg'
+              ? '-ml-2 -mb-2'
+              : props.size === 'md'
+              ? '-ml-1.5 -mb-1.5'
+              : props.size === 'sm'
+              ? '-ml-1 -mb-1'
+              : props.size === 'xs'
+              ? '-ml-0.5 -mb-0.5'
+              : '-ml-0.5 -mb-0.5'
+            : props.size === 'lg'
+            ? '-ml-2 -mt-2'
+            : props.size === 'md'
+            ? '-ml-1.5 -mt-1.5'
+            : props.size === 'sm'
+            ? '-ml-1 -mt-1'
+            : props.size === 'xs'
+            ? '-ml-0.5 -mt-0.5'
+            : '-ml-0.5 -mt-0.5'
+          : '',
       }
       return generateClasses([{ ...classes }])
     })
