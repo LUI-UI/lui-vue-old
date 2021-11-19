@@ -13,6 +13,7 @@ import LButton from './components/Button/LButton.vue'
       <l-button
         type="default"
         variant="primary"
+        darker
         size="md"
         icon="home"
       />

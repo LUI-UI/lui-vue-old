@@ -6,7 +6,6 @@ module.exports = {
   purge: {
     content: ['./src/**/*.{js,jsx,ts,tsx,vue,html}', './safelist.txt'],
   },
-
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {

@@ -33,6 +33,9 @@ export default {
       control: { type: 'select' },
       options: ['', 'https://randomuser.me/api/portraits/men/43.jpg'],
     },
+    // badge: {
+    //   control: {type: 'object'}
+    // }
   },
 }
 
