@@ -21,9 +21,6 @@ export default {
     clear: {
       control: { type: 'boolean' },
     },
-    label: {
-      control: { type: 'text' },
-    },
     description: {
       control: { type: 'text' },
     },
