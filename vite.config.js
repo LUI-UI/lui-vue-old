@@ -2,6 +2,7 @@ import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 import eslintPlugin from 'vite-plugin-eslint'
 import { visualizer } from 'rollup-plugin-visualizer'
+import postcss from 'rollup-plugin-postcss'
 const path = require('path')
 
 export default defineConfig({
@@ -12,6 +13,13 @@ export default defineConfig({
       filename: './dist/report.html',
       open: true,
       brotliSize: true,
+    }),
+    postcss({
+      minimize: true,
+      extract: true,
+      config: {
+        path: "./postcss.config.js",
+      },
     }),
   ],
   build: {

@@ -1,4 +1,4 @@
-
+import "../index.css"
 export { default as LuiButton } from '../components/Button/LButton.vue'
 export { default as LuiInput } from '../components/Input/LInput.vue'
 export { default as LuiIcon } from '../components/Icon/LIcon.vue'

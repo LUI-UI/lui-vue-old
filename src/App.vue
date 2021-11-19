@@ -1,22 +1,24 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import LButton from './components/Button/LButton.vue'
-// import LIcon from './components/Icon/LIcons.vue'
-// import LBadge from './components/Badge/LBadge.vue'
-// import { reactive } from 'vue'
+import LuiAvatar from './components/Avatar/LAvatar.vue'
 </script>
 
 <template>
   <div class="btn-container">
-    <div>
+    <div class="mb-8">
       <l-button
         type="default"
         variant="primary"
+        darker
         size="md"
         icon="home"
       />
     </div>
+    <LuiAvatar
+      variant="secondary"
+      text="DD"
+      :badge="{position:'top', variant:'danger'}"
+    />
     <!-- <l-button
       type="default"
       variant="primary"
