@@ -7,7 +7,10 @@ const filterControl = {
   options: ['darker', 'lighter', 'none'],
 }
 export const variant = variantControl
-export const bgVariant = variantControl
+export const bgVariant = {
+  control: { type: 'select' },
+  options: ['primary', 'secondary', 'info', 'success', 'warning', 'danger'],
+}
 export const textVariant = variantControl
 export const borderVariant = variantControl
 export const block = {

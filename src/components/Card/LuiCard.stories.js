@@ -3,12 +3,12 @@ import {
   img,
   border,
   rounded,
-  bgVariant,
-  textVariant,
-  borderVariant,
   borderFilter,
   bgFilter,
   textFilter,
+  bgVariant,
+  textVariant,
+  borderVariant,
 } from '../../utils/storyProps'
 export default {
   title: 'Lui Card',
@@ -17,12 +17,12 @@ export default {
     img,
     border,
     rounded,
-    bgVariant,
-    textVariant,
-    borderVariant,
     borderFilter,
     bgFilter,
     textFilter,
+    bgVariant,
+    textVariant,
+    borderVariant,
   },
 }
 
@@ -31,7 +31,16 @@ const Template = (args) => ({
   setup() {
     return { args }
   },
-  template: `<lui-card v-bind="args"> Test </lui-card>`,
+  template: `
+  <div class="p-5 flex justify-center">
+  <lui-card v-bind="args" class="w-1/2"> Test </lui-card>
+  </div>
+  `,
 })
 export const Default = Template.bind({})
-Default.args = {}
+Default.args = {
+  bgVariant: 'primary',
+  textVariant: 'secondary',
+  bgFilter: 'lighter',
+  textFilter: 'darker',
+}

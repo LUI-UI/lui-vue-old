@@ -7,7 +7,7 @@
       v-if="img !== ''"
       :src="img"
       :alt="imgAlt"
-      class="w-full h-full"
+      :class="imgClasses"
     >
     <div
       v-if="$slots.default"
@@ -45,10 +45,6 @@ export default {
     borderVariant,
   ],
   props: {
-    borderVariant: {
-      type: String,
-      default: 'secondary',
-    },
     imgAlt: {
       type: String,
       default: 'Card image.',
@@ -58,21 +54,32 @@ export default {
   setup(props) {
     const computedClasses = computed(() => {
       const classes = {
-        backgroundColor: generateColorVariant(props.bgVariant, props.bgFilter, 'bg'),
+        backgroundColor: generateColorVariant(props.bgVariant, props.bgFilter, 'bg').colorClasses,
         backgroundClip: 'bg-clip-border',
-        border: props.border ? 'border border-solid' : '',
-        borderColor: generateColorVariant(props.bgVariant, props.bgFilter, 'border'),
+        border: props.border ? 'border' : '',
+        borderStyle: props.border ? 'border-solid' : '',
+        borderColor: generateColorVariant(props.borderVariant, props.borderFilter, 'border').colorClasses,
+        color: generateColorVariant(props.textVariant, props.textFilter, 'text').colorClasses,
         borderRadius: props.rounded ? 'rounded-md' : '',
         flexDirection: 'flex-col',
         display: 'flex',
         minWidth: 'min-w-0',
         position: 'relative',
         wordBreak: 'break-words',
+        overflow: 'overflow-hidden',
+      }
+      return generateClasses([{ ...classes }])
+    })
+    const imgClasses = computed(() => {
+      const classes = {
+        width: 'w-full',
+        height: 'h-full',
       }
       return generateClasses([{ ...classes }])
     })
     return {
       computedClasses,
+      imgClasses,
     }
   },
 }

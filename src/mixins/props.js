@@ -1,34 +1,39 @@
 // helper functions
-const variantProps = {
-  variant: {
-    type: String,
-    default: 'primary',
-    validator(value) {
-      return ['primary', 'secondary', 'info', 'success', 'warning', 'danger'].includes(value)
+function variantProps(name) {
+  return {
+    props: {
+      [name]: {
+        type: String,
+        default: 'primary',
+        validator(value) {
+          return ['light', 'dark', 'white', 'primary', 'secondary', 'info', 'success', 'warning', 'danger'].includes(value)
+        },
+      }
     },
-  },
+  }
 }
-const filterProps = {
-  filter: {
-    type: String,
-    default: 'none',
-    validator(value) {
-      return ['darker', 'lighter', 'none'].includes(value)
-    },
-  },
+function filterProps(name) {
+  return {
+    props: {
+      [name]: {
+        type: String,
+        default: 'none',
+        validator(value) {
+          return ['darker', 'lighter', 'none'].includes(value)
+        },
+      }
+    }
+  }
 }
-export const variant = {
-  props: variantProps,
-}
-export const bgVariant = {
-  props: variantProps,
-}
-export const textVariant = {
-  props: variantProps,
-}
-export const borderVariant = {
-  props: variantProps,
-}
+
+export const variant = variantProps('variant')
+export const bgVariant = variantProps('bgVariant')
+export const textVariant = variantProps('textVariant')
+export const borderVariant = variantProps('borderVariant')
+export const filter = filterProps('filter')
+export const borderFilter = filterProps('borderFilter')
+export const bgFilter = filterProps('bgFilter')
+export const textFilter = filterProps('textFilter')
 export const block = {
   props: {
     block: {
@@ -52,26 +57,6 @@ export const roundedFull = {
       default: false,
     },
   },
-}
-export const filter = {
-  props: {
-    filter: {
-      type: String,
-      default: 'none',
-      validator(value) {
-        return ['darker', 'lighter', 'none'].includes(value)
-      },
-    },
-  },
-}
-export const borderFilter = {
-  props: filterProps,
-}
-export const bgFilter = {
-  props: filterProps
-}
-export const textFilter = {
-  props: filterProps
 }
 export const border = {
   props: {
@@ -100,5 +85,3 @@ export const img = {
     },
   },
 }
-
-
