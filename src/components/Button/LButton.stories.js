@@ -1,41 +1,27 @@
 import LButton from './LButton.vue'
-
+import { variant, block, filter, rounded, roundedFull } from '../../utils/storyProps'
 // More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
 export default {
-  title: 'Button',
+  title: 'Lui Button',
   component: LButton,
   args: {
     label: 'test',
-    disable: false,
-  },  
-  
+  },
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   argTypes: {
     onClick: {},
+    variant,
+    block,
+    filter,
+    rounded,
+    roundedFull,
     size: {
       control: { type: 'select' },
       options: ['sm', 'md', 'lg'],
     },
-    variant: {
-      control: { type: 'select' },
-      options: ['primary', 'secondary', 'info', 'success', 'warning', 'danger'],
-    },
-    block: {
-      control: { type: 'boolean' },
-    },
     type: {
       control: { type: 'select' },
       options: ['default', 'text', 'outline', 'link', 'link-underline'],
-    },
-    rounded: {
-      control: { type: 'boolean' },
-    },
-    roundedFull: {
-      control: { type: 'boolean' },
-    },
-    filter: {
-      control: { type: 'select' },
-      options: ['darker', 'lighter', 'none'],
     },
     icon: {
       control: { type: 'select' },
@@ -43,7 +29,7 @@ export default {
     },
     prepend: {
       control: { type: 'select' },
-      options: ['home', 'arrow-right', 'mail-check','none'],
+      options: ['home', 'arrow-right', 'mail-check', 'none'],
     },
     disableStyles:{
       control: { type: 'multi-select' },
