@@ -7,11 +7,11 @@
     >
       {{ label }}
     </label>
-    <div class="relative w-max">
+    <div :class="parentClasses">
       <l-icon
-        v-if="prefix !== 'none'"
-        :name="prefix"
-        :class="[iconClasses.size, iconClasses.position, iconClasses.prefix]"
+        v-if="prepend !== 'none'"
+        :name="prepend"
+        :class="[iconClasses.size, iconClasses.position, iconClasses.prepend]"
         line
       />
       <input
@@ -26,7 +26,7 @@
         variant="secondary"
         icon="close"
         :size="size"
-        :disable-states="['hover', 'focus', 'underline']"
+        disable-styles
         :class="[iconClasses.position, iconClasses.clear]"
         @click="$refs.Linput.value = ''"
       />
@@ -37,7 +37,6 @@
         line
       />
     </div>
-
     <p
       v-if="description !== 'none'"
       :class="descriptionClasses"
@@ -47,8 +46,9 @@
   </div>
 </template>
 <script>
-import { generateClasses } from '../../mixins/methods'
 import { computed } from 'vue'
+import { generateClasses } from '../../mixins/methods'
+import { prepend } from '../../mixins/props'
 import LIcon from '../Icon/LIcon.vue'
 import LButton from '../Button/LButton.vue'
 export default {
@@ -56,6 +56,7 @@ export default {
     LIcon,
     LButton,
   },
+  mixins: [prepend],
   inheritAttrs: false,
   props: {
     size: {
@@ -80,10 +81,10 @@ export default {
       type: String,
       default: 'none',
     },
-    prefix: {
-      type: String,
-      default: 'none',
-    },
+    // prepend: {
+    //   type: String,
+    //   default: 'none',
+    // },
     clear: {
       type: Boolean,
       default: false,
@@ -93,7 +94,7 @@ export default {
     const computedClasses = computed(() => {
       const classes = {
         paddingLeft:
-          props.prefix === 'none'
+          props.prepend === 'none'
             ? props.size === 'lg'
               ? 'pl-3'
               : 'pl-2'
@@ -169,7 +170,7 @@ export default {
           : props.state === 'warning'
           ? 'text-warning'
           : 'text-secondary-600'
-      return `${textColor} block text-xs leading-4.5 mt-1`
+      return `${textColor} inline-block text-xs leading-4.5 mt-1`
     })
 
     const iconClasses = computed(() => {
@@ -196,7 +197,7 @@ export default {
             ? 'text-success'
             : '',
         position: 'absolute top-2/4 transform -translate-y-1/2',
-        prefix: props.size === 'lg' ? 'text-secondary-400 left-3' : 'text-secondary-400 left-2',
+        prepend: props.size === 'lg' ? 'text-secondary-400 left-3' : 'text-secondary-400 left-2',
         state: props.size === 'lg' ? 'right-3' : 'right-2',
         clear:
           props.state === null
@@ -211,12 +212,13 @@ export default {
             : 'right-8',
       }
     })
-    console.log('disabled : ', !!context.attrs.disabled)
+    const parentClasses = 'relative w-max'
     return {
       computedClasses,
       labelClasses,
       descriptionClasses,
       iconClasses,
+      parentClasses,
     }
   },
 }

@@ -13,7 +13,7 @@ export default {
     },
     size: {
       type: String,
-      default: 'fwh',
+      default: '',
       validator(value) {
         return [
           'lg',
@@ -33,6 +33,7 @@ export default {
           '10x',
           'fw',
           'fwh',
+          ''
         ].includes(value)
       },
     },
@@ -51,7 +52,7 @@ export default {
         `ri-${props.name}${props.fill ? '-fill' : ''}${
           props.line ? '-line' : ''
         }`,
-        `ri-${props.size}`,
+        props.size ? `ri-${props.size}` : '',
       ]
     })
     return {classes}

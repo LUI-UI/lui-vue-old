@@ -52,6 +52,14 @@ export const border = {
     },
   },
 }
+export const prepend = {
+  props: {
+    prepend: {
+      type: String,
+      default: 'none',
+    },
+  },
+}
 export const size = {
   props: {
     size: {

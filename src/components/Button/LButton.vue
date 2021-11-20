@@ -5,13 +5,13 @@
     @click="$emit('click')"
   >
     <l-icon
-      v-if="prefix !== 'none'"
-      :name="prefix"
+      v-if="prepend !== 'none'"
+      :name="prepend"
       fill
       :class="iconClasses"
     />
     <span
-      v-if="prefix !== 'none' && icon !== 'none'"
+      v-if="prepend !== 'none' && icon !== 'none'"
       :class="size === 'sm' ? 'mx-1.5' : 'mx-2.5'"
     >
       <slot />
@@ -35,12 +35,13 @@ import {
   roundedFull,
   filter,
   block,
+  prepend
 } from '../../mixins/props'
 export default {
   components: {
     LIcon,
   },
-  mixins: [variant, rounded, roundedFull, filter, block],
+  mixins: [variant, rounded, roundedFull, filter, block,prepend],
   inheritAttrs: false,
   props: {
     size: {
@@ -61,15 +62,14 @@ export default {
       type: String,
       default: 'none',
     },
-    prefix: {
-      type: String,
-      default: 'none',
-    },
-    disableStates: {
-      type: [Array],
+    disableStyles: {
+      type: [Array, Boolean],
       default: () => [''],
       validator(value) {
-        return ['hover', 'focus', 'disable', 'underline',''].some(r=> value.indexOf(r) >= 0)
+        return (
+          typeof value === 'boolean' ||
+          ['hover', 'focus', 'disable', 'underline', ''].some((r) => value.indexOf(r) >= 0)
+        )
       },
     },
   },
@@ -118,15 +118,17 @@ export default {
               ? `border-${props.variant}-800`
               : `border-${props.variant}-50`
             : '',
-        borderBottom: props.disableStates.includes('underline')
-          ? ''
-          : props.type === 'link-underline'
-          ? props.filter === 'darker'
-            ? `border-b border-${props.variant}-800`
-            : props.filter === 'lighter'
-            ? `border-b border-${props.variant}-100`
-            : `border-b border-${props.variant}`
-          : '',
+        borderBottom:
+          (typeof props.disableStyles === 'boolean' && props.disableStyles === true) ||
+          (Array.isArray(props.disableStyles) && props.disableStyles.includes('underline'))
+            ? ''
+            : props.type === 'link-underline'
+            ? props.filter === 'darker'
+              ? `border-b border-${props.variant}-800`
+              : props.filter === 'lighter'
+              ? `border-b border-${props.variant}-100`
+              : `border-b border-${props.variant}`
+            : '',
         borderRadius:
           props.type !== 'link' && (props.rounded || props.roundedFull)
             ? props.rounded
@@ -136,11 +138,11 @@ export default {
               : ''
             : '',
         width: !props.block || props.type === 'link' ? '' : 'w-full',
-        display: props.prefix !== 'none' || props.icon !== 'none' ? 'flex' : '',
-        justifyContent: props.prefix !== 'none' || props.icon !== 'none' ? 'justify-center' : '',
-        alignItems: props.prefix !== 'none' || props.icon !== 'none' ? 'items-center' : '',
+        display: props.prepend !== 'none' || props.icon !== 'none' ? 'flex' : '',
+        justifyContent: props.prepend !== 'none' || props.icon !== 'none' ? 'justify-center' : '',
+        alignItems: props.prepend !== 'none' || props.icon !== 'none' ? 'items-center' : '',
       }
-      const stateClasses = {
+      let stateClasses = {
         hover: {
           backgroundColor:
             props.type === 'link' || props.type === 'link-underline'
@@ -178,8 +180,14 @@ export default {
               : '',
         },
         disable: {
-          backgroundColor: props.type === 'default' ? 'disabled:bg-secondary-300' : '',
-          fontColor: props.type === 'default' ? 'disabled:text-white' : '',
+          backgroundColor:
+            props.type === 'default'
+              ? 'disabled:bg-secondary-300'
+              : props.type === 'outline'
+              ? 'disabled:bg-secondary-100'
+              : '',
+          fontColor:
+            props.type === 'default' ? 'disabled:text-white' : 'disabled:text-secondary-300',
           borderColor: 'disabled:border-secondary-300',
         },
         focus: {
@@ -192,15 +200,19 @@ export default {
               : `focus:ring-2 focus:ring-${props.variant} focus:ring-offset-2`,
         },
       }
-      props.disableStates.map((s) => (stateClasses[s] = ''))
-      const { disabled, focus, hover } = stateClasses
-      return generateClasses([{ ...classes }, { ...disabled }, { ...focus }, { ...hover }])
+      if (typeof props.disableStyles === 'boolean') {
+        if (props.disableStyles === true) stateClasses = ''
+      }
+      if (Array.isArray(props.disableStyles)) props.disableStyles.map((s) => (stateClasses[s] = ''))
+
+      const { disable, focus, hover } = stateClasses
+      return generateClasses([{ ...classes }, { ...disable }, { ...focus }, { ...hover }])
     })
     const iconClasses = computed(() => {
       const classes = {
         fontSize: props.size === 'sm' ? 'text-base' : props.size === 'md' ? 'text-xl' : 'text-2xl',
         prefixMargin:
-          props.prefix !== 'none' ? (props.size === 'sm' ? 'mr-1.5 -ml-0.5' : 'mr-2 -ml-1') : '',
+          props.prepend !== 'none' ? (props.size === 'sm' ? 'mr-1.5 -ml-0.5' : 'mr-2 -ml-1') : '',
         suffixMargin:
           props.icon !== 'none' && !!context.slots.default
             ? props.size === 'sm'
@@ -211,7 +223,6 @@ export default {
       }
       return generateClasses([{ ...classes }])
     })
-    console.log('check slot : ', !context.slots.default)
     return { computedClasses, iconClasses }
   },
 }

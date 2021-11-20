@@ -27,7 +27,7 @@ export default {
     description: {
       control: { type: 'text' },
     },
-    prefix: {
+    prepend: {
       control: { type: 'select' },
       options: ['search', 'search-2', 'search-eye','none'],
     }

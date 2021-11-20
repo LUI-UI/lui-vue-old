@@ -5,8 +5,10 @@ export default {
   title: 'Button',
   component: LButton,
   args: {
-    label: 'test'
-  },
+    label: 'test',
+    disable: false,
+  },  
+  
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   argTypes: {
     onClick: {},
@@ -39,13 +41,13 @@ export default {
       control: { type: 'select' },
       options: ['home', 'arrow-right', 'mail-check', 'none'],
     },
-    prefix: {
+    prepend: {
       control: { type: 'select' },
       options: ['home', 'arrow-right', 'mail-check','none'],
     },
-    disableStates:{
+    disableStyles:{
       control: { type: 'multi-select' },
-      options: ['hover', 'focus', 'disable', 'underline'],
+      options: ['hover', 'focus', 'disable', 'underline',true,false],
     }
   },
 }
@@ -59,7 +61,7 @@ const Template = (args) => ({
     return { args }
   },
   // And then the `args` are bound to your component with `v-bind="args"`
-  template: `<l-button v-bind="args"> {{ args.label }} </l-button>`,
+  template: `<l-button v-bind="args" :disabled="args.disable"> {{ args.label }} </l-button>`,
 })
 
 export const Default = Template.bind({})
@@ -77,20 +79,3 @@ export const Text = Template.bind({})
 Text.args = {
   type: 'text',
 }
-
-// export const Secondary = Template.bind({})
-// Secondary.args = {
-//   label: 'Button',
-// }
-
-// export const Large = Template.bind({})
-// Large.args = {
-//   size: 'large',
-//   label: 'Button',
-// }
-
-// export const Small = Template.bind({})
-// Small.args = {
-//   size: 'small',
-//   label: 'Button',
-// }
