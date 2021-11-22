@@ -47,7 +47,17 @@ const Template = (args) => ({
     return { args }
   },
   // And then the `args` are bound to your component with `v-bind="args"`
-  template: `<l-button v-bind="args" :disabled="args.disable"> {{ args.label }} </l-button>`,
+  template: `<l-button v-bind="args" :disabled="args.disable"> {{args.label}} </l-button>`,
+})
+const IconTemplate = (args) => ({
+  // Components used in your story `template` are defined in the `components` object
+  components: { LButton },
+  // The story's `args` need to be mapped into the template through the `setup()` method
+  setup() {
+    return { args }
+  },
+  // And then the `args` are bound to your component with `v-bind="args"`
+  template: `<l-button v-bind="args" :disabled="args.disable"></l-button>`,
 })
 
 export const Default = Template.bind({})
@@ -64,4 +74,9 @@ export const Text = Template.bind({})
 // More on args: https://storybook.js.org/docs/vue/writing-stories/args
 Text.args = {
   type: 'text',
+}
+export const IconButton = IconTemplate.bind({})
+// More on args: https://storybook.js.org/docs/vue/writing-stories/args
+IconButton.args = {
+  icon: 'home',
 }

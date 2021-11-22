@@ -1,14 +1,29 @@
 // helper functions
-function variantProps(name) {
+function variantProps(name, defaultValue) {
   return {
     props: {
       [name]: {
         type: String,
-        default: 'primary',
+        default: defaultValue || 'primary',
         validator(value) {
-          return ['light', 'dark', 'white', 'primary', 'secondary', 'info', 'success', 'warning', 'danger'].includes(value)
+          const list =
+            name === 'variant'
+              ? ['primary', 'secondary', 'info', 'success', 'warning', 'danger']
+              : [
+                  'light',
+                  'dark',
+                  'white',
+                  'black',
+                  'primary',
+                  'secondary',
+                  'info',
+                  'success',
+                  'warning',
+                  'danger',
+                ]
+          return list.includes(value)
         },
-      }
+      },
     },
   }
 }
@@ -21,15 +36,15 @@ function filterProps(name) {
         validator(value) {
           return ['darker', 'lighter', 'none'].includes(value)
         },
-      }
-    }
+      },
+    },
   }
 }
 
 export const variant = variantProps('variant')
-export const bgVariant = variantProps('bgVariant')
-export const textVariant = variantProps('textVariant')
-export const borderVariant = variantProps('borderVariant')
+export const bgVariant = variantProps('bgVariant', 'light')
+export const textVariant = variantProps('textVariant', 'dark')
+export const borderVariant = variantProps('borderVariant', 'secondary')
 export const filter = filterProps('filter')
 export const borderFilter = filterProps('borderFilter')
 export const bgFilter = filterProps('bgFilter')

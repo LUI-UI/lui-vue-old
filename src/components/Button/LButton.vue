@@ -29,19 +29,12 @@
 import { computed } from 'vue'
 import LIcon from '../Icon/LIcon.vue'
 import { generateClasses, generateVariant } from '../../mixins/methods'
-import {
-  variant,
-  rounded,
-  roundedFull,
-  filter,
-  block,
-  prepend
-} from '../../mixins/props'
+import { variant, rounded, roundedFull, filter, block, prepend } from '../../mixins/props'
 export default {
   components: {
     LIcon,
   },
-  mixins: [variant, rounded, roundedFull, filter, block,prepend],
+  mixins: [variant, rounded, roundedFull, filter, block, prepend],
   inheritAttrs: false,
   props: {
     size: {
@@ -80,13 +73,13 @@ export default {
         padding:
           props.type === 'link' || props.type === 'link-underline'
             ? 'p-0'
-            : !context.slots.default // text text-icon
+            : !context.slots.default // icon button
             ? props.size === 'lg'
               ? 'p-3'
               : props.size === 'md'
               ? 'p-2.5'
               : 'p-1.5'
-            : props.size === 'lg' // icon button
+            : props.size === 'lg' // text ve icon
             ? 'px-6 py-3'
             : props.size === 'md'
             ? 'px-4 py-2'
@@ -211,18 +204,25 @@ export default {
     const iconClasses = computed(() => {
       const classes = {
         fontSize: props.size === 'sm' ? 'text-base' : props.size === 'md' ? 'text-xl' : 'text-2xl',
-        prefixMargin:
-          props.prepend !== 'none' ? (props.size === 'sm' ? 'mr-1.5 -ml-0.5' : 'mr-2 -ml-1') : '',
+        lineHeight: props.size === 'lg' ? 'leading-5' : 'leading-none',
+        prependMargin:
+        // prepend var, slot var, icon yoksa 
+          props.prepend !== 'none' && !!context.slots.default && props.icon === 'none'
+            ? props.size === 'sm'
+              ? 'mr-1.5 -ml-0.5'
+              : 'mr-2 -ml-1'
+            : 'm-0',
         suffixMargin:
-          props.icon !== 'none' && !!context.slots.default
+          props.prepend === 'none' && !!context.slots.default && props.icon !== 'none'
             ? props.size === 'sm'
               ? 'ml-1.5 -mr-0.5'
               : 'ml-2 -mr-1'
             : 'm-0',
-        lineHeight: props.size === 'lg' ? 'leading-5' : 'leading-none',
+        
       }
       return generateClasses([{ ...classes }])
     })
+    console.log("SLOT : ", !!context.slots.default)
     return { computedClasses, iconClasses }
   },
 }

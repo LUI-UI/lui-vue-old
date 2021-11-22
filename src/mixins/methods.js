@@ -1,3 +1,4 @@
+
 export function generateClasses(params) {
   const acc = []
   params.map((param) => {
@@ -21,8 +22,9 @@ export function generateVariant(variant, filter) {
   return { backgroundColor, fontColor }
 }
 export function generateColorVariant(variant, filter, property) {
+  const baseList = ['white','black','light','dark']
   const colorClasses =
-    filter === 'none'
+    filter === 'none' || baseList.includes(variant)
       ? `${property}-${variant}`
       : filter === 'darker'
       ? `${property}-${variant}-800`
