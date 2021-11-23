@@ -1,48 +1,36 @@
 <script setup>
 import LButton from './components/Button/LButton.vue'
-import LCard from './components/Card/LuiCard.vue'
-import LuiAvatar from './components/Avatar/LAvatar.vue'
 
-const colors = {
-  rose: {
-    50: '#fff1f2',
-    100: '#ffe4e6',
-    200: '#fecdd3',
-    300: '#fda4af',
-    400: '#fb7185',
-    500: '#f43f5e',
-    600: '#e11d48',
-    700: '#be123c',
-    800: '#9f1239',
-    900: '#881337',
-  },
-}
+// function hexToRgb(hex) {
+//   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+//   return result
+//     ? `${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)}`
+//     : null
+// }
 
-function hexToRgbA(hex) {
-  var c
-  if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-    c = hex.substring(1).split('')
-    if (c.length == 3) {
-      c = [c[0], c[0], c[1], c[1], c[2], c[2]]
-    }
-    c = '0x' + c.join('')
-    return 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',1)'
-  }
-  throw new Error('Bad Hex')
-}
+// let variables = []
 
-hexToRgbA('#fbafff')
+// Object.keys(color).forEach((c) => {
+//   for (const [key, value] of Object.entries(color[c])) {
+//     if (typeof color[c] === 'object') {
+//       if (key !== 'DEFAULT') {
+//         variables.push({ key: `--color-${c}-${key}`, value: `${hexToRgb(value)}` })
+//       } else {
+//         variables.push({ key: `--color-${c}`, value: `${hexToRgb(value)}` })
+//       }
+//     }
+//   }
+// })
+// console.log(variables)
 
-function changeTheme() {
-  Object.keys(colors.rose).forEach((key) => {
-    document.documentElement.style.setProperty(`--rose-${key}`, `${hexToRgbA(colors.rose[key])}`)
-  })
-}
+// variables.forEach((v) => document.documentElement.style.setProperty(v.key, v.value))
 </script>
 
 <template>
   <div class="btn-container">
     <div class="mb-8">
+      <LButton>TEST</LButton>
+      <p class="text-primary mt-7 border border-primary">Test</p>
       <!-- <LButton
         type="default"
         variant="primary"
@@ -50,7 +38,7 @@ function changeTheme() {
         icon="home"
       >
       </LButton>   -->
-      <LCard
+      <!-- <LCard
         class="w-1/4"
         border
         border-variant="primary"
@@ -61,15 +49,32 @@ function changeTheme() {
         bg-filter="darker"
       >
         <div class="mb-6">
-          <LButton size="lg" icon="home" variant="warning" filter="darker" @click="changeTheme()" />
+          <LButton
+            size="lg"
+            icon="home"
+            variant="warning"
+            filter="darker"
+            @click="changeTheme()"
+          />
         </div>
-        <h3 class="mb-6">Title test</h3>
+        <h3 class="mb-6">
+          Title test
+        </h3>
         <p class="mb-6">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, inventore.
         </p>
         <div>
-          <LButton class="mr-1" size="sm" variant="primary" filter="darker"> Action 1 </LButton>
-          <LButton size="sm"> Action 2 </LButton>
+          <LButton
+            class="mr-1"
+            size="sm"
+            variant="primary"
+            filter="darker"
+          >
+            Action 1
+          </LButton>
+          <LButton size="sm">
+            Action 2
+          </LButton>
         </div>
       </LCard>
       <LCard
@@ -83,19 +88,37 @@ function changeTheme() {
         bg-filter="darker"
       >
         <div class="mb-6">
-          <LButton size="lg" icon="home" variant="warning" filter="darker" />
+          <LButton
+            size="lg"
+            icon="home"
+            variant="warning"
+            filter="darker"
+          />
         </div>
-        <h3 class="mb-6">Title test</h3>
+        <h3 class="mb-6">
+          Title test
+        </h3>
         <p class="mb-6">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, inventore.
         </p>
         <div>
-          <LButton class="mr-1" size="sm" variant="primary" filter="darker"> Action 1 </LButton>
-          <LButton size="sm"> Action 2 </LButton>
+          <LButton
+            class="mr-1"
+            size="sm"
+            variant="primary"
+            filter="darker"
+          >
+            Action 1
+          </LButton>
+          <LButton size="sm">
+            Action 2
+          </LButton>
         </div>
       </LCard>
       <LuiAvatar />
-      <button @click="changeTheme()">TESTESTES</button>
+      <button @click="changeTheme()">
+        TESTESTES
+      </button> -->
     </div>
     <!-- <l-button
       type="default"

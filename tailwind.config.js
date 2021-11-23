@@ -1,5 +1,17 @@
 const color = require('./colors')
 // const plugin = require('tailwindcss/plugin')
+// const variables = ['warning','danger','primary','success','info','secondary']
+// const keys = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900']
+// const aaa = []
+// variables.forEach((v) => {
+//   keys.forEach((k) => {
+//     aaa.push({
+//       [`${v}-${k}`]: ({ opacityValue }) => {
+//         return `rgba(var(--color-${v}-${k}),${opacityValue})`
+//       },
+//     })
+//   })
+// })
 
 module.exports = {
   mode: 'jit',
@@ -14,9 +26,7 @@ module.exports = {
         light: color.gray[100],
         warning: color.yellow,
         danger: color.red,
-        primary: ({ opacityValue }) => {
-          return `rgba(var(--color-primary),${opacityValue})`
-        },
+        primary: color.blue,
         success: color.green,
         info: color.cyan,
         secondary: color.gray,
