@@ -1,42 +1,26 @@
-import LIcon from './LIcon.vue'
+import LBadge from './LuiBadge.vue'
 
 // More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
 export default {
-  title: 'Icon',
-  component: LIcon,
+  title: 'Badge',
+  component: LBadge,
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   argTypes: {
-    // onClick: {},
-    name: {
-      control: { type: 'text' },
-    },
+    onClick: {},
     size: {
       control: { type: 'select' },
-      options: [
-        'lg',
-        'xl',
-        'xxs',
-        'xs',
-        'sm',
-        'md',
-        '1x',
-        '2x',
-        '3x',
-        '4x',
-        '5x',
-        '6x',
-        '7x',
-        '8x',
-        '9x',
-        '10x',
-        'fw',
-      ],
+      options: ['2xs', 'xs', 'sm', 'md', 'lg'],
     },
-    fill: {
+    variant: {
+      control: { type: 'select' },
+      options: ['primary', 'secondary', 'info', 'success', 'warning', 'danger'],
+    },
+    border: {
       control: { type: 'boolean' },
     },
-    line: {
-      control: { type: 'boolean' },
+    filter: {
+      control: { type: 'select' },
+      options: ['darker', 'lighter', 'none'],
     },
   },
 }
@@ -44,27 +28,22 @@ export default {
 // More on component templates: https://storybook.js.org/docs/vue/writing-stories/introduction#using-args
 const Template = (args) => ({
   // Components used in your story `template` are defined in the `components` object
-  components: { LIcon },
+  components: { LBadge },
   // The story's `args` need to be mapped into the template through the `setup()` method
   setup() {
     return { args }
   },
   // And then the `args` are bound to your component with `v-bind="args"`
-  template: `<l-icon v-bind="args" />`,
+  template: `<l-badge v-bind="args" />`,
 })
 
-export const Home = Template.bind({})
+export const Danger = Template.bind({})
 // More on args: https://storybook.js.org/docs/vue/writing-stories/args
-Home.args = {
-  size: 'xl',
-  fill: true, 
-  name: 'home'
+Danger.args = {
+  variant: 'danger',
 }
-
-export const Mail = Template.bind({})
+export const Large = Template.bind({})
 // More on args: https://storybook.js.org/docs/vue/writing-stories/args
-Mail.args = {
-  size: 'xl',
-  fill: true, 
-  name: 'mail'
+Large.args = {
+  size: 'lg',
 }

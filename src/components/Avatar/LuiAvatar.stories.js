@@ -1,4 +1,4 @@
-import LAvatar from './LAvatar.vue'
+import LAvatar from './LuiAvatar.vue'
 import { variant, rounded, roundedFull, filter, size, border, img } from '../../utils/storyProps'
 export default {
   title: 'Avatar',

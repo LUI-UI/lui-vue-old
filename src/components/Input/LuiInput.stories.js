@@ -1,4 +1,4 @@
-import LInput from './LInput.vue'
+import LInput from './LuiInput.vue'
 
 // More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
 export default {
