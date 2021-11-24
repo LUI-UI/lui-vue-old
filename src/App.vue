@@ -30,7 +30,9 @@ import LButton from './components/Button/LButton.vue'
   <div class="btn-container">
     <div class="mb-8">
       <LButton>TEST</LButton>
-      <p class="text-primary mt-7 border border-primary">Test</p>
+      <p class="text-primary mt-7 border border-primary">
+        Test
+      </p>
       <!-- <LButton
         type="default"
         variant="primary"
