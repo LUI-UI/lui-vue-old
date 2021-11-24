@@ -52,6 +52,7 @@ module.exports = {
         '2xl': '1rem', // olmamalı 2xl olmalı.
       },
       lineHeight: {
+        3.5: '0.875rem', // button da kullanildi deigecek mi ?
         4.5: '1.125rem', // button da kullanildi deigecek mi ?
       },
     },

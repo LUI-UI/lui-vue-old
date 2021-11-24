@@ -37,3 +37,12 @@ export const size = {
   control: { type: 'select' },
   options: ['2xs', 'xs', 'sm', 'md', 'lg'],
 }
+
+export const icon = {
+  control: { type: 'select' },
+  options: ['home', 'arrow-right', 'mail-check', 'none']
+}
+export const prepend = {
+  control: { type: 'select' },
+  options: ['home', 'arrow-right', 'mail-check', 'none']
+}

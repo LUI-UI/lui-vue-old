@@ -1,5 +1,14 @@
-<script setup>
-import LButton from './components/Button/LButton.vue'
+<script>
+import LChip from './components/Chip/LuiChip.vue'
+
+export default {
+  components: { LChip },
+  methods: {
+    handleAction(value) {
+      console.log('action event', value)
+    },
+  },
+}
 
 // function hexToRgb(hex) {
 //   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
@@ -29,10 +38,13 @@ import LButton from './components/Button/LButton.vue'
 <template>
   <div class="btn-container">
     <div class="mb-8">
-      <LButton>TEST</LButton>
-      <p class="text-primary mt-7 border border-primary">
-        Test
-      </p>
+      <LChip
+        size="md"
+        :click-able="true"
+        @click="handleAction"
+      >
+        TEST
+      </LChip>
       <!-- <LButton
         type="default"
         variant="primary"

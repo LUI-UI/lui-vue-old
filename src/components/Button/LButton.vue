@@ -29,12 +29,12 @@
 import { computed } from 'vue'
 import LIcon from '../Icon/LIcon.vue'
 import { generateClasses, generateVariant } from '../../mixins/methods'
-import { variant, rounded, roundedFull, filter, block, prepend } from '../../mixins/props'
+import { variant, rounded, roundedFull, filter, block, prepend, icon } from '../../mixins/props'
 export default {
   components: {
     LIcon,
   },
-  mixins: [variant, rounded, roundedFull, filter, block, prepend],
+  mixins: [variant, rounded, roundedFull, filter, block, prepend, icon],
   inheritAttrs: false,
   props: {
     size: {
@@ -50,10 +50,6 @@ export default {
       validator(value) {
         return ['default', 'text', 'outline', 'link', 'link-underline'].includes(value)
       },
-    },
-    icon: {
-      type: String,
-      default: 'none',
     },
     disableStyles: {
       type: [Array, Boolean],

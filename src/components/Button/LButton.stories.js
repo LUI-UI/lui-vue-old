@@ -1,5 +1,5 @@
 import LButton from './LButton.vue'
-import { variant, block, filter, rounded, roundedFull } from '../../utils/storyProps'
+import { variant, block, filter, rounded, roundedFull, icon, prepend } from '../../utils/storyProps'
 // More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
 export default {
   title: 'Lui Button',
@@ -15,6 +15,8 @@ export default {
     filter,
     rounded,
     roundedFull,
+    icon, 
+    prepend,
     size: {
       control: { type: 'select' },
       options: ['sm', 'md', 'lg'],
@@ -22,14 +24,6 @@ export default {
     type: {
       control: { type: 'select' },
       options: ['default', 'text', 'outline', 'link', 'link-underline'],
-    },
-    icon: {
-      control: { type: 'select' },
-      options: ['home', 'arrow-right', 'mail-check', 'none'],
-    },
-    prepend: {
-      control: { type: 'select' },
-      options: ['home', 'arrow-right', 'mail-check', 'none'],
     },
     disableStyles:{
       control: { type: 'multi-select' },

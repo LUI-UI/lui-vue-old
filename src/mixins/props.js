@@ -41,6 +41,25 @@ function filterProps(name) {
   }
 }
 
+function sizeProps(start,end){
+  const sizes = ['2xs', 'xs', 'sm', 'md', 'lg'];
+  //array.slice(0, n)
+  console.log(sizes.slice(2,5))
+  return {
+    props: {
+      size: {
+        type: String,
+        default: 'md',
+        validator(value) {
+          return sizes.slice(start,end).includes(value)
+        },
+      },
+    },
+  }
+}
+
+export const size = sizeProps()
+export const sizeTriple = sizeProps(2,5)
 export const variant = variantProps('variant')
 export const bgVariant = variantProps('bgVariant', 'light')
 export const textVariant = variantProps('textVariant', 'dark')
@@ -89,17 +108,15 @@ export const prepend = {
     },
   },
 }
-export const size = {
+export const icon = {
   props: {
-    size: {
+    icon: {
       type: String,
-      default: 'md',
-      validator(value) {
-        return ['2xs', 'xs', 'sm', 'md', 'lg'].includes(value)
-      },
+      default: 'none',
     },
   },
 }
+
 export const img = {
   props: {
     img: {
