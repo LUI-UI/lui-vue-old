@@ -37,6 +37,10 @@ export const size = {
   control: { type: 'select' },
   options: ['2xs', 'xs', 'sm', 'md', 'lg'],
 }
+export const sizetest = {
+  control: { type: 'select' },
+  options: ['sm', 'md', 'lg'],
+}
 
 export const icon = {
   control: { type: 'select' },

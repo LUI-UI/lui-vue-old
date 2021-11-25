@@ -1,13 +1,14 @@
 <script>
-import LChip from './components/Chip/LuiChip.vue'
+import LTabs from './components/TabMenu/LuiTabs.vue'
+import LTab from './components/TabMenu/LuiTab.vue'
 
 export default {
-  components: { LChip },
-  methods: {
-    handleAction(value) {
-      console.log('action event', value)
-    },
-  },
+  components: { LTabs, LTab },
+  // methods: {
+  //   handleAction(value) {
+  //     console.log('action event', value)
+  //   },
+  // },
 }
 
 // function hexToRgb(hex) {
@@ -38,20 +39,20 @@ export default {
 <template>
   <div class="btn-container">
     <div class="mb-8">
-      <LChip
-        size="md"
-        :click-able="true"
-        @click="handleAction"
-      >
-        TEST
-      </LChip>
-      <!-- <LButton
-        type="default"
-        variant="primary"
-        size="md"
-        icon="home"
-      >
-      </LButton>   -->
+      <l-tabs>
+        <l-tab title="Tab1">
+          Hello from 1
+        </l-tab>
+        <l-tab title="Tab2">
+          Hello from tab 2
+        </l-tab>
+        <l-tab title="Tab3">
+          Hello from tab 3
+        </l-tab>
+        <l-tab title="Tab4">
+          Hello from tab 4
+        </l-tab>
+      </l-tabs>
       <!-- <LCard
         class="w-1/4"
         border

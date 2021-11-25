@@ -5,14 +5,14 @@
     :class="computedClasses"
     v-on="clickAble ? { click: () => $emit('click', $slots.default()[0].children) } : {}"
   >
-    <LIcon
+    <lui-icon
       v-if="prepend !== 'none'"
       :name="prepend"
       fill
       :class="[iconClasses.size, iconClasses.marginPrepend, iconClasses.lineHeight]"
     />
     <slot />
-    <LIcon
+    <lui-icon
       v-if="icon !== 'none'"
       :name="icon"
       fill
@@ -23,19 +23,21 @@
 <script>
 import { computed } from 'vue'
 import { generateClasses, generateVariant } from '../../mixins/methods'
-import { variant, rounded, roundedFull, filter, prepend, icon } from '../../mixins/props'
-import LIcon from '../Icon/LIcon.vue'
+import {
+  variant,
+  rounded,
+  roundedFull,
+  filter,
+  prepend,
+  icon,
+  sizeTriple,
+} from '../../mixins/props'
+import LuiIcon from '../Icon/LuiIcon.vue'
 export default {
-  components: { LIcon },
-  mixins: [variant, rounded, roundedFull, filter, prepend, icon],
+  components: { LuiIcon },
+  mixins: [variant, rounded, roundedFull, filter, prepend, icon, sizeTriple],
   props: {
-    size: {
-      type: String,
-      default: 'sm',
-      validator(value) {
-        return ['sm', 'md', 'lg'].includes(value)
-      },
-    },
+    size: sizeTriple,
     type: {
       type: String,
       default: 'default',
@@ -45,8 +47,8 @@ export default {
     },
     clickAble: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   emits: ['click'],
   setup(props) {
@@ -107,7 +109,6 @@ export default {
       }
       return classes
     })
-
 
     // function clickEvent() {
     //   emit('action', slots.default()[0].children)
