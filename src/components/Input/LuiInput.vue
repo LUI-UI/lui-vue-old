@@ -8,7 +8,7 @@
       {{ label }}
     </label>
     <div :class="parentClasses">
-      <l-icon
+      <lui-icon
         v-if="prepend !== 'none'"
         :name="prepend"
         :class="[iconClasses.size, iconClasses.position, iconClasses.prepend]"
@@ -20,7 +20,7 @@
         v-bind="$attrs"
         :class="computedClasses"
       >
-      <l-button
+      <lui-button
         v-if="clear && !$attrs.disabled"
         type="link"
         variant="secondary"
@@ -30,7 +30,7 @@
         :class="[iconClasses.position, iconClasses.clear]"
         @click="$refs.Linput.value = ''"
       />
-      <l-icon
+      <lui-icon
         v-if="state !== null"
         :name="iconClasses.name"
         :class="[iconClasses.size, iconClasses.color, iconClasses.position, iconClasses.state]"
@@ -49,12 +49,12 @@
 import { computed } from 'vue'
 import { generateClasses } from '../../mixins/methods'
 import { prepend } from '../../mixins/props'
-import LIcon from '../Icon/LIcon.vue'
-import LButton from '../Button/LButton.vue'
+import LuiIcon from '../Icon/LuiIcon.vue'
+import LuiButton from '../Button/LuiButton.vue'
 export default {
   components: {
-    LIcon,
-    LButton,
+    LuiIcon,
+    LuiButton,
   },
   mixins: [prepend],
   inheritAttrs: false,

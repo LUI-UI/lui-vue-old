@@ -4,7 +4,7 @@
     v-bind="$attrs"
     @click="$emit('click')"
   >
-    <l-icon
+    <lui-icon
       v-if="prepend !== 'none'"
       :name="prepend"
       fill
@@ -17,7 +17,7 @@
       <slot />
     </span>
     <slot v-else />
-    <l-icon
+    <lui-icon
       v-if="icon !== 'none'"
       :name="icon"
       fill
@@ -27,12 +27,12 @@
 </template>
 <script>
 import { computed } from 'vue'
-import LIcon from '../Icon/LIcon.vue'
+import LuiIcon from '../Icon/LuiIcon.vue'
 import { generateClasses, generateVariant } from '../../mixins/methods'
 import { variant, rounded, roundedFull, filter, block, prepend, icon } from '../../mixins/props'
 export default {
   components: {
-    LIcon,
+    LuiIcon,
   },
   mixins: [variant, rounded, roundedFull, filter, block, prepend, icon],
   inheritAttrs: false,

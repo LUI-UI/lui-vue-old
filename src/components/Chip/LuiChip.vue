@@ -5,14 +5,14 @@
     :class="computedClasses"
     v-on="clickAble ? { click: () => $emit('click', $slots.default()[0].children) } : {}"
   >
-    <LIcon
+    <lui-icon
       v-if="prepend !== 'none'"
       :name="prepend"
       fill
       :class="[iconClasses.size, iconClasses.marginPrepend, iconClasses.lineHeight]"
     />
     <slot />
-    <LIcon
+    <lui-icon
       v-if="icon !== 'none'"
       :name="icon"
       fill
@@ -24,9 +24,9 @@
 import { computed } from 'vue'
 import { generateClasses, generateVariant } from '../../mixins/methods'
 import { variant, rounded, roundedFull, filter, prepend, icon } from '../../mixins/props'
-import LIcon from '../Icon/LIcon.vue'
+import LuiIcon from '../Icon/LuiIcon.vue'
 export default {
-  components: { LIcon },
+  components: { LuiIcon },
   mixins: [variant, rounded, roundedFull, filter, prepend, icon],
   props: {
     size: {
