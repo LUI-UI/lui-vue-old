@@ -2,7 +2,7 @@ import LBadge from './LuiBadge.vue'
 
 // More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
 export default {
-  title: 'Badge',
+  title: 'LuiBadge',
   component: LBadge,
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   argTypes: {

@@ -11,7 +11,7 @@ import {
   borderVariant,
 } from '../../utils/storyProps'
 export default {
-  title: 'Lui Card',
+  title: 'LuiCard',
   components: LuiCard,
   argTypes: {
     img,

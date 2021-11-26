@@ -1,7 +1,7 @@
 import LAvatar from './LuiAvatar.vue'
 import { variant, rounded, roundedFull, filter, size, border, img } from '../../utils/storyProps'
 export default {
-  title: 'Avatar',
+  title: 'LuiAvatar',
   component: LAvatar,
   argTypes: {
     onClick: {},

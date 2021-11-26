@@ -2,7 +2,7 @@ import LButton from './LuiButton.vue'
 import { variant, block, filter, rounded, roundedFull, icon, prepend } from '../../utils/storyProps'
 // More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
 export default {
-  title: 'Lui Button',
+  title: 'LuiButton',
   component: LButton,
   args: {
     label: 'test',
