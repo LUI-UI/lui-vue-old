@@ -40,16 +40,24 @@ export default {
   <div class="btn-container">
     <div class="mb-8">
       <l-tabs>
-        <l-tab title="Tab1">
+        <l-tab
+          title="Landing pages"
+        >
           Hello from 1
         </l-tab>
-        <l-tab title="Tab2">
+        <l-tab
+          title="Tab2"
+        >
           Hello from tab 2
         </l-tab>
-        <l-tab title="Tab3">
+        <l-tab
+          title="Tab3"
+        >
           Hello from tab 3
         </l-tab>
-        <l-tab title="Tab4">
+        <l-tab
+          title="Tab4"
+        >
           Hello from tab 4
         </l-tab>
       </l-tabs>
@@ -135,40 +143,22 @@ export default {
         TESTESTES
       </button> -->
     </div>
-    <!-- <l-button
-      type="default"
-      variant="primary"
-      size="lg"
-      icon="home"
-    />
-    <l-button
-      type="outline"
-      variant="primary"
-      size="sm"
-      icon="home"
-      class="mt-2"
-      rounded-full
-    /> -->
-
-    <!-- <button class="p-1.5 text-white bg-blue-500 text-xs flex mt-2">
-      <i
-        class="ri-home-fill text-lg leading-none"
-      />
-    </button> -->
-    <!-- <button class="tttt">Sign up</button> -->
   </div>
 </template>
 
-<style scoped>
+<style>
+/* @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); */
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: font-worksans;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  text-align: center; */
+  /* color: #2c3e50; */
+  font-family: 'Work Sans', sans-serif;
   margin-top: 60px;
 }
 .btn-container {
+  /* font-family: 'Work Sans', sans-serif; */
   padding: 150px;
 }
 

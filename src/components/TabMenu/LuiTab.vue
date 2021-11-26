@@ -85,6 +85,14 @@ export default {
       type: String,
       default: 'Title',
     },
+    active: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type:Boolean,
+      default: false
+    }
   },
   setup() {
     const selectedTitle = inject('selectedTitle')
