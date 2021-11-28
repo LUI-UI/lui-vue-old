@@ -57,6 +57,7 @@ export default {
         </l-tab>
         <l-tab
           title="Tab4"
+          disabled
         >
           Hello from tab 4
         </l-tab>

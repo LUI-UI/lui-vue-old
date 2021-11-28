@@ -12,11 +12,11 @@
         :tabindex="selectedTitle === prop.title ? '0' : '-1'"
         :aria-selected="selectedTitle === prop.title ? true : false"
         :disabled="prop.disabled !== undefined ? true : false"
-        :class="[classes.tab, selectedTitle === prop.title ? classes.activeTab : 'text-secondary-400']"
+        :class="[classes.tab, selectedTitle === prop.title ? classes.activeTab : classes.defaultTab]"
         @click="selectedTitle = prop.title"
         @keydown="handleKeyEvents($event, index)"
       >
-        <span class="px-4">{{ prop.title }}</span>
+        <span :class="classes.tabText">{{ prop.title }}</span>
       </button>
     </div>
 
@@ -29,7 +29,6 @@
 import { ref, provide, computed } from 'vue'
 import { generateClasses } from '../../mixins/methods'
 export default {
-  // align,disable,active, falza elemen grup, otomatic focus avtive etme,
   props: {
     alignTabs: {
       type: String,
@@ -47,7 +46,6 @@ export default {
     },
   },
   setup(props, { slots }) {
-    // const tabProps = ref(slots.default().map((tab) => tab.props.title))
     const tabProps = ref(slots.default().map((tab) => tab.props))
 
     let initialActive = tabProps.value.findIndex((t) => t.active !== undefined)
@@ -78,7 +76,6 @@ export default {
     }
 
     const classes = computed(() => {
-      //tabContainer, tab, content, activeTab
       const tabContainer = {
         width: 'w-full',
         display: 'flex',
@@ -106,26 +103,29 @@ export default {
           ? 'text-left'
           : props.alignContent === 'center'
           ? 'text-center'
-          : 'text-right'
-      const activeTab = 'text-primary after:bg-primary'
+          : 'text-right';
+      const activeTab = 'text-primary after:bg-primary';
+      const defaultTab = 'text-secondary-400';
       const tabMenuContainer = 'w-full'
+      const tabText = 'px-4';
 
       return {
         tabContainer: generateClasses([{ ...tabContainer }]),
         tab: generateClasses([{ ...tab }]),
         panel,
         activeTab,
-        tabMenuContainer
+        defaultTab,
+        tabMenuContainer,
+        tabText
       }
     })
-    console.log(classes.value)
 
     return {
       tabProps,
       selectedTitle,
       elements,
-      handleKeyEvents,
       classes,
+      handleKeyEvents,
     }
   },
 }
