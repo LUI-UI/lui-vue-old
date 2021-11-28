@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full">
+  <div :class="classes.tabMenuContainer">
     <div
-      :class="tabContainerClasses"
+      :class="classes.tabContainer"
       role="tablist"
     >
       <button
@@ -12,7 +12,7 @@
         :tabindex="selectedTitle === prop.title ? '0' : '-1'"
         :aria-selected="selectedTitle === prop.title ? true : false"
         :disabled="prop.disabled !== undefined ? true : false"
-        :class="[computedClasses, activeClasses(prop)]"
+        :class="[classes.tab, selectedTitle === prop.title ? classes.activeTab : 'text-secondary-400']"
         @click="selectedTitle = prop.title"
         @keydown="handleKeyEvents($event, index)"
       >
@@ -20,7 +20,7 @@
       </button>
     </div>
 
-    <div :class="contentClasses">
+    <div :class="classes.panel">
       <slot />
     </div>
   </div>
@@ -49,11 +49,14 @@ export default {
   setup(props, { slots }) {
     // const tabProps = ref(slots.default().map((tab) => tab.props.title))
     const tabProps = ref(slots.default().map((tab) => tab.props))
+
     let initialActive = tabProps.value.findIndex((t) => t.active !== undefined)
     initialActive = initialActive === -1 ? false : initialActive
+
     let selectedTitle = ref(tabProps.value[initialActive || 0].title)
 
     const elements = ref([])
+
     provide('selectedTitle', selectedTitle)
 
     function handleKeyEvents(e, index) {
@@ -73,19 +76,13 @@ export default {
         elements.value[targetPosition].focus()
       }
     }
-    function activeClasses(prop) {
-      return this.selectedTitle === prop.title
-        ? 'text-primary after:bg-primary'
-        : 'text-secondary-400'
-    }
 
-    // const classes = {
-    //   tabContainer, tab, content, activeTab
-    // }
-    const tabContainerClasses = computed(() => {
-      const classes = {
+    const classes = computed(() => {
+      //tabContainer, tab, content, activeTab
+      const tabContainer = {
         width: 'w-full',
         display: 'flex',
+        margin: 'mb-8',
         flexWrap: 'flex-wrap',
         alingItems: 'items-center',
         justifyContent:
@@ -95,35 +92,40 @@ export default {
             ? 'justify-center'
             : 'justify-end',
       }
-      return generateClasses([{ ...classes }])
-    })
-    const contentClasses = computed(() => {
-      return props.alignContent === 'left'
-        ? 'text-left'
-        : props.alignContent === 'center'
-        ? 'text-center'
-        : 'text-right'
-    })
-    const computedClasses = computed(() => {
-      const classes = {
+      const tab = {
         lineHeight: 'leading-5',
         fontSize: 'text-base',
         fontWeight: 'font-semibold',
+        position: 'relative',
+        margin: 'mb-2',
         after:
-          'after:w-full after:h-0.5 after:inline-block after:rounded-full after:bg-transparent',
+          'after:w-full after:h-0.5 after:absolute after:top-full after:left-0 after:inline-block after:rounded-full after:bg-transparent',
       }
-      return generateClasses([{ ...classes }])
+      const panel =
+        props.alignContent === 'left'
+          ? 'text-left'
+          : props.alignContent === 'center'
+          ? 'text-center'
+          : 'text-right'
+      const activeTab = 'text-primary after:bg-primary'
+      const tabMenuContainer = 'w-full'
+
+      return {
+        tabContainer: generateClasses([{ ...tabContainer }]),
+        tab: generateClasses([{ ...tab }]),
+        panel,
+        activeTab,
+        tabMenuContainer
+      }
     })
+    console.log(classes.value)
 
     return {
       tabProps,
       selectedTitle,
       elements,
       handleKeyEvents,
-      computedClasses,
-      activeClasses,
-      tabContainerClasses,
-      contentClasses,
+      classes,
     }
   },
 }
