@@ -12,7 +12,10 @@
         :tabindex="selectedTitle === prop.title ? '0' : '-1'"
         :aria-selected="selectedTitle === prop.title ? true : false"
         :disabled="prop.disabled !== undefined ? true : false"
-        :class="[classes.tab, selectedTitle === prop.title ? classes.activeTab : classes.defaultTab]"
+        :class="[
+          classes.tab,
+          selectedTitle === prop.title ? classes.activeTab : classes.defaultTab,
+        ]"
         @click="selectedTitle = prop.title"
         @keydown="handleKeyEvents($event, index)"
       >
@@ -28,23 +31,13 @@
 <script>
 import { ref, provide, computed } from 'vue'
 import { generateClasses } from '../../mixins/methods'
+import * as prop from '../../mixins/props'
 export default {
-  props: {
-    alignTabs: {
-      type: String,
-      default: 'left',
-      validator(value) {
-        return ['left', 'center', 'right'].includes(value)
-      },
-    },
-    alignContent: {
-      type: String,
-      default: 'left',
-      validator(value) {
-        return ['left', 'center', 'right'].includes(value)
-      },
-    },
-  },
+  mixins: [
+    prop.string('alignTabs', 'left', ['left', 'center', 'right']),
+    prop.string('alignContent', 'left', ['left', 'center', 'right']),
+  ],
+
   setup(props, { slots }) {
     const tabProps = ref(slots.default().map((tab) => tab.props))
 
@@ -103,11 +96,11 @@ export default {
           ? 'text-left'
           : props.alignContent === 'center'
           ? 'text-center'
-          : 'text-right';
-      const activeTab = 'text-primary after:bg-primary';
-      const defaultTab = 'text-secondary-400';
+          : 'text-right'
+      const activeTab = 'text-primary after:bg-primary'
+      const defaultTab = 'text-secondary-400'
       const tabMenuContainer = 'w-full'
-      const tabText = 'px-4';
+      const tabText = 'px-4'
 
       return {
         tabContainer: generateClasses([{ ...tabContainer }]),
@@ -116,7 +109,7 @@ export default {
         activeTab,
         defaultTab,
         tabMenuContainer,
-        tabText
+        tabText,
       }
     })
 

@@ -21,35 +21,26 @@
 <script>
 import { computed } from '@vue/reactivity'
 import { generateClasses, generateColorVariant } from '../../mixins/methods'
-import {
-  img,
-  border,
-  rounded,
-  bgVariant,
-  textVariant,
-  borderVariant,
-  borderFilter,
-  bgFilter,
-  textFilter,
-} from '../../mixins/props'
+import * as prop from '../../mixins/props'
 export default {
   mixins: [
-    img,
-    border,
-    rounded,
-    borderFilter,
-    bgFilter,
-    textFilter,
-    bgVariant,
-    textVariant,
-    borderVariant,
+    prop.string('img',''),
+    prop.string('imgAlt','imgAlt'),
+    prop.boolean('border'),
+    prop.boolean('rounded'),
+    prop.filter('borderFilter'),
+    prop.filter('bgFilter'),
+    prop.filter('textFilter'),
+    prop.variant('bgVariant', 'light'),
+    prop.variant('textVariant', 'dark'),
+    prop.variant('borderVariant', 'secondary'),
   ],
-  props: {
-    imgAlt: {
-      type: String,
-      default: 'Card image.',
-    },
-  },
+  // props: {
+  //   imgAlt: {
+  //     type: String,
+  //     default: 'Card image.',
+  //   },
+  // },
 
   setup(props) {
     const computedClasses = computed(() => {

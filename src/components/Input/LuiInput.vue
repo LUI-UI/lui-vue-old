@@ -1,12 +1,5 @@
 <template>
   <div>
-    <label
-      v-if="label !== 'none'"
-      :for="$attrs.id"
-      :class="labelClasses"
-    >
-      {{ label }}
-    </label>
     <div :class="parentClasses">
       <lui-icon
         v-if="prepend !== 'none'"
@@ -48,46 +41,28 @@
 <script>
 import { computed } from 'vue'
 import { generateClasses } from '../../mixins/methods'
-import { prepend } from '../../mixins/props'
 import LuiIcon from '../Icon/LuiIcon.vue'
 import LuiButton from '../Button/LuiButton.vue'
+import * as prop from '../../mixins/props'
 export default {
   components: {
     LuiIcon,
     LuiButton,
   },
-  mixins: [prepend],
+  mixins: [
+    prop.string('prepend'),
+    prop.size('sm', ['sm', 'md', 'lg']),
+    prop.boolean('clear'),
+    prop.string('description'),
+  ],
   inheritAttrs: false,
   props: {
-    size: {
-      type: String,
-      default: 'sm',
-      validator(value) {
-        return ['sm', 'md', 'lg'].includes(value)
-      },
-    },
     state: {
       type: [String, Boolean, null],
       default: null,
       validator(value) {
         return [null, 'warning', true, false].includes(value)
       },
-    },
-    label: {
-      type: String,
-      default: 'none',
-    },
-    description: {
-      type: String,
-      default: 'none',
-    },
-    // prepend: {
-    //   type: String,
-    //   default: 'none',
-    // },
-    clear: {
-      type: Boolean,
-      default: false,
     },
   },
   setup(props, context) {

@@ -37,7 +37,7 @@ export const size = {
   control: { type: 'select' },
   options: ['2xs', 'xs', 'sm', 'md', 'lg'],
 }
-export const sizetest = {
+export const sizeTriple = {
   control: { type: 'select' },
   options: ['sm', 'md', 'lg'],
 }

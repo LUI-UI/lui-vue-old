@@ -1,5 +1,6 @@
 import LuiChip from './LuiChip.vue'
-import { variant, filter, rounded, roundedFull, icon, prepend,sizetest } from '../../utils/storyProps'
+// import { variant, filter, rounded, roundedFull, icon, prepend,sizetest } from '../../utils/storyProps'
+import * as prop from '../../utils/storyProps'
 // More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
 export default {
   title: 'LuiChip',
@@ -10,13 +11,13 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   argTypes: {
     // onClick: {},
-    variant,
-    filter,
-    rounded,
-    roundedFull,
-    icon,
-    prepend,
-    size: {...sizetest},
+    variant: prop.variant,
+    filter: prop.filter,
+    rounded: prop.rounded,
+    roundedFull: prop.roundedFull,
+    icon: prop.icon,
+    prepend: prop.prepend,
+    size: prop.sizeTriple,
     type: {
       control: { type: 'select' },
       options: ['default', 'outline'],

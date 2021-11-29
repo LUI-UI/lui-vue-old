@@ -1,61 +1,43 @@
 <template>
-  <i
-    :class="classes"
-  />
+  <i :class="classes" />
 </template>
 <script>
 import { computed } from '@vue/reactivity'
+import * as prop from '../../mixins/props'
 export default {
-  props: {
-    name: {
-      type: String,
-      required: true,
-    },
-    size: {
-      type: String,
-      default: '',
-      validator(value) {
-        return [
-          'lg',
-          'xl',
-          'xxs',
-          'xs',
-          'sm',
-          '1x',
-          '2x',
-          '3x',
-          '4x',
-          '5x',
-          '6x',
-          '7x',
-          '8x',
-          '9x',
-          '10x',
-          'fw',
-          'fwh',
-          ''
-        ].includes(value)
-      },
-    },
-    fill: {
-      type: Boolean,
-      default: false,
-    },
-    line: {
-      type: Boolean,
-      default: false,
-    },
-  },
+  mixins: [
+    prop.string('name', true),
+    prop.boolean('fill'),
+    prop.boolean('line'),
+    prop.size('none', [
+      'lg',
+      'xl',
+      'xxs',
+      'xs',
+      'sm',
+      '1x',
+      '2x',
+      '3x',
+      '4x',
+      '5x',
+      '6x',
+      '7x',
+      '8x',
+      '9x',
+      '10x',
+      'fw',
+      'fwh',
+      'none',
+    ]),
+  ],
   setup(props) {
     const classes = computed(() => {
       return [
-        `ri-${props.name}${props.fill ? '-fill' : ''}${
-          props.line ? '-line' : ''
-        }`,
-        props.size ? `ri-${props.size}` : '',
+        `ri-${props.name}${props.fill ? '-fill' : ''}${props.line ? '-line' : ''}`,
+        props.size !== 'none' ? `ri-${props.size}` : '',
       ]
     })
-    return {classes}
+    return { classes }
   },
 }
 

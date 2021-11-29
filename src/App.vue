@@ -1,9 +1,11 @@
 <script>
 import LTabs from './components/TabMenu/LuiTabs.vue'
 import LTab from './components/TabMenu/LuiTab.vue'
+import LuiInput from './components/Input/LuiInput.vue'
+import LuiButton from './components/Button/LuiButton.vue'
 
 export default {
-  components: { LTabs, LTab },
+  components: { LTabs, LTab, LuiInput, LuiButton },
   // methods: {
   //   handleAction(value) {
   //     console.log('action event', value)
@@ -40,19 +42,22 @@ export default {
   <div class="btn-container">
     <div class="mb-8">
       <l-tabs>
-        <l-tab
-          title="Landing pages"
-        >
+        <l-tab title="Landing pages">
           Hello from 1
+          <LuiInput
+            :state="false"
+            size="md"
+            description="alameti farika"
+            :clear="true"
+          >
+            test
+          </LuiInput>
         </l-tab>
-        <l-tab
-          title="Tab2"
-        >
+        <l-tab title="Tab2">
           Hello from tab 2
+          <LuiButton>Buton</LuiButton>
         </l-tab>
-        <l-tab
-          title="Tab3"
-        >
+        <l-tab title="Tab3">
           Hello from tab 3
         </l-tab>
         <l-tab

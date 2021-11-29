@@ -5,9 +5,11 @@
 <script>
 import { computed } from 'vue'
 import { generateClasses, generateVariant } from '../../mixins/methods'
-import {variant, border, size, filter} from '../../mixins/props'
+
+import * as prop from '../../mixins/props'
+
 export default {
-  mixins: [variant, border, size, filter],
+  mixins: [prop.variant(), prop.boolean('border'), prop.size(), prop.filter()],
   setup(props) {
     const computedClasses = computed(() => {
       const classes = {
@@ -34,9 +36,9 @@ export default {
         backgroundColor: generateVariant(props.variant, props.filter).backgroundColor,
         border: props.border ? 'border border-white' : '',
         display: 'inline-block',
-        borderRadius: 'rounded-full'
+        borderRadius: 'rounded-full',
       }
-      return generateClasses([{...classes}])
+      return generateClasses([{ ...classes }])
     })
     return { computedClasses }
   },
