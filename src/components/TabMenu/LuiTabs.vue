@@ -89,7 +89,7 @@ export default {
         position: 'relative',
         margin: 'mb-2',
         after:
-          'after:w-full after:h-0.5 after:absolute after:top-full after:left-0 after:inline-block after:rounded-full after:bg-transparent',
+          'after:w-full after:h-0.5 after:absolute after:-bottom-2 after:left-0 after:inline-block after:rounded-full after:bg-transparent',
       }
       const panel =
         props.alignContent === 'left'
