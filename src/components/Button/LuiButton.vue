@@ -42,8 +42,8 @@ export default {
     prop.boolean('block'),
     prop.string('prepend'),
     prop.string('icon'),
-    prop.string('type','default',['default', 'text', 'outline', 'link', 'link-underline']),
-    prop.size('md',['sm', 'md', 'lg'])
+    prop.string('type', 'default', ['default', 'text', 'outline', 'link', 'link-underline']),
+    prop.size('md', ['sm', 'md', 'lg']),
   ],
   inheritAttrs: false,
   props: {
@@ -81,16 +81,12 @@ export default {
             ? generateVariant(props.variant, props.filter).backgroundColor
             : '',
         fontColor:
-          props.filter === 'none'
-            ? props.type === 'default'
-              ? 'text-white'
-              : `text-${props.variant}`
-            : props.filter === 'darker'
-            ? props.type === 'default'
-              ? 'text-white'
-              : `text-${props.variant}-800`
-            : props.type === 'default'
+          props.type === 'default'
+            ? generateVariant(props.variant, props.filter).fontColor
+            : props.filter === 'none'
             ? `text-${props.variant}`
+            : props.filter === 'darker'
+            ? `text-${props.variant}-800`
             : `text-${props.variant}-50`,
         fontSize: props.size === 'sm' ? 'text-xs leading-4.5' : 'text-base',
         borderWidth: props.type === 'outline' || props.type === 'default' ? 'border' : '',
@@ -213,7 +209,6 @@ export default {
       }
       return generateClasses([{ ...classes }])
     })
-    console.log('SLOT : ', !!context.slots.default)
     return { computedClasses, iconClasses }
   },
 }
