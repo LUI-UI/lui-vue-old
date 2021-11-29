@@ -1,11 +1,9 @@
 <script>
 import LTabs from './components/TabMenu/LuiTabs.vue'
 import LTab from './components/TabMenu/LuiTab.vue'
-import LuiInput from './components/Input/LuiInput.vue'
-import LuiButton from './components/Button/LuiButton.vue'
-
+import LuiAccordion from './components/Accordion/LuiAccordion.vue'
 export default {
-  components: { LTabs, LTab, LuiInput, LuiButton },
+  components: { LTabs, LTab, LuiAccordion },
   // methods: {
   //   handleAction(value) {
   //     console.log('action event', value)
@@ -44,25 +42,15 @@ export default {
       <l-tabs>
         <l-tab title="Landing pages">
           Hello from 1
-          <LuiInput
-            :state="false"
-            size="md"
-            description="alameti farika"
-            :clear="true"
-          >
-            test
-          </LuiInput>
         </l-tab>
         <l-tab title="Tab2">
           Hello from tab 2
-          <LuiButton>Buton</LuiButton>
         </l-tab>
         <l-tab title="Tab3">
           Hello from tab 3
         </l-tab>
         <l-tab
           title="Tab4"
-          disabled
         >
           Hello from tab 4
         </l-tab>
@@ -149,6 +137,10 @@ export default {
         TESTESTES
       </button> -->
     </div>
+
+    <lui-accordion title="Accordion">
+      Accordion content
+    </lui-accordion>
   </div>
 </template>
 
