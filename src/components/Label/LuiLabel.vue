@@ -9,18 +9,11 @@
 
 <script>
 import { generateClasses } from '../../mixins/methods'
+import * as prop from '../../mixins/props'
 import { computed } from 'vue'
 export default {
+  mixins: [prop.size('sm', ['sm', 'lg'])],
   inheritAttrs: false,
-  props: {
-    size: {
-      type: String,
-      default: 'sm',
-      validator(value) {
-        return ['sm', 'lg'].includes(value)
-      },
-    },
-  },
   setup(props) {
     const classes = computed(() => {
       const styles = {

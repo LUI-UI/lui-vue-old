@@ -1,8 +1,8 @@
-import LLabel from './LLabel.vue'
+import LuiLabel from './LuiLabel.vue'
 
 export default {
-  title: 'Label',
-  component: LLabel,
+  title: 'LuiLabel',
+  component: LuiLabel,
   args: {
     label: "label",
   },
@@ -18,13 +18,13 @@ export default {
 
 const Template = (args) => ({
   // Components used in your story `template` are defined in the `components` object
-  components: { LLabel },
+  components: { LuiLabel },
   // The story's `args` need to be mapped into the template through the `setup()` method
   setup() {
     return { args }
   },
   // And then the `args` are bound to your component with `v-bind="args"`
-  template: `<l-label v-bind="args"> {{ args.label }} </l-label>`,
+  template: `<lui-label v-bind="args"> {{ args.label }} </lui-label>`,
 })
 
 
@@ -36,5 +36,5 @@ Small.args = {
 export const Large = Template.bind({})
 // More on args: https://storybook.js.org/docs/vue/writing-stories/args
 Large.args = {
-  size: 'sm',
+  size: 'lg',
 }
