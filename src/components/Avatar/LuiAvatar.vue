@@ -5,7 +5,7 @@
     v-bind="$attrs"
     @click="$emit('click')"
   >
-    <l-icon
+    <lui-icon
       v-if="icon !== 'none'"
       :name="icon"
       fill
@@ -20,7 +20,7 @@
     <span v-else>
       {{ text.toUpperCase().slice(0, 2) }}
     </span>
-    <LBadge
+    <lui-badge
       v-if="badge.variant !== '' && badge.position !== ''"
       :class="badgeClasses"
       :variant="badge.variant"
@@ -31,32 +31,33 @@
 </template>
 <script>
 import { computed } from 'vue'
-import LIcon from '../Icon/LIcon.vue'
-import LBadge from '../Badge/LBadge.vue'
+import LuiIcon from '../Icon/LuiIcon.vue'
+import LuiBadge from '../Badge/LuiBadge.vue'
 import { generateClasses, generateVariant } from '../../mixins/methods'
-import { variant, rounded, roundedFull, filter, size, border } from '../../mixins/props'
+import * as prop from '../../mixins/props'
 export default {
   components: {
-    LIcon,
-    LBadge,
+    LuiIcon,
+    LuiBadge,
   },
-  mixins: [variant, rounded, roundedFull, filter, size, border],
+  mixins: [
+    prop.variant(),
+    prop.filter(),
+    prop.size(),
+    prop.boolean('rounded'),
+    prop.boolean('roundedFull'),
+    prop.boolean('border'),
+    prop.string('icon',' '),
+    prop.string('img',' '),
+  ],
   inheritAttrs: false,
   props: {
-    icon: {
-      type: String,
-      default: 'none',
-    },
     text: {
       type: String,
       default: '',
       validator(value) {
         return value.length <= 2
       },
-    },
-    img: {
-      type: String,
-      default: '',
     },
     badge: {
       type: [Object],

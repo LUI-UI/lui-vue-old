@@ -14,3 +14,11 @@
 * {
   @apply font-worksans;
 }
+
+
+
+/* :root {
+  --color-rose-500: 244,63,94;
+  --color-fusia: 217,70,239;
+  --color-primary: var(--color-fusia);
+} */

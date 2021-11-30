@@ -1,10 +1,10 @@
 <template>
   <div>
     <div :class="parentClasses">
-      <l-icon
-        v-if="prefix !== 'none'"
-        :name="prefix"
-        :class="[iconClasses.size, iconClasses.position, iconClasses.prefix]"
+      <lui-icon
+        v-if="prepend !== 'none'"
+        :name="prepend"
+        :class="[iconClasses.size, iconClasses.position, iconClasses.prepend]"
         line
       />
       <input
@@ -13,7 +13,7 @@
         v-bind="$attrs"
         :class="computedClasses"
       >
-      <l-button
+      <lui-button
         v-if="clear && !$attrs.disabled"
         type="link"
         variant="secondary"
@@ -23,7 +23,7 @@
         :class="[iconClasses.position, iconClasses.clear]"
         @click="$refs.Linput.value = ''"
       />
-      <l-icon
+      <lui-icon
         v-if="state !== null"
         :name="iconClasses.name"
         :class="[iconClasses.size, iconClasses.color, iconClasses.position, iconClasses.state]"
@@ -39,24 +39,24 @@
   </div>
 </template>
 <script>
-import { generateClasses } from '../../mixins/methods'
 import { computed } from 'vue'
-import LIcon from '../Icon/LIcon.vue'
-import LButton from '../Button/LButton.vue'
+import { generateClasses } from '../../mixins/methods'
+import LuiIcon from '../Icon/LuiIcon.vue'
+import LuiButton from '../Button/LuiButton.vue'
+import * as prop from '../../mixins/props'
 export default {
   components: {
-    LIcon,
-    LButton,
+    LuiIcon,
+    LuiButton,
   },
+  mixins: [
+    prop.string('prepend'),
+    prop.size('sm', ['sm', 'md', 'lg']),
+    prop.boolean('clear'),
+    prop.string('description'),
+  ],
   inheritAttrs: false,
   props: {
-    size: {
-      type: String,
-      default: 'sm',
-      validator(value) {
-        return ['sm', 'md', 'lg'].includes(value)
-      },
-    },
     state: {
       type: [String, Boolean, null],
       default: null,
@@ -64,24 +64,12 @@ export default {
         return [null, 'warning', true, false].includes(value)
       },
     },
-    description: {
-      type: String,
-      default: 'none',
-    },
-    prefix: {
-      type: String,
-      default: 'none',
-    },
-    clear: {
-      type: Boolean,
-      default: false,
-    },
   },
   setup(props, context) {
     const computedClasses = computed(() => {
       const classes = {
         paddingLeft:
-          props.prefix === 'none'
+          props.prepend === 'none'
             ? props.size === 'lg'
               ? 'pl-3'
               : 'pl-2'
@@ -180,7 +168,7 @@ export default {
             ? 'text-success'
             : '',
         position: 'absolute top-2/4 transform -translate-y-1/2',
-        prefix: props.size === 'lg' ? 'text-secondary-400 left-3' : 'text-secondary-400 left-2',
+        prepend: props.size === 'lg' ? 'text-secondary-400 left-3' : 'text-secondary-400 left-2',
         state: props.size === 'lg' ? 'right-3' : 'right-2',
         clear:
           props.state === null
@@ -200,7 +188,7 @@ export default {
       computedClasses,
       descriptionClasses,
       iconClasses,
-      parentClasses
+      parentClasses,
     }
   },
 }

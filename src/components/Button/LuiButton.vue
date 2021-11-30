@@ -4,20 +4,20 @@
     v-bind="$attrs"
     @click="$emit('click')"
   >
-    <l-icon
-      v-if="prefix !== 'none'"
-      :name="prefix"
+    <lui-icon
+      v-if="prepend !== 'none'"
+      :name="prepend"
       fill
       :class="iconClasses"
     />
     <span
-      v-if="prefix !== 'none' && icon !== 'none'"
+      v-if="prepend !== 'none' && icon !== 'none'"
       :class="size === 'sm' ? 'mx-1.5' : 'mx-2.5'"
     >
       <slot />
     </span>
     <slot v-else />
-    <l-icon
+    <lui-icon
       v-if="icon !== 'none'"
       :name="icon"
       fill
@@ -27,44 +27,26 @@
 </template>
 <script>
 import { computed } from 'vue'
-import LIcon from '../Icon/LIcon.vue'
+import LuiIcon from '../Icon/LuiIcon.vue'
 import { generateClasses, generateVariant } from '../../mixins/methods'
-import {
-  variant,
-  rounded,
-  roundedFull,
-  filter,
-  block,
-} from '../../mixins/props'
+import * as prop from '../../mixins/props'
 export default {
   components: {
-    LIcon,
+    LuiIcon,
   },
-  mixins: [variant, rounded, roundedFull, filter, block],
+  mixins: [
+    prop.variant(),
+    prop.filter(),
+    prop.boolean('rounded'),
+    prop.boolean('roundedFull'),
+    prop.boolean('block'),
+    prop.string('prepend'),
+    prop.string('icon'),
+    prop.string('type', 'default', ['default', 'text', 'outline', 'link', 'link-underline']),
+    prop.size('md', ['sm', 'md', 'lg']),
+  ],
   inheritAttrs: false,
   props: {
-    size: {
-      type: String,
-      default: 'md',
-      validator(value) {
-        return ['sm', 'md', 'lg'].includes(value)
-      },
-    },
-    type: {
-      type: String,
-      default: 'default',
-      validator(value) {
-        return ['default', 'text', 'outline', 'link', 'link-underline'].includes(value)
-      },
-    },
-    icon: {
-      type: String,
-      default: 'none',
-    },
-    prefix: {
-      type: String,
-      default: 'none',
-    },
     disableStyles: {
       type: [Array, Boolean],
       default: () => [''],
@@ -73,7 +55,6 @@ export default {
           typeof value === 'boolean' ||
           ['hover', 'focus', 'disable', 'underline', ''].some((r) => value.indexOf(r) >= 0)
         )
-        // if(Array.isArray(value)) return ['hover', 'focus', 'disable', 'underline',''].some(r=> value.indexOf(r) >= 0) || (typeof value === 'boolean')
       },
     },
   },
@@ -84,13 +65,13 @@ export default {
         padding:
           props.type === 'link' || props.type === 'link-underline'
             ? 'p-0'
-            : !context.slots.default // text text-icon
+            : !context.slots.default // icon button
             ? props.size === 'lg'
               ? 'p-3'
               : props.size === 'md'
               ? 'p-2.5'
               : 'p-1.5'
-            : props.size === 'lg' // icon button
+            : props.size === 'lg' // text ve icon
             ? 'px-6 py-3'
             : props.size === 'md'
             ? 'px-4 py-2'
@@ -100,16 +81,12 @@ export default {
             ? generateVariant(props.variant, props.filter).backgroundColor
             : '',
         fontColor:
-          props.filter === 'none'
-            ? props.type === 'default'
-              ? 'text-white'
-              : `text-${props.variant}`
-            : props.filter === 'darker'
-            ? props.type === 'default'
-              ? 'text-white'
-              : `text-${props.variant}-800`
-            : props.type === 'default'
+          props.type === 'default'
+            ? generateVariant(props.variant, props.filter).fontColor
+            : props.filter === 'none'
             ? `text-${props.variant}`
+            : props.filter === 'darker'
+            ? `text-${props.variant}-800`
             : `text-${props.variant}-50`,
         fontSize: props.size === 'sm' ? 'text-xs leading-4.5' : 'text-base',
         borderWidth: props.type === 'outline' || props.type === 'default' ? 'border' : '',
@@ -142,9 +119,9 @@ export default {
               : ''
             : '',
         width: !props.block || props.type === 'link' ? '' : 'w-full',
-        display: props.prefix !== 'none' || props.icon !== 'none' ? 'flex' : '',
-        justifyContent: props.prefix !== 'none' || props.icon !== 'none' ? 'justify-center' : '',
-        alignItems: props.prefix !== 'none' || props.icon !== 'none' ? 'items-center' : '',
+        display: props.prepend !== 'none' || props.icon !== 'none' ? 'flex' : '',
+        justifyContent: props.prepend !== 'none' || props.icon !== 'none' ? 'justify-center' : '',
+        alignItems: props.prepend !== 'none' || props.icon !== 'none' ? 'items-center' : '',
       }
       let stateClasses = {
         hover: {
@@ -215,15 +192,20 @@ export default {
     const iconClasses = computed(() => {
       const classes = {
         fontSize: props.size === 'sm' ? 'text-base' : props.size === 'md' ? 'text-xl' : 'text-2xl',
-        prefixMargin:
-          props.prefix !== 'none' ? (props.size === 'sm' ? 'mr-1.5 -ml-0.5' : 'mr-2 -ml-1') : '',
+        lineHeight: props.size === 'lg' ? 'leading-5' : 'leading-none',
+        prependMargin:
+          // prepend var, slot var, icon yoksa
+          props.prepend !== 'none' && !!context.slots.default && props.icon === 'none'
+            ? props.size === 'sm'
+              ? 'mr-1.5 -ml-0.5'
+              : 'mr-2 -ml-1'
+            : 'm-0',
         suffixMargin:
-          props.icon !== 'none' && !!context.slots.default
+          props.prepend === 'none' && !!context.slots.default && props.icon !== 'none'
             ? props.size === 'sm'
               ? 'ml-1.5 -mr-0.5'
               : 'ml-2 -mr-1'
             : 'm-0',
-        lineHeight: props.size === 'lg' ? 'leading-5' : 'leading-none',
       }
       return generateClasses([{ ...classes }])
     })

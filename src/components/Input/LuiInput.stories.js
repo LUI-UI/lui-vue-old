@@ -1,8 +1,8 @@
-import LInput from './LInput.vue'
+import LInput from './LuiInput.vue'
 
 // More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
 export default {
-  title: 'Input',
+  title: 'LuiInput',
   component: LInput,
   args: {
     disable: false,
@@ -24,7 +24,7 @@ export default {
     description: {
       control: { type: 'text' },
     },
-    prefix: {
+    prepend: {
       control: { type: 'select' },
       options: ['search', 'search-2', 'search-eye','none'],
     }
