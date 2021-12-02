@@ -39,6 +39,7 @@ export default {
   ],
 
   setup(props, { slots }) {
+
     const tabProps = ref(slots.default().map((tab) => tab.props))
 
     let initialActive = tabProps.value.findIndex((t) => t.active !== undefined)

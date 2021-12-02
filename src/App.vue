@@ -1,9 +1,15 @@
 <script>
 import LTabs from './components/TabMenu/LuiTabs.vue'
 import LTab from './components/TabMenu/LuiTab.vue'
-import LuiAccordion from './components/Accordion/LuiAccordion.vue'
+// import LuiAccordion from './components/Accordion/LuiAccordion.vue'
+// import LuiAccordionGroup from './components/Accordion/LuiAccordionGroup.vue'
 export default {
-  components: { LTabs, LTab, LuiAccordion },
+  components: { LTabs, LTab, },
+  data(){
+    return {
+      isAcc : true,
+    }
+  }
   // methods: {
   //   handleAction(value) {
   //     console.log('action event', value)
@@ -42,17 +48,25 @@ export default {
       <l-tabs>
         <l-tab title="Landing pages">
           Hello from 1
+          <button @click="isAcc = !isAcc">
+            test
+          </button>
         </l-tab>
-        <l-tab title="Tab2">
+        <l-tab
+          title="Tab2"
+          disabled
+        >
           Hello from tab 2
         </l-tab>
         <l-tab title="Tab3">
           Hello from tab 3
         </l-tab>
-        <l-tab
-          title="Tab4"
-        >
-          Hello from tab 4
+        <l-tab title="Tab4">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim iure perferendis facere sint
+          molestias. Dolorem voluptatum eum voluptas repellendus nam magni praesentium! Voluptate
+          quos totam aspernatur, dolores porro ipsam fugiat iusto. Iste non adipisci est assumenda
+          aspernatur neque exercitationem! Libero maiores laudantium ipsum quo mollitia itaque
+          quisquam inventore sit harum.
         </l-tab>
       </l-tabs>
       <!-- <LCard
@@ -137,10 +151,25 @@ export default {
         TESTESTES
       </button> -->
     </div>
-
-    <lui-accordion title="Accordion">
-      Accordion content
-    </lui-accordion>
+    <!-- <lui-accordion-group>
+      <lui-accordion
+        title="Accordion 1"
+        :active="isAcc"
+      >
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim iure perferendis facere sint
+        molestias. Dolorem voluptatum eum voluptas repellendus nam magni praesentium! Voluptate quos
+        totam aspernatur, dolores porro ipsam fugiat iusto. Iste non adipisci est assumenda
+        aspernatur neque exercitationem! Libero maiores laudantium ipsum quo mollitia itaque
+        quisquam inventore sit harum.
+      </lui-accordion>
+      <lui-accordion title="Accordion 2">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita, repudiandae.
+      </lui-accordion>
+      <lui-accordion title="Accordion 3">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni repellat, laudantium rem ex
+        eaque hic dolore eveniet in consequatur veniam!
+      </lui-accordion>
+    </lui-accordion-group> -->
   </div>
 </template>
 

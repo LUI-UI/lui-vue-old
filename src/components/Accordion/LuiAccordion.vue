@@ -1,105 +1,99 @@
 <template>
-  <div class="accordion w-96 border border-secondary-200 rounded-2xl py-8 px-6">
+  <div :class="computedClasses.wrapper">
     <h3>
-      <button class="w-full flex items-center justify-between mb-6">
-        <span class="text-secondary-900 text-lg font-semibold leading-6">{{ title }}</span>
-        <lui-icon 
-          name="add" 
-          line 
-          class="text-lg" 
+      <button
+        :aria-expanded="isActive"
+        :disabled="disabled"
+        :class="computedClasses.button"
+        @click="expandItem"
+      >
+        <span :class="computedClasses.title">{{ title }}</span>
+        <lui-icon
+          :name="isActive ? 'close' : 'add'"
+          line
+          :class="computedClasses.icon"
         />
       </button>
     </h3>
-    <div class="content">
+    <div
+      v-if="isActive"
+      :class="computedClasses.content"
+      role="region"
+      tabindex="0"
+    >
       <slot />
     </div>
   </div>
-  <!-- <div class="demo-block">
-    <div
-      id="accordionGroup"
-      class="Accordion"
-    >
-      <h3>
-        <button
-          id="accordion1id"
-          :aria-expanded="true"
-          class="Accordion-trigger"
-          aria-controls="sect1"
-        >
-          <span class="Accordion-title">
-            Personal Information
-            <span class="Accordion-icon" />
-          </span>
-        </button>
-      </h3>
-      <div
-        id="sect1"
-        role="region"
-        aria-labelledby="accordion1id"
-        class="Accordion-panel"
-      >
-        <div>
-          <span>content</span>
-        </div>
-      </div>
-      <h3>
-        <button
-          id="accordion2id"
-          aria-expanded="false"
-          class="Accordion-trigger"
-          aria-controls="sect2"
-        >
-          <span class="Accordion-title">
-            Billing Address
-            <span class="Accordion-icon" />
-          </span>
-        </button>
-      </h3>
-      <div
-        id="sect2"
-        role="region"
-        aria-labelledby="accordion2id"
-        class="Accordion-panel"
-      >
-        <div>
-          <span>contetn2</span>
-        </div>
-      </div>
-      <h3>
-        <button
-          id="accordion3id"
-          aria-expanded="false"
-          class="Accordion-trigger"
-          aria-controls="sect3"
-        >
-          <span class="Accordion-title">
-            Shipping Address
-            <span class="Accordion-icon" />
-          </span>
-        </button>
-      </h3>
-      <div
-        id="sect3"
-        role="region"
-        aria-labelledby="accordion3id"
-        class="Accordion-panel"
-      >
-        <div>
-          <span>content3</span>
-        </div>
-      </div>
-    </div>
-  </div> -->
 </template>
 <script>
+import { computed, ref, inject } from 'vue'
+import { generateClasses } from '../../mixins/methods'
 import LuiIcon from '../Icon/LuiIcon.vue'
+import * as prop from '../../mixins/props'
 export default {
   components: { LuiIcon },
-  props: {
-    title: {
-      type: String,
-      default: 'title',
-    },
+  mixins: [prop.string('title', 'title'), prop.boolean('active'),prop.boolean('disabled')],
+  setup(props) {
+    let activeAccordion = inject('activeAccordion', ref(null))
+
+    let isActive = computed(() => {
+      return activeAccordion.value === props.title
+    })
+
+    function expandItem() {
+      if (activeAccordion.value !== props.title) {
+        activeAccordion.value = props.title
+      } else {
+        activeAccordion.value = ''
+      }
+    }
+
+    const computedClasses = computed(() => {
+      const classes = {
+        wrapper: {
+          width: 'w-full',
+          border: 'border',
+          borderColor: props.disabled ? 'border-secondary-100' : 'border-secondary-200',
+          borderRadius: 'rounded-2xl',
+          paddingY: 'py-8',
+          paddingX: 'px-6',
+          margin: 'mb-7',
+        },
+        button: {
+          width: 'w-full',
+          display: 'flex',
+          alignItems: 'items-center',
+          justifyContent: 'justify-between',
+          disabled: 'text-secondary-700 disabled:text-secondary-300'
+        },
+        title: {
+          fontSize: 'text-lg',
+          fontWeight: 'font-semibold',
+          lineHeight: 'leading-6',
+        },
+        icon: {
+          fontSize: 'text-2xl',
+        },
+        content: {
+          marginTop: 'mt-6',
+          fontColor: 'text-secondary-600'
+        },
+      }
+      const { wrapper, button, title, icon, content } = classes
+      return {
+        wrapper: generateClasses([{ ...wrapper }]),
+        button: generateClasses([{ ...button }]),
+        title: generateClasses([{ ...title }]),
+        icon: generateClasses([{ ...icon }]),
+        content: generateClasses([{ ...content }]),
+      }
+    })
+
+    return {
+      expandItem,
+      isActive,
+      computedClasses,
+    }
   },
 }
 </script>
