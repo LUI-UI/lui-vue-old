@@ -6,6 +6,8 @@
         :disabled="disabled"
         :class="computedClasses.button"
         @click="expandItem"
+        @focus="focus = true"
+        @focusout="focus = false"
       >
         <span :class="computedClasses.title">{{ title }}</span>
         <lui-icon
@@ -47,8 +49,10 @@ export default {
         activeAccordion.value = ''
       }
     }
-
+    let focus = ref(false)
+    
     const computedClasses = computed(() => {
+      console.log(focus.value)
       const classes = {
         wrapper: {
           width: 'w-full',
@@ -93,6 +97,7 @@ export default {
       expandItem,
       isActive,
       computedClasses,
+      focus
     }
   },
 }

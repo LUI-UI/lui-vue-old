@@ -1,6 +1,6 @@
 <script>
-import LTabs from './components/TabMenu/LuiTabs.vue'
-import LTab from './components/TabMenu/LuiTab.vue'
+import LTabs from './components/Tabs/LuiTabs.vue'
+import LTab from './components/Tabs/LuiTab.vue'
 // import LuiAccordion from './components/Accordion/LuiAccordion.vue'
 // import LuiAccordionGroup from './components/Accordion/LuiAccordionGroup.vue'
 export default {
