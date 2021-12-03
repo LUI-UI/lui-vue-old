@@ -1,34 +1,38 @@
-import LuiLink from './LuiLink.vue'
+import LuiText from './LuiText.vue'
 
 export default {
-  title: 'LuiLink',
-  component: LuiLink,
+  title: 'LuiText',
+  component: LuiText,
   args: {
-    label: "link",
+    label: "lui text",
   },
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   argTypes: {
     // onClick: {},
     size: {
       control: { type: 'select' },
-      options: ['xxsm', 'xsm', 'sm', 'lg', 'xlg'],
+      options: ['xs', 'sm', 'lg','xlg'],
     },
     variant: {
       control: { type: 'select' },
       options: ['primary', 'secondary', 'info', 'success', 'warning', 'danger'],
     },
+    tag:{
+      control: {type: 'select'},
+      options: ['p','span','a','div']
+    }
   },
 }
 
 const Template = (args) => ({
   // Components used in your story `template` are defined in the `components` object
-  components: { LuiLink },
+  components: { LuiText },
   // The story's `args` need to be mapped into the template through the `setup()` method
   setup() {
     return { args }
   },
   // And then the `args` are bound to your component with `v-bind="args"`
-  template: `<lui-link v-bind="args" href="https://contentrain.io/"> {{ args.label }} </lui-link>`,
+  template: `<lui-text v-bind="args"> {{ args.label }} </lui-text>`,
 })
 
 
@@ -36,11 +40,13 @@ export const Small = Template.bind({})
 // More on args: https://storybook.js.org/docs/vue/writing-stories/args
 Small.args = {
   size: 'sm',
-  variant: 'primary'
+  variant: 'secondary',
+  tag: 'p'
 }
 export const Large = Template.bind({})
 // More on args: https://storybook.js.org/docs/vue/writing-stories/args
 Large.args = {
   size: 'lg',
-  variant: 'success'
+  variant: 'secondary',
+  tag: 'p'
 }

@@ -1,10 +1,10 @@
 <template>
-  <a
-    v-bind="$attrs"
+  <component 
+    :is="tag" 
     :class="classes"
   >
     <slot />
-  </a>
+  </component>
 </template>
 
 <script>
@@ -12,15 +12,13 @@ import * as prop from '../../mixins/props'
 import { computed } from 'vue'
 import { generateClasses } from '../../mixins/methods'
 export default {
-  mixins: [prop.size('sm', ['xxsm', 'xsm', 'sm', 'lg', 'xlg']), prop.variant('variant', 'primary')],
+  mixins: [prop.string('tag', 'p'), prop.size('md', ['xs', 'sm', 'md', 'lg','xlg']),prop.variant('variant', 'secondary')],
   setup(props) {
     const classes = computed(() => {
       const styles = {
-        fontColor: `text-${props.variant}-400 hover:text-${props.variant}-500`,
+        fontColor: `text-${props.variant}-600`,
         fontSize:
-          props.size === 'xxsm'
-            ? 'text-2xs'
-            : props.size === 'xsm' 
+          props.size === 'xs'
             ? 'text-xs'
             : props.size === 'sm'
             ? 'text-sm'
@@ -30,14 +28,13 @@ export default {
         lineHeight:
           props.size === 'xxsm'
             ? 'leading-3'
-            : props.size === 'xsm' 
+            : props.size === 'xsm'
             ? 'leading-4.5'
             : props.size === 'sm'
             ? 'leading-5'
             : props.size === 'lg'
             ? 'leading-6'
             : 'leading-7',
-        underline: 'underline',
       }
       return generateClasses([{ ...styles }])
     })

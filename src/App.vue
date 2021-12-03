@@ -53,7 +53,10 @@ export default {
         link test
       </lui-link>
       <hr>
-      <a class="test" href="https://lanista.com.tr/">contentrain!</a>
+      <a
+        class="test"
+        href="https://lanista.com.tr/"
+      >contentrain!</a>
       <!-- <LCard
         class="w-1/4"
         border
