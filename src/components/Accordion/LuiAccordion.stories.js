@@ -39,7 +39,7 @@ const GroupTemplate = (args) => ({
   template: 
   `<lui-accordion-group v-bind="args"> 
     <lui-accordion title="Title1"> Hello from 1 </lui-accordion>
-    <lui-accordion title="Title2" disabled> Hello from tab 2 </lui-accordion>
+    <lui-accordion title="Title2"> Hello from tab 2 </lui-accordion>
     <lui-accordion title="Title3"> Hello from tab 3 </lui-accordion>
     <lui-accordion title="Title4"> Hello from tab 4 </lui-accordion>
   </lui-accordion-group>`,

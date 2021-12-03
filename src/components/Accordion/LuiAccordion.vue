@@ -6,8 +6,8 @@
         :disabled="disabled"
         :class="computedClasses.button"
         @click="expandItem"
-        @focus="focus = true"
-        @focusout="focus = false"
+        @focus="btnFocus = true"
+        @focusout="btnFocus = false"
       >
         <span :class="computedClasses.title">{{ title }}</span>
         <lui-icon
@@ -49,7 +49,7 @@ export default {
         activeAccordion.value = ''
       }
     }
-    let focus = ref(false)
+    let btnFocus = ref(false)
     
     const computedClasses = computed(() => {
       console.log(focus.value)
@@ -62,13 +62,15 @@ export default {
           paddingY: 'py-8',
           paddingX: 'px-6',
           margin: 'mb-7',
+          focus: btnFocus.value ? 'ring-2 ring-primary ring-offset-2' : ''
         },
         button: {
           width: 'w-full',
           display: 'flex',
           alignItems: 'items-center',
           justifyContent: 'justify-between',
-          disabled: 'text-secondary-700 disabled:text-secondary-300'
+          disabled: 'text-secondary-700 disabled:text-secondary-300',
+          outline: 'outline-none'
         },
         title: {
           fontSize: 'text-lg',
@@ -97,7 +99,7 @@ export default {
       expandItem,
       isActive,
       computedClasses,
-      focus
+      btnFocus
     }
   },
 }
