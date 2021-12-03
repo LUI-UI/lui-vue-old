@@ -15,7 +15,10 @@ export default {
     alignContent: {
       control: { type: 'select' },
       options: ['left', 'center', 'right'],
-    },    
+    },
+    stretch: {
+      control: {type: 'boolean'}
+    }    
   },
 }
 

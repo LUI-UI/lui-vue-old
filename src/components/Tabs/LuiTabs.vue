@@ -36,6 +36,7 @@ export default {
   mixins: [
     prop.string('alignTabs', 'left', ['left', 'center', 'right']),
     prop.string('alignContent', 'left', ['left', 'center', 'right']),
+    prop.boolean('stretch')
   ],
 
   setup(props, { slots }) {
@@ -89,6 +90,7 @@ export default {
         fontWeight: 'font-semibold',
         position: 'relative',
         margin: 'mb-2',
+        flexGrow: props.stretch ? 'flex-grow' : '',
         disabled: 'disabled:text-secondary-300',
         after:
           'after:w-full after:h-0.5 after:absolute after:-bottom-2 after:left-0 after:inline-block after:rounded-full after:bg-transparent',
