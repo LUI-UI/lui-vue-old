@@ -40,6 +40,7 @@ export default {
     prop.boolean('rounded'),
     prop.boolean('roundedFull'),
     prop.boolean('block'),
+    prop.boolean('uppercase'),
     prop.string('prepend'),
     prop.string('icon'),
     prop.string('type', 'default', ['default', 'text', 'outline', 'link', 'link-underline']),
@@ -118,6 +119,7 @@ export default {
               ? 'rounded-full'
               : ''
             : '',
+        uppercase: props.uppercase ? 'uppercase' : '',
         width: !props.block || props.type === 'link' ? '' : 'w-full',
         display: props.prepend !== 'none' || props.icon !== 'none' ? 'flex' : '',
         justifyContent: props.prepend !== 'none' || props.icon !== 'none' ? 'justify-center' : '',

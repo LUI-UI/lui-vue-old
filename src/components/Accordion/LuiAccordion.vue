@@ -52,7 +52,6 @@ export default {
     let btnFocus = ref(false)
     
     const computedClasses = computed(() => {
-      console.log(focus.value)
       const classes = {
         wrapper: {
           width: 'w-full',
