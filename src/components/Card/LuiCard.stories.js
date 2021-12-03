@@ -1,28 +1,18 @@
 import LuiCard from './LuiCard.vue'
-import {
-  img,
-  border,
-  rounded,
-  borderFilter,
-  bgFilter,
-  textFilter,
-  bgVariant,
-  textVariant,
-  borderVariant,
-} from '../../utils/storyProps'
+import * as prop from '../../utils/storyProps'
 export default {
   title: 'LuiCard',
   components: LuiCard,
   argTypes: {
-    img,
-    border,
-    rounded,
-    borderFilter,
-    bgFilter,
-    textFilter,
-    bgVariant,
-    textVariant,
-    borderVariant,
+    img: prop.img,
+    border: prop.border,
+    rounded: prop.rounded,
+    borderFilter: prop.borderFilter,
+    bgFilter: prop.bgFilter,
+    textFilter: prop.textFilter,
+    bgVariant: prop.bgVariant,
+    textVariant: prop.textVariant,
+    borderVariant: prop.borderVariant,
   },
 }
 

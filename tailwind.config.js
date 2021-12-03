@@ -1,5 +1,5 @@
 const color = require('./colors')
-// const plugin = require('tailwindcss/plugin')
+const plugin = require('tailwindcss/plugin')
 // const variables = ['warning','danger','primary','success','info','secondary']
 // const keys = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900']
 // const aaa = []
@@ -64,50 +64,50 @@ module.exports = {
   variants: {
     extend: {
       borderWidth: ['hover'],
-      textColor: ['disabled'],
+      textColor: ['visited','disabled','hover'],
       backgroundColor: ['disabled'],
       borderColor: ['disabled'],
-      // outlineColor: ['hover','focus'],
       ringColor: ['disabled'],
       ringWidth: ['disabled'],
     },
   },
-  // plugins: [
-  //   require('tailwind-safelist-generator')({
-  //     path: 'safelist.txt',
-  //     patterns: [
-  //       'bg-{colors}',
-  //       'hover:bg-{colors}',
-  //       'focus:bg-{colors}',
-  //       'disabled:bg-{colors}',
-  //       'text-{colors}',
-  //       'hover:text-{colors}',
-  //       'focus:text-{colors}',
-  //       'disabled:text-{colors}',
-  //       'border-{colors}',
-  //       'hover:border-{colors}',
-  //       'focus:border-{colors}',
-  //       'disabled:border-{colors}',
-  //       'outline-{colors}',
-  //       'hover:outline-{colors}',
-  //       'focus:outline-{colors}',
-  //       'disabled:outline-{colors}',
-  //       'ring-{colors}',
-  //       'hover:ring-{colors}',
-  //       'focus:ring-{colors}',
-  //       'disabled:ring-{colors}',
-  //       'rounded-{borderRadius}'
-  //     ],
-  //   }),
-  //   plugin(function ({ addUtilities, theme }) {
-  //     const outline = {
-  //       '.outline': {
-  //         outlineColor: theme('colors'),
-  //         outlineStyle: 'solid',
-  //         outlineWidth: '1px',
-  //       },
-  //     }
-  //     addUtilities(outline)
-  //   }),
-  // ],
+  plugins: [
+    require('tailwind-safelist-generator')({
+      path: 'safelist.txt',
+      patterns: [
+        'bg-{colors}',
+        'hover:bg-{colors}',
+        'focus:bg-{colors}',
+        'disabled:bg-{colors}',
+        'text-{colors}',
+        'hover:text-{colors}',
+        'focus:text-{colors}',
+        'visited:text-{colors}',
+        'disabled:text-{colors}',
+        'border-{colors}',
+        'hover:border-{colors}',
+        'focus:border-{colors}',
+        'disabled:border-{colors}',
+        'outline-{colors}',
+        'hover:outline-{colors}',
+        'focus:outline-{colors}',
+        'disabled:outline-{colors}',
+        'ring-{colors}',
+        'hover:ring-{colors}',
+        'focus:ring-{colors}',
+        'disabled:ring-{colors}',
+        'rounded-{borderRadius}'
+      ],
+    }),
+    plugin(function ({ addUtilities, theme }) {
+      const outline = {
+        '.outline': {
+          outlineColor: theme('colors'),
+          outlineStyle: 'solid',
+          outlineWidth: '1px',
+        },
+      }
+      addUtilities(outline)
+    }),
+  ],
 }

@@ -29,28 +29,25 @@
 import { computed } from 'vue'
 import LuiIcon from '../Icon/LuiIcon.vue'
 import { generateClasses, generateVariant } from '../../mixins/methods'
-import { variant, rounded, roundedFull, filter, block, prepend, icon } from '../../mixins/props'
+import * as prop from '../../mixins/props'
 export default {
   components: {
     LuiIcon,
   },
-  mixins: [variant, rounded, roundedFull, filter, block, prepend, icon],
+  mixins: [
+    prop.variant(),
+    prop.filter(),
+    prop.boolean('rounded'),
+    prop.boolean('roundedFull'),
+    prop.boolean('block'),
+    prop.boolean('uppercase'),
+    prop.string('prepend'),
+    prop.string('icon'),
+    prop.string('type', 'default', ['default', 'text', 'outline', 'link', 'link-underline']),
+    prop.size('md', ['sm', 'md', 'lg']),
+  ],
   inheritAttrs: false,
   props: {
-    size: {
-      type: String,
-      default: 'md',
-      validator(value) {
-        return ['sm', 'md', 'lg'].includes(value)
-      },
-    },
-    type: {
-      type: String,
-      default: 'default',
-      validator(value) {
-        return ['default', 'text', 'outline', 'link', 'link-underline'].includes(value)
-      },
-    },
     disableStyles: {
       type: [Array, Boolean],
       default: () => [''],
@@ -85,16 +82,12 @@ export default {
             ? generateVariant(props.variant, props.filter).backgroundColor
             : '',
         fontColor:
-          props.filter === 'none'
-            ? props.type === 'default'
-              ? 'text-white'
-              : `text-${props.variant}`
-            : props.filter === 'darker'
-            ? props.type === 'default'
-              ? 'text-white'
-              : `text-${props.variant}-800`
-            : props.type === 'default'
+          props.type === 'default'
+            ? generateVariant(props.variant, props.filter).fontColor
+            : props.filter === 'none'
             ? `text-${props.variant}`
+            : props.filter === 'darker'
+            ? `text-${props.variant}-800`
             : `text-${props.variant}-50`,
         fontSize: props.size === 'sm' ? 'text-xs leading-4.5' : 'text-base',
         borderWidth: props.type === 'outline' || props.type === 'default' ? 'border' : '',
@@ -126,6 +119,7 @@ export default {
               ? 'rounded-full'
               : ''
             : '',
+        uppercase: props.uppercase ? 'uppercase' : '',
         width: !props.block || props.type === 'link' ? '' : 'w-full',
         display: props.prepend !== 'none' || props.icon !== 'none' ? 'flex' : '',
         justifyContent: props.prepend !== 'none' || props.icon !== 'none' ? 'justify-center' : '',
@@ -202,7 +196,7 @@ export default {
         fontSize: props.size === 'sm' ? 'text-base' : props.size === 'md' ? 'text-xl' : 'text-2xl',
         lineHeight: props.size === 'lg' ? 'leading-5' : 'leading-none',
         prependMargin:
-        // prepend var, slot var, icon yoksa 
+          // prepend var, slot var, icon yoksa
           props.prepend !== 'none' && !!context.slots.default && props.icon === 'none'
             ? props.size === 'sm'
               ? 'mr-1.5 -ml-0.5'
@@ -214,11 +208,9 @@ export default {
               ? 'ml-1.5 -mr-0.5'
               : 'ml-2 -mr-1'
             : 'm-0',
-        
       }
       return generateClasses([{ ...classes }])
     })
-    console.log("SLOT : ", !!context.slots.default)
     return { computedClasses, iconClasses }
   },
 }

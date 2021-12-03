@@ -1,13 +1,19 @@
 <script>
-import LChip from './components/Chip/LuiChip.vue'
-
+import LuiLink from './components/Link/LuiLink.vue'
+// import LuiAccordion from './components/Accordion/LuiAccordion.vue'
+// import LuiAccordionGroup from './components/Accordion/LuiAccordionGroup.vue'
 export default {
-  components: { LChip },
-  methods: {
-    handleAction(value) {
-      console.log('action event', value)
-    },
+  components: { LuiLink },
+  data() {
+    return {
+      isAcc: true,
+    }
   },
+  // methods: {
+  //   handleAction(value) {
+  //     console.log('action event', value)
+  //   },
+  // },
 }
 
 // function hexToRgb(hex) {
@@ -38,20 +44,19 @@ export default {
 <template>
   <div class="btn-container">
     <div class="mb-8">
-      <LChip
-        size="md"
-        :click-able="true"
-        @click="handleAction"
+      <lui-link
+        href="https://contentrain.io/" 
+        target="_blank"
+        size="xl"
+        variany="primary"
       >
-        TEST
-      </LChip>
-      <!-- <LButton
-        type="default"
-        variant="primary"
-        size="md"
-        icon="home"
-      >
-      </LButton>   -->
+        link test
+      </lui-link>
+      <hr>
+      <a
+        class="test"
+        href="https://lanista.com.tr/"
+      >contentrain!</a>
       <!-- <LCard
         class="w-1/4"
         border
@@ -134,43 +139,45 @@ export default {
         TESTESTES
       </button> -->
     </div>
-    <!-- <l-button
-      type="default"
-      variant="primary"
-      size="lg"
-      icon="home"
-    />
-    <l-button
-      type="outline"
-      variant="primary"
-      size="sm"
-      icon="home"
-      class="mt-2"
-      rounded-full
-    /> -->
-
-    <!-- <button class="p-1.5 text-white bg-blue-500 text-xs flex mt-2">
-      <i
-        class="ri-home-fill text-lg leading-none"
-      />
-    </button> -->
-    <!-- <button class="tttt">Sign up</button> -->
+    <!-- <lui-accordion-group>
+      <lui-accordion
+        title="Accordion 1"
+        :active="isAcc"
+      >
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim iure perferendis facere sint
+        molestias. Dolorem voluptatum eum voluptas repellendus nam magni praesentium! Voluptate quos
+        totam aspernatur, dolores porro ipsam fugiat iusto. Iste non adipisci est assumenda
+        aspernatur neque exercitationem! Libero maiores laudantium ipsum quo mollitia itaque
+        quisquam inventore sit harum.
+      </lui-accordion>
+      <lui-accordion title="Accordion 2">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita, repudiandae.
+      </lui-accordion>
+      <lui-accordion title="Accordion 3">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni repellat, laudantium rem ex
+        eaque hic dolore eveniet in consequatur veniam!
+      </lui-accordion>
+    </lui-accordion-group> -->
   </div>
 </template>
 
-<style scoped>
+<style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
 }
 .btn-container {
+  /* font-family: 'Work Sans', sans-serif; */
   padding: 150px;
 }
-
+a.test{
+  color: blue;
+}
+a.test:visited{
+  color: red;
+}
+/* a:visited{
+  color:red;
+} */
 .badge-container {
   display: flex;
   align-items: flex-end;

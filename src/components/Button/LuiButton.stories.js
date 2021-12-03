@@ -28,6 +28,9 @@ export default {
     disableStyles:{
       control: { type: 'multi-select' },
       options: ['hover', 'focus', 'disable', 'underline',true,false],
+    },
+    uppercase: {
+      control: { type: 'boolean' }
     }
   },
 }

@@ -23,31 +23,22 @@
 <script>
 import { computed } from 'vue'
 import { generateClasses, generateVariant } from '../../mixins/methods'
-import { variant, rounded, roundedFull, filter, prepend, icon } from '../../mixins/props'
 import LuiIcon from '../Icon/LuiIcon.vue'
+import * as prop from '../../mixins/props'
+
 export default {
   components: { LuiIcon },
-  mixins: [variant, rounded, roundedFull, filter, prepend, icon],
-  props: {
-    size: {
-      type: String,
-      default: 'sm',
-      validator(value) {
-        return ['sm', 'md', 'lg'].includes(value)
-      },
-    },
-    type: {
-      type: String,
-      default: 'default',
-      validator(value) {
-        return ['default', 'outline'].includes(value)
-      },
-    },
-    clickAble: {
-      type: Boolean,
-      default: false
-    }
-  },
+  mixins: [
+    prop.variant(),
+    prop.filter(),
+    prop.size('sm',['sm', 'md', 'lg']),
+    prop.boolean('rounded'),
+    prop.boolean('roundedFull'),
+    prop.boolean('clickAble'),
+    prop.string('prepend'),
+    prop.string('icon'),
+    prop.string('type',['default', 'outline'])
+  ],
   emits: ['click'],
   setup(props) {
     const computedClasses = computed(() => {
@@ -107,7 +98,6 @@ export default {
       }
       return classes
     })
-
 
     // function clickEvent() {
     //   emit('action', slots.default()[0].children)
