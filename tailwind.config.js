@@ -64,7 +64,7 @@ module.exports = {
   variants: {
     extend: {
       borderWidth: ['hover'],
-      textColor: ['disabled'],
+      textColor: ['visited','disabled','hover'],
       backgroundColor: ['disabled'],
       borderColor: ['disabled'],
       // outlineColor: ['hover','focus'],

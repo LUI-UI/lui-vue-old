@@ -1,15 +1,14 @@
 <script>
-import LTabs from './components/Tabs/LuiTabs.vue'
-import LTab from './components/Tabs/LuiTab.vue'
+import LuiLink from './components/Link/LuiLink.vue'
 // import LuiAccordion from './components/Accordion/LuiAccordion.vue'
 // import LuiAccordionGroup from './components/Accordion/LuiAccordionGroup.vue'
 export default {
-  components: { LTabs, LTab, },
-  data(){
+  components: { LuiLink },
+  data() {
     return {
-      isAcc : true,
+      isAcc: true,
     }
-  }
+  },
   // methods: {
   //   handleAction(value) {
   //     console.log('action event', value)
@@ -45,30 +44,16 @@ export default {
 <template>
   <div class="btn-container">
     <div class="mb-8">
-      <l-tabs>
-        <l-tab title="Landing pages">
-          Hello from 1
-          <button @click="isAcc = !isAcc">
-            test
-          </button>
-        </l-tab>
-        <l-tab
-          title="Tab2"
-          disabled
-        >
-          Hello from tab 2
-        </l-tab>
-        <l-tab title="Tab3">
-          Hello from tab 3
-        </l-tab>
-        <l-tab title="Tab4">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim iure perferendis facere sint
-          molestias. Dolorem voluptatum eum voluptas repellendus nam magni praesentium! Voluptate
-          quos totam aspernatur, dolores porro ipsam fugiat iusto. Iste non adipisci est assumenda
-          aspernatur neque exercitationem! Libero maiores laudantium ipsum quo mollitia itaque
-          quisquam inventore sit harum.
-        </l-tab>
-      </l-tabs>
+      <lui-link
+        href="https://contentrain.io/" 
+        target="_blank"
+        size="xl"
+        variany="primary"
+      >
+        link test
+      </lui-link>
+      <hr>
+      <a class="test" href="https://lanista.com.tr/">contentrain!</a>
       <!-- <LCard
         class="w-1/4"
         border
@@ -174,21 +159,22 @@ export default {
 </template>
 
 <style>
-/* @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); */
 #app {
-  /* font-family: font-worksans;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center; */
-  /* color: #2c3e50; */
-  font-family: 'Work Sans', sans-serif;
   margin-top: 60px;
 }
 .btn-container {
   /* font-family: 'Work Sans', sans-serif; */
   padding: 150px;
 }
-
+a.test{
+  color: blue;
+}
+a.test:visited{
+  color: red;
+}
+/* a:visited{
+  color:red;
+} */
 .badge-container {
   display: flex;
   align-items: flex-end;
