@@ -89,6 +89,7 @@ export default {
         fontWeight: 'font-semibold',
         position: 'relative',
         margin: 'mb-2',
+        disabled: 'disabled:text-secondary-300',
         after:
           'after:w-full after:h-0.5 after:absolute after:-bottom-2 after:left-0 after:inline-block after:rounded-full after:bg-transparent',
       }
@@ -99,7 +100,7 @@ export default {
           ? 'text-center'
           : 'text-right'
       const activeTab = 'text-primary after:bg-primary'
-      const defaultTab = 'text-secondary-400'
+      const defaultTab = 'text-secondary-500'
       const tabMenuContainer = 'w-full'
       const tabText = 'px-4'
 
