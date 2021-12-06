@@ -8,10 +8,32 @@ const color = require('./colors')
 //     aaa.push({
 //       [`${v}-${k}`]: ({ opacityValue }) => {
 //         return `rgba(var(--color-${v}-${k}),${opacityValue})`
-//       },
+//       },s
 //     })
 //   })
 // })
+
+const colors = {
+  warning: {},
+  danger: {},
+  primary: {},
+  success: {},
+  info: {},
+  secondary: {},
+}
+const levels = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 'default']
+const variables = ['warning', 'danger', 'primary', 'success', 'info', 'secondary']
+
+variables.forEach((variable) => {
+  levels.forEach((level) => {
+    if (level !== 'default') {
+      colors[variable][level] = `var(--color-${variable}-${level})`
+    } else {
+      colors[variable]['DEFAULT'] = `var(--color-${variable}-500)`
+    }
+  })
+})
+
 
 module.exports = {
   mode: 'jit',
@@ -21,15 +43,12 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-      colors: {
-        dark: color.gray[800],
-        light: color.gray[100],
-        warning: color.yellow,
-        danger: color.red,
-        primary: color.blue,
-        success: color.green,
-        info: color.cyan,
-        secondary: color.gray,
+      colors: { 
+        ...colors, 
+        black: 'var(--color-black)', 
+        white: 'var(--color-white)', 
+        dark: "var(--color-dark)",
+        light: "var(--color-dark)", 
       },
       boxShadow: {
         DEFAULT: '0px 0px 16px rgba(0,0,0,0.1)',
@@ -64,50 +83,40 @@ module.exports = {
   variants: {
     extend: {
       borderWidth: ['hover'],
-      textColor: ['visited','disabled','hover'],
+      textColor: ['visited', 'disabled', 'hover'],
       backgroundColor: ['disabled'],
       borderColor: ['disabled'],
       ringColor: ['disabled'],
       ringWidth: ['disabled'],
     },
   },
-  // plugins: [
-  //   require('tailwind-safelist-generator')({
-  //     path: 'safelist.txt',
-  //     patterns: [
-  //       'bg-{colors}',
-  //       'hover:bg-{colors}',
-  //       'focus:bg-{colors}',
-  //       'disabled:bg-{colors}',
-  //       'text-{colors}',
-  //       'hover:text-{colors}',
-  //       'focus:text-{colors}',
-  //       'visited:text-{colors}',
-  //       'disabled:text-{colors}',
-  //       'border-{colors}',
-  //       'hover:border-{colors}',
-  //       'focus:border-{colors}',
-  //       'disabled:border-{colors}',
-  //       'outline-{colors}',
-  //       'hover:outline-{colors}',
-  //       'focus:outline-{colors}',
-  //       'disabled:outline-{colors}',
-  //       'ring-{colors}',
-  //       'hover:ring-{colors}',
-  //       'focus:ring-{colors}',
-  //       'disabled:ring-{colors}',
-  //       'rounded-{borderRadius}'
-  //     ],
-  //   }),
-  //   plugin(function ({ addUtilities, theme }) {
-  //     const outline = {
-  //       '.outline': {
-  //         outlineColor: theme('colors'),
-  //         outlineStyle: 'solid',
-  //         outlineWidth: '1px',
-  //       },
-  //     }
-  //     addUtilities(outline)
-  //   }),
-  // ],
+  plugins: [
+    require('tailwind-safelist-generator')({
+      path: 'safelist.txt',
+      patterns: [
+        'bg-{colors}',
+        'hover:bg-{colors}',
+        'focus:bg-{colors}',
+        'disabled:bg-{colors}',
+        'text-{colors}',
+        'hover:text-{colors}',
+        'focus:text-{colors}',
+        'visited:text-{colors}',
+        'disabled:text-{colors}',
+        'border-{colors}',
+        'hover:border-{colors}',
+        'focus:border-{colors}',
+        'disabled:border-{colors}',
+        'outline-{colors}',
+        'hover:outline-{colors}',
+        'focus:outline-{colors}',
+        'disabled:outline-{colors}',
+        'ring-{colors}',
+        'hover:ring-{colors}',
+        'focus:ring-{colors}',
+        'disabled:ring-{colors}',
+        'rounded-{borderRadius}'
+      ],
+    }),
+  ],
 }
