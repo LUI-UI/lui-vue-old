@@ -9,8 +9,8 @@ module.exports = {
 // ci
 // docs
 // feat
-// fix
 // perf
+// fix
 // refactor
 // revert
 // test
