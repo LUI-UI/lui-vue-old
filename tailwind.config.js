@@ -1,18 +1,4 @@
 const color = require('./colors')
-// const plugin = require('tailwindcss/plugin')
-// const variables = ['warning','danger','primary','success','info','secondary']
-// const keys = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900']
-// const aaa = []
-// variables.forEach((v) => {
-//   keys.forEach((k) => {
-//     aaa.push({
-//       [`${v}-${k}`]: ({ opacityValue }) => {
-//         return `rgba(var(--color-${v}-${k}),${opacityValue})`
-//       },s
-//     })
-//   })
-// })
-
 const colors = {
   warning: {},
   danger: {},
@@ -29,7 +15,7 @@ variables.forEach((variable) => {
     if (level !== 'default') {
       colors[variable][level] = `var(--color-${variable}-${level})`
     } else {
-      colors[variable]['DEFAULT'] = `var(--color-${variable}-500)`
+      colors[variable]['DEFAULT'] = `var(--color-${variable})`
     }
   })
 })
