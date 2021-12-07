@@ -1,6 +1,6 @@
 {
   "name": "lui-vue",
-  "version": "0.0.0-semantic-release",
+  "version": "0.1.0",
   "private": false,
   "scripts": {
     "dev": "vite",
