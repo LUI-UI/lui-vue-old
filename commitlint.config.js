@@ -4,7 +4,6 @@ module.exports = {
 
 // https://www.conventionalcommits.org/en/v1.0.0/#summary
 
-
 //build
 // chore
 // ci
@@ -14,5 +13,5 @@ module.exports = {
 // perf
 // refactor
 // revert
-// style
 // test
+// style
