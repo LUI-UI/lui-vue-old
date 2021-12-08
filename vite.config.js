@@ -1,18 +1,18 @@
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 import eslintPlugin from 'vite-plugin-eslint'
-import { visualizer } from 'rollup-plugin-visualizer'
 const path = require('path')
 
 export default defineConfig({
+  resolve: {
+    alias:{
+      '/@': path.resolve('./node_modules/vue')
+    },
+    preserveSymlinks: false
+  },
   plugins: [
     eslintPlugin(),
     vue(),
-    visualizer({
-      filename: './dist/report.html',
-      open: true,
-      brotliSize: true,
-    }),
   ],
   build: {
     lib: {
