@@ -10,6 +10,7 @@
 <script>
 import { computed } from 'vue'
 import * as prop from '../../mixins/props'
+import { generateClasses } from '../../mixins/methods'
 export default {
   mixins: [prop.string('level', '2', ['1', '2', '3', '4', '5', '6']), prop.boolean('display')],
   setup(props) {
@@ -19,6 +20,7 @@ export default {
     const computedClasses = computed(() => {
       const classes = {
         textColor: 'secondary-600',
+        fontWeight: '400',
         // level 4 te leading tasarimda 23, bizde 24
         // level 5 te 25 biz de  24
         // level 2 de 30 biz de
@@ -50,7 +52,7 @@ export default {
               : 'text-9xl'
             : '',
       }
-      return classes
+      return generateClasses([{...classes}])
     })
     return { setLevel, computedClasses }
   },
