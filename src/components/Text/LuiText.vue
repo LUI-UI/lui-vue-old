@@ -1,6 +1,6 @@
 <template>
-  <component 
-    :is="tag" 
+  <component
+    :is="tag"
     :class="classes"
   >
     <slot />
@@ -12,7 +12,47 @@ import * as prop from '../../mixins/props'
 import { computed } from 'vue'
 import { generateClasses } from '../../mixins/methods'
 export default {
-  mixins: [prop.string('tag', 'p'), prop.size('md', ['xs', 'sm', 'md', 'lg','xlg']),prop.variant('variant', 'secondary')],
+  mixins: [
+    prop.string('tag', 'p', [
+      'p',
+      'span',
+      'br',
+      'strong',
+      'em',
+      'quotes',
+      'blockquote',
+      'code',
+      'pre',
+      'mark',
+      'ins',
+      'del',
+      'sup',
+      'sub',
+      'small',
+      'i',
+      'b',
+      'abbr',
+      'address',
+      'bdi',
+      'bdo',
+      'cite',
+      'dfn',
+      'kbs',
+      'meter',
+      'q',
+      'rp',
+      'rt',
+      'ruby',
+      's',
+      'samp',
+      'time',
+      'u',
+      'var',
+      'wbr',
+    ]),
+    prop.size('md', ['xs', 'sm', 'md', 'lg', 'xlg']),
+    prop.variant('variant', 'secondary'),
+  ],
   setup(props) {
     const classes = computed(() => {
       const styles = {

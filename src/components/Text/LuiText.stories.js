@@ -4,23 +4,59 @@ export default {
   title: 'LuiText',
   component: LuiText,
   args: {
-    label: "lui text",
+    label: 'lui text',
   },
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   argTypes: {
     // onClick: {},
     size: {
       control: { type: 'select' },
-      options: ['xs', 'sm', 'lg','xlg'],
+      options: ['xs', 'sm', 'lg', 'xlg'],
     },
     variant: {
       control: { type: 'select' },
       options: ['primary', 'secondary', 'info', 'success', 'warning', 'danger'],
     },
-    tag:{
-      control: {type: 'select'},
-      options: ['p','span','a','div']
-    }
+    tag: {
+      control: { type: 'select' },
+      options: [
+        'p',
+        'span',
+        'br',
+        'strong',
+        'em',
+        'quotes',
+        'blockquote',
+        'code',
+        'pre',
+        'mark',
+        'ins',
+        'del',
+        'sup',
+        'sub',
+        'small',
+        'i',
+        'b',
+        'abbr',
+        'address',
+        'bdi',
+        'bdo',
+        'cite',
+        'dfn',
+        'kbs',
+        'meter',
+        'q',
+        'rp',
+        'rt',
+        'ruby',
+        's',
+        'samp',
+        'time',
+        'u',
+        'var',
+        'wbr',
+      ],
+    },
   },
 }
 
@@ -35,18 +71,17 @@ const Template = (args) => ({
   template: `<lui-text v-bind="args"> {{ args.label }} </lui-text>`,
 })
 
-
 export const Small = Template.bind({})
 // More on args: https://storybook.js.org/docs/vue/writing-stories/args
 Small.args = {
   size: 'sm',
   variant: 'secondary',
-  tag: 'p'
+  tag: 'p',
 }
 export const Large = Template.bind({})
 // More on args: https://storybook.js.org/docs/vue/writing-stories/args
 Large.args = {
   size: 'lg',
   variant: 'secondary',
-  tag: 'p'
+  tag: 'p',
 }
