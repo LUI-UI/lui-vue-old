@@ -1,6 +1,6 @@
 {
   "name": "@lanistasoftware/lui-vue",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "private": false,
   "scripts": {
     "dev": "vite",
@@ -14,9 +14,6 @@
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable",
     "prepare": "husky install"
-  },
-  "dependencies": {
-    "vue": "^3.2.23"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
