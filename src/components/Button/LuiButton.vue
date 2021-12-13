@@ -2,7 +2,6 @@
   <button
     :class="[computedClasses]"
     v-bind="$attrs"
-    @click="$emit('click')"
   >
     <lui-icon
       v-if="prepend !== 'none'"
@@ -20,7 +19,8 @@
     <lui-icon
       v-if="icon !== 'none'"
       :name="icon"
-      fill
+      :fill="!iconLine"
+      :line="iconLine"
       :class="iconClasses"
     />
   </button>
@@ -41,6 +41,7 @@ export default {
     prop.boolean('roundedFull'),
     prop.boolean('block'),
     prop.boolean('uppercase'),
+    prop.boolean('iconLine'),
     prop.string('prepend'),
     prop.string('icon'),
     prop.string('type', 'default', ['default', 'text', 'outline', 'link', 'link-underline']),
@@ -59,7 +60,6 @@ export default {
       },
     },
   },
-  emits: ['click'],
   setup(props, context) {
     const computedClasses = computed(() => {
       const classes = {
