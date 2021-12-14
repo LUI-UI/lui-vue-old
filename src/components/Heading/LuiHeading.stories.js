@@ -1,8 +1,8 @@
-import LuiHead from './LuiHead.vue'
+import LuiHeading from './LuiHeading.vue'
 
 export default {
-  title: 'LuiHead',
-  component: LuiHead,
+  title: 'LuiHeading',
+  component: LuiHeading,
   args: {
     label: "heading",
   },
@@ -21,13 +21,13 @@ export default {
 
 const Template = (args) => ({
   // Components used in your story `template` are defined in the `components` object
-  components: { LuiHead },
+  components: { LuiHeading },
   // The story's `args` need to be mapped into the template through the `setup()` method
   setup() {
     return { args }
   },
   // And then the `args` are bound to your component with `v-bind="args"`
-  template: `<lui-head v-bind="args"> {{ args.label }} </lui-head>`,
+  template: `<lui-heading v-bind="args"> {{ args.label }} </lui-heading>`,
 })
 
 
