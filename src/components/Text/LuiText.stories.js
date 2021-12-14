@@ -11,7 +11,7 @@ export default {
     // onClick: {},
     size: {
       control: { type: 'select' },
-      options: ['xs', 'sm', 'lg', 'xlg'],
+      options: ['xs', 'sm', 'md', 'lg'],
     },
     variant: {
       control: { type: 'select' },

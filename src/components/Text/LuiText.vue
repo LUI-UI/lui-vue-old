@@ -51,7 +51,7 @@ export default {
       'var',
       'wbr',
     ]),
-    prop.size('md', ['xs', 'sm', 'md', 'lg', 'xlg']),
+    prop.size('md', ['xs', 'sm', 'md', 'lg']),
     prop.variant('variant', 'secondary'),
   ],
   setup(props) {
@@ -63,19 +63,17 @@ export default {
             ? 'text-xs'
             : props.size === 'sm'
             ? 'text-sm'
-            : props.size === 'lg'
+            : props.size === 'md'
             ? 'text-base'
             : 'text-xl',
         lineHeight:
-          props.size === 'xxsm'
+          props.size === 'xs'
             ? 'leading-3'
-            : props.size === 'xsm'
-            ? 'leading-4.5'
             : props.size === 'sm'
+            ? 'leading-4.5'
+            : props.size === 'md'
             ? 'leading-5'
-            : props.size === 'lg'
-            ? 'leading-6'
-            : 'leading-7',
+            : 'leading-6',
       }
       return generateClasses([{ ...styles }])
     })
