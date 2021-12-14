@@ -5,11 +5,16 @@
   >
     <lui-button
       type="outline"
-      variant="primary"
-      rounded
-      aria-expanded="false"
-      icon="arrow-down-s"
-      icon-line
+      :variant="variant"
+      :size="size"
+      :rounded="rounded"
+      :aria-expanded="menuActive"
+      :icon="icon === 'default' ? iconName.append : icon"
+      :prepend="icon === 'default' ? iconName.prepend : prepend"
+      :block="block"
+      :icon-line="iconLine"
+      :uppercase="uppercase"
+      :filter="filter"
       @click.stop="menuActive = !menuActive"
     >
       {{ text }}
@@ -19,68 +24,168 @@
       :class="computedClasses.content"
       class="dropdown-menu"
     >
-      <lui-dropdown-item>Mon panier</lui-dropdown-item>
-      <lui-dropdown-item>Mes commandes</lui-dropdown-item>
-      <!-- <slot /> -->
+      <slot />
     </ul>
   </div>
 </template>
 <script>
 import LuiButton from '../Button/LuiButton.vue'
-import LuiDropdownItem from './LuiDropdownItem.vue'
 import { generateClasses } from '../../mixins/methods'
 import * as prop from '../../mixins/props'
-import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed, provide } from 'vue'
 export default {
-  components: { LuiButton, LuiDropdownItem },
+  components: { LuiButton },
   mixins: [
     prop.variant(),
     prop.filter(),
-    prop.boolean('rounded'),
-    prop.boolean('block'),
+    prop.boolean('rounded', true),
+    prop.boolean('block', false),
     prop.boolean('uppercase'),
-    prop.string('icon'),
-    prop.boolean('iconLine'),
+    prop.string('icon', 'default'),
     prop.string('prepend'),
-    prop.boolean('left'),
-    prop.boolean('right'),
-    prop.boolean('top'),
-    prop.boolean('bottom'),
-    prop.string('text','Dropdown'),
+    prop.boolean('iconLine', true),
+    prop.boolean('left', true),
+    prop.boolean('right', false),
+    prop.boolean('top', false),
+    prop.boolean('bottom', true),
+    prop.string('placement', 'bottomLeft', [
+      'bottomLeft',
+      'bottomRight',
+      'topLeft',
+      'topRight',
+      'rightTop',
+      'rightBottom',
+      'leftTop',
+      'leftBottom',
+    ]),
+    prop.string('text', 'Dropdown'),
     prop.size('md', ['sm', 'md', 'lg']),
   ],
   setup(props) {
+    const parentProps = ref({
+      variant: props.variant,
+      filter: props.filter,
+      rounded: props.rounded,
+      block: props.block,
+      size: props.size,
+    })
+
+    provide('parentProps', parentProps.value)
+
     const menuActive = ref(false)
+
     function closeDropdown() {
       menuActive.value = false
     }
+    const iconName = computed(() => {
+      if (props.icon === 'default') {
+        let names = { prepend: 'none', append: 'none' }
+        if (props.placement.startsWith('bottom')) {
+          if (menuActive.value) names.append = 'arrow-down-s'
+          else names.append = 'arrow-up-s'
+        }
+        if (props.placement.startsWith('top')) {
+          if (!menuActive.value) names.append = 'arrow-down-s'
+          else names.append = 'arrow-up-s'
+        }
+        if (props.placement.startsWith('right')) {
+          if (!menuActive.value) names.append = 'arrow-left-s'
+          else names.append = 'arrow-right-s'
+        }
+        if (props.placement.startsWith('left')) {
+          if (!menuActive.value) names.prepend = 'arrow-right-s'
+          else names.prepend = 'arrow-left-s'
+        }
+        return names
+      }
+
+      return null
+    })
+
     const computedClasses = computed(() => {
       const classes = {
         container: {
           position: 'relative',
-          width: 'w-max',
+          width: props.block ? 'w-full' : 'w-max',
         },
         content: {
           position: 'absolute',
-          top: !props.top ? 'top-full' : '',
-          bottom: props.top ? 'bottom-full' : '',
-          left: !props.right ? 'left-0' : '',
-          right: props.right ? 'right-0' : '',
+          top:
+            props.placement.includes('bottom') || props.placement.includes('Bottom')
+              ? 'top-full'
+              : props.placement.includes('Top')
+              ? 'top-0'
+              : '',
+          bottom: props.placement.startsWith('top') ? 'bottom-full' : '',
+          left: props.placement.includes('Left') ? 'left-0' : props.placement.startsWith('right') ? 'left-full' : '',
+          right: props.placement.includes('Right')
+            ? 'right-0'
+            : props.placement.startsWith('left')
+            ? 'right-full'
+            : '',
+
+          //bottomLeft: top-full
+          //bottomRight: top-full
+          //rightTop: top-0
+          //rightBottom: top-full
+          //lefTop: top-0
+          //lefBottom: top-full,
+
+          //topRight: bottom-full
+          //topLeft: bottom-full
+
+          //bottomLeft: left-0
+          //topLeft: left-0
+
+          //bottomRight: right-0
+          //topRight: right-0
+
+          //
+
+          // placement:
+          //   props.placement === 'bottomLeft'
+          //     ? 'top-full left-0'
+          //     : props.placement === 'bottomRight'
+          //     ? 'top-full right-0'
+          //     : props.placement === 'topLeft'
+          //     ? 'bottom-full left-0'
+          //     : props.placement === 'topRight'
+          //     ? 'bottom-full right-0'
+          //     : props.placement === 'rightTop'
+          //     ? 'left-full top-0'
+          //     : props.placement === 'rightBottom'
+          //     ? 'left-full top-full'
+          //     : props.placement === 'leftTop'
+          //     ? 'right-full top-0' //leftBottom
+          //     : 'right-full top-full',
+
           backgroundColor: 'bg-white',
-          borderRadius: 'rounded-lg',
-          border: 'border border-secondary-200',
-          width: 'w-max',
+          borderRadius: props.rounded ? 'rounded-lg' : '',
+          borderWidth: 'border',
+          borderColor: 'border-secondary-200',
+          width: props.block ? 'w-full' : 'w-max',
           paddingBottom: 'pb-2',
-          marginBottom: !props.top ? 'mt-2' : '',
-          marginTop: props.top ? 'mb-2' : '',
+          // margin:
+          //   props.placement === 'bottomLeft' || props.placement === 'bottomRight'
+          //     ? 'mt-2'
+          //     : props.placement === 'topLeft' || props.placement === 'topRight'
+          //     ? 'mb-2'
+          //     : props.placement === 'rightTop' || props.placement === 'rightBottom'
+          //     ? 'ml-2'
+          //     : 'mr-2',
+          marginTop: props.placement.includes('bottom') ? 'mt-2' : '',
+          marginBottom: props.placement.includes('top') ? 'mb-2' : '',
+          marginLeft: props.placement.includes('right') ? 'ml-2' : '',
+          marginRight: props.placement.includes('left') ? 'mr-2' : '',
+          boxShadow: 'shadow-md',
         },
       }
       return {
         container: generateClasses([{ ...classes.container }]),
-        button: generateClasses([{ ...classes.button }]),
         content: generateClasses([{ ...classes.content }]),
       }
     })
+
     onMounted(() => {
       document.addEventListener('click', closeDropdown)
     })
@@ -88,7 +193,7 @@ export default {
       document.removeEventListener('click', closeDropdown)
     })
 
-    return { menuActive, computedClasses }
+    return { menuActive, computedClasses, iconName }
   },
 }
 </script>

@@ -6,7 +6,8 @@
     <lui-icon
       v-if="prepend !== 'none'"
       :name="prepend"
-      fill
+      :fill="!iconLine"
+      :line="iconLine"
       :class="iconClasses"
     />
     <span
@@ -89,7 +90,8 @@ export default {
             : props.filter === 'darker'
             ? `text-${props.variant}-800`
             : `text-${props.variant}-50`,
-        fontSize: props.size === 'sm' ? 'text-xs leading-4.5' : 'text-base',
+        fontSize: props.size === 'sm' ? 'text-xs' : 'text-base',
+        lineHeight: props.size === 'sm' ? 'leading-4.5' : 'leading-6',
         borderWidth: props.type === 'outline' || props.type === 'default' ? 'border' : '',
         borderStyle: props.type === 'outline' || props.type === 'default' ? 'border-solid' : '',
         borderColor:
