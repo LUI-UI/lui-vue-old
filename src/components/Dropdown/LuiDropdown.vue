@@ -34,7 +34,7 @@
 import LuiButton from '../Button/LuiButton.vue'
 import { generateClasses } from '../../mixins/methods'
 import * as prop from '../../mixins/props'
-import { ref, computed, provide } from 'vue'
+import { ref, computed, provide, watch } from 'vue'
 export default {
   components: { LuiButton },
   mixins: [
@@ -59,7 +59,8 @@ export default {
     prop.string('text', 'Dropdown'),
     prop.size('md', ['sm', 'md', 'lg']),
   ],
-  setup(props) {
+  emits: ['onChange'],
+  setup(props, { emit }) {
     const parentProps = ref({
       variant: props.variant,
       filter: props.filter,
@@ -71,6 +72,9 @@ export default {
     provide('parentProps', parentProps.value)
 
     const menuActive = ref(false)
+    watch(menuActive, (val) => {
+      emit('onChange', val)
+    })
 
     const iconName = computed(() => {
       if (props.icon === 'default') {
@@ -112,7 +116,11 @@ export default {
               ? 'top-0'
               : '',
           bottom: props.placement.startsWith('top') ? 'bottom-full' : '',
-          left: props.placement.includes('Left') ? 'left-0' : props.placement.startsWith('right') ? 'left-full' : '',
+          left: props.placement.includes('Left')
+            ? 'left-0'
+            : props.placement.startsWith('right')
+            ? 'left-full'
+            : '',
           right: props.placement.includes('Right')
             ? 'right-0'
             : props.placement.startsWith('left')
@@ -136,7 +144,6 @@ export default {
         content: generateClasses([{ ...classes.content }]),
       }
     })
-
 
     return { menuActive, computedClasses, iconName }
   },

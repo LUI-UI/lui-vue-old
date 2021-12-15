@@ -12,6 +12,8 @@
         type="text"
         v-bind="$attrs"
         :class="computedClasses"
+        :value="modelValue"
+        @input="$emit('update:modelValue', $event.target.value)"
       >
       <lui-button
         v-if="clear && !$attrs.disabled"
@@ -51,6 +53,7 @@ export default {
   },
   mixins: [
     prop.string('prepend'),
+    prop.string('modelValue', ''),
     prop.size('sm', ['sm', 'md', 'lg']),
     prop.boolean('clear'),
     prop.string('description'),
@@ -65,6 +68,7 @@ export default {
       },
     },
   },
+  emits: ['update:modelValue'],
   setup(props, context) {
     const computedClasses = computed(() => {
       const classes = {
@@ -129,9 +133,11 @@ export default {
           ring: 'disabled:ring-0 disabled:ring-transparent',
         },
       }
+
       const { focus, disabled } = stateClasses
       return generateClasses([{ ...classes }, { ...focus }, { ...disabled }])
     })
+
     const descriptionClasses = computed(() => {
       const textColor =
         props.state === true
