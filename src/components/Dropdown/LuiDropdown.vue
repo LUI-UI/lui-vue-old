@@ -16,7 +16,8 @@
       :icon-line="iconLine"
       :uppercase="uppercase"
       :filter="filter"
-      @click.stop="menuActive = !menuActive"
+      @click="menuActive = !menuActive"
+      @blur="menuActive = false"
     >
       {{ text }}
     </lui-button>
@@ -33,7 +34,7 @@
 import LuiButton from '../Button/LuiButton.vue'
 import { generateClasses } from '../../mixins/methods'
 import * as prop from '../../mixins/props'
-import { ref, onMounted, onBeforeUnmount, computed, provide } from 'vue'
+import { ref, computed, provide } from 'vue'
 export default {
   components: { LuiButton },
   mixins: [
@@ -71,9 +72,6 @@ export default {
 
     const menuActive = ref(false)
 
-    function closeDropdown() {
-      menuActive.value = false
-    }
     const iconName = computed(() => {
       if (props.icon === 'default') {
         let names = { prepend: 'none', append: 'none' }
@@ -139,12 +137,6 @@ export default {
       }
     })
 
-    onMounted(() => {
-      document.addEventListener('click', closeDropdown)
-    })
-    onBeforeUnmount(() => {
-      document.removeEventListener('click', closeDropdown)
-    })
 
     return { menuActive, computedClasses, iconName }
   },
