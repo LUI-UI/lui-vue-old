@@ -1,5 +1,6 @@
 <template>
   <label
+    role="label"
     v-bind="$attrs"
     :class="classes"
   >

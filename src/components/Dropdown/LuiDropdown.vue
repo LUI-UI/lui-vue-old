@@ -1,5 +1,6 @@
 <template>
   <div
+    role="listbox"
     class="dropdown"
     :class="computedClasses.container"
   >
@@ -44,10 +45,6 @@ export default {
     prop.string('icon', 'default'),
     prop.string('prepend'),
     prop.boolean('iconLine', true),
-    prop.boolean('left', true),
-    prop.boolean('right', false),
-    prop.boolean('top', false),
-    prop.boolean('bottom', true),
     prop.string('placement', 'bottomLeft', [
       'bottomLeft',
       'bottomRight',
@@ -123,56 +120,12 @@ export default {
             : props.placement.startsWith('left')
             ? 'right-full'
             : '',
-
-          //bottomLeft: top-full
-          //bottomRight: top-full
-          //rightTop: top-0
-          //rightBottom: top-full
-          //lefTop: top-0
-          //lefBottom: top-full,
-
-          //topRight: bottom-full
-          //topLeft: bottom-full
-
-          //bottomLeft: left-0
-          //topLeft: left-0
-
-          //bottomRight: right-0
-          //topRight: right-0
-
-          //
-
-          // placement:
-          //   props.placement === 'bottomLeft'
-          //     ? 'top-full left-0'
-          //     : props.placement === 'bottomRight'
-          //     ? 'top-full right-0'
-          //     : props.placement === 'topLeft'
-          //     ? 'bottom-full left-0'
-          //     : props.placement === 'topRight'
-          //     ? 'bottom-full right-0'
-          //     : props.placement === 'rightTop'
-          //     ? 'left-full top-0'
-          //     : props.placement === 'rightBottom'
-          //     ? 'left-full top-full'
-          //     : props.placement === 'leftTop'
-          //     ? 'right-full top-0' //leftBottom
-          //     : 'right-full top-full',
-
           backgroundColor: 'bg-white',
           borderRadius: props.rounded ? 'rounded-lg' : '',
           borderWidth: 'border',
           borderColor: 'border-secondary-200',
           width: props.block ? 'w-full' : 'w-max',
           paddingBottom: 'pb-2',
-          // margin:
-          //   props.placement === 'bottomLeft' || props.placement === 'bottomRight'
-          //     ? 'mt-2'
-          //     : props.placement === 'topLeft' || props.placement === 'topRight'
-          //     ? 'mb-2'
-          //     : props.placement === 'rightTop' || props.placement === 'rightBottom'
-          //     ? 'ml-2'
-          //     : 'mr-2',
           marginTop: props.placement.includes('bottom') ? 'mt-2' : '',
           marginBottom: props.placement.includes('top') ? 'mb-2' : '',
           marginLeft: props.placement.includes('right') ? 'ml-2' : '',

@@ -1,5 +1,8 @@
 <template>
-  <i :class="classes" />
+  <i
+    :class="classes"
+    v-bind="$attrs"
+  />
 </template>
 <script>
 import { computed } from '@vue/reactivity'
@@ -40,6 +43,10 @@ export default {
     return { classes }
   },
 }
+
+
+//If your icons are purely decorative, you’ll need to manually add an aria-hidden attribute to each of your icons so they’re accessible.
+//If your icon has semantic meaning, all you need to do is throw a title="meaning" attribute. Auto-accessibility takes care of the rest.
 
 // ***Remixicon sizing
 
