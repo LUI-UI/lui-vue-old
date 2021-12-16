@@ -20,7 +20,7 @@ export default {
     const computedClasses = computed(() => {
       const classes = {
         textColor: 'secondary-600',
-        fontWeight: 'font-normal',
+        fontWeight: 'font-semibold',
         // level 4 te leading tasarimda 23, bizde 24
         // level 5 te 25 biz de  24
         // level 2 de 30 biz de
