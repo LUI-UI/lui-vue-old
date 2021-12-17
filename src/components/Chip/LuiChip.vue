@@ -1,9 +1,9 @@
 <template>
   <span
-    :tabindex="clickAble ? '0' : null"
-    :role="clickAble ? 'button' : null"
+    :tabindex="clickable ? '0' : null"
+    :role="clickable ? 'button' : null"
     :class="computedClasses"
-    v-on="clickAble ? { click: () => $emit('click', $slots.default()[0].children) } : {}"
+    v-bind="$attrs"
   >
     <lui-icon
       v-if="prepend !== 'none'"
@@ -34,12 +34,11 @@ export default {
     prop.size('sm',['sm', 'md', 'lg']),
     prop.boolean('rounded'),
     prop.boolean('roundedFull'),
-    prop.boolean('clickAble'),
+    prop.boolean('clickable'),
     prop.string('prepend'),
     prop.string('icon'),
     prop.string('type',['default', 'outline'])
   ],
-  emits: ['click'],
   setup(props) {
     const computedClasses = computed(() => {
       const classes = {

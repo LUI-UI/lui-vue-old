@@ -4,28 +4,46 @@
       for="$"
       class="label"
     >Label</label> -->
-    <div
-      :ref="(el) => (selectArea = el)"
-      role="menu"
-      tabindex="0"
-      class="select-area"
-      @blur="optionsActive = false"
-    >
+    <div>
       <button
         id="exp_button"
         :ref="(el) => (selectButton = el)"
         aria-haspopup="listbox"
         aria-labelledby="exp_elem exp_button"
         :class="computedClasses.button"
+        v-bind="$attrs"
         @click="openOptions"
       >
-        <div :class="computedClasses.multipleWrapper">
+        <div
+          v-if="multiple && selectedOptions.length > 0"
+          :class="computedClasses.multipleWrapper"
+        >
+          <lui-chip
+            v-for="(selected, i) in selectedOptions"
+            :key="i"
+            filter="lighter"
+            variant="primary"
+            type="default"
+            :rounded-full="rounded"
+            :size="chipSize"
+            icon="close"
+            clickable
+            :class="computedClasses.multipleItem"
+            @click.stop="deleteOption(selected)"
+          >
+            {{ selected[textField] }}
+          </lui-chip>
+        </div>
+        <!-- <div
+          v-if="multiple"
+          :class="computedClasses.multipleWrapper"
+        >
           <span
             v-for="(selected, i) in selectedOptions"
             :key="i"
             :class="computedClasses.multipleItem"
           >
-            <span>{{ selected[valueField] }}</span>
+            <span>{{ selected[textField] }}</span>
             <button
               class="flex items-center justify-center"
               @click.stop="deleteOption(selected)"
@@ -37,13 +55,13 @@
               />
             </button>
           </span>
-        </div>
+        </div> -->
 
-        <!-- <span>{{ selectedOption }}</span> -->
+        <span v-else>{{ selectedOption }}</span>
         <lui-icon
-          name="arrow-down-s"
+          :name="iconName"
+          :class="computedClasses.icon"
           line
-          class="ml-1 text-xl"
         />
       </button>
       <ul
@@ -54,7 +72,25 @@
         aria-labelledby="exp_elem"
         :class="computedClasses.options"
       >
-        <li
+        <lui-option
+          v-for="(option, index) in options"
+          id="exp_elem_Np"
+          :key="index"
+          class="flex items-center"
+          tabindex="0"
+          role="option"
+          :selected="selectedOptions.includes(s => s.text === option.text)"
+          @click="selectOption(option)"
+        >
+          <lui-icon
+            name="map-2"
+            line
+          />
+          <span class="ml-2">
+            {{ option[textField] }}
+          </span>
+        </lui-option>
+        <!-- <li
           v-for="(option, index) in options"
           id="exp_elem_Np"
           :key="index"
@@ -64,7 +100,8 @@
           @click="selectOption(option)"
         >
           {{ option[textField] }}
-        </li>
+        </li> -->
+        <slot name="options" />
       </ul>
     </div>
   </div>
@@ -93,138 +130,155 @@
 </template>
 
 <script>
+import LuiOption from './LuiOption.vue'
 import LuiIcon from '../Icon/LuiIcon.vue'
-import { computed, ref } from 'vue'
+import LuiChip from '../Chip/LuiChip.vue'
+import { computed, ref, provide } from 'vue'
 import { generateClasses } from '../../mixins/methods'
+import * as prop from '../../mixins/props'
 export default {
-  components: { LuiIcon },
+  components: { LuiIcon, LuiChip, LuiOption },
+  mixins: [
+    prop.string('placeholder', 'select item'),
+    prop.string('textField', 'text'),
+    prop.string('valueField', 'value'),
+    prop.boolean('multiple', false),
+    prop.boolean('rounded', true),
+    prop.size('md', ['sm', 'md', 'lg']),
+  ],
+  inheritAttrs: false,
   props: {
-    text: {
-      type: String,
-      default: 'none',
-    },
-    multiple: {
-      type: Boolean,
-      default: true,
-    },
-    textField: {
-      type: String,
-      default: 'text',
-    },
-    valueField: {
-      type: String,
-      default: 'value',
-    },
+    //UniqField, optionDisable? ?, STATES?,seperatedButton,
+    //keyEvents(a11n), optionsGroup,selectedOptionsUniq,onChange,defaultValue
     options: {
       type: Array,
       default: () => [],
     },
+    modelValue: {
+      type: [String, Array],
+      default: '',
+    },
   },
-  setup(props) {
+  emits: ['update:modelValue'],
+  setup(props, { emit }) {
     const selectArea = ref(null)
     const selectButton = ref(null)
     const optionsActive = ref(false)
     const optionsArr = ref(props.options)
-    let selectedOption = ref('select an element')
+    let selectedOption = ref(props.placeholder)
     let selectedOptions = ref([])
+    const parentProps = ref({ size: props.size, rounded: props.rounded })
+
+    provide('parentProps', parentProps.value)
 
     function openOptions() {
       optionsActive.value = !optionsActive.value
       // selectArea.value.focus()
       // selectButton.value.focus()
     }
-    function deleteOption(opt){
-      console.log(opt)
-      const el = selectedOptions.value.findIndex(s => s.text === opt.text)
-      selectedOptions.value.splice(el,1)
+    function deleteOption(opt) {
+      const el = selectedOptions.value.findIndex((s) => s.text === opt.text)
+      selectedOptions.value.splice(el, 1)
     }
     function selectOption(option) {
-      console.log(option)
-      selectedOptions.value.push(option)
-      // selectedOption.value = option[props.valueField]
+      if (props.multiple) {
+        const index = selectedOptions.value.findIndex(o => o.text === option.text)
+        if(index === -1) {
+          selectedOptions.value.push(option)
+        } else {
+          selectedOptions.value.splice(index,1)
+        }
+        
+        emit('update:modelValue', selectedOptions.value)
+      }
       if (!props.multiple) {
+        emit('update:modelValue', option[props.textField])
+        selectedOption.value = option[props.textField]
         optionsActive.value = false
       }
     }
+
+    const iconName = computed(() => {
+      if (optionsActive.value) return 'arrow-down-s'
+      return 'arrow-up-s'
+    })
+
+    const chipSize = computed(() => {
+      return props.size === 'lg' ? 'md' : props.size
+    })
+
     const computedClasses = computed(() => {
       const classes = {
         button: {
           display: 'flex',
-          // flexWrap: props.multiple ? 'flex-wrap' : '',
           alignItems: 'items-center',
           justifyContent: 'justify-between',
-          paddingTop: 'pt-2',
-          paddingBottom: !props.multiple ? 'pb-2' : 'pb-0',
+          paddingTop: props.size === 'sm' ? 'pt-1.5' : props.size === 'md' ? 'pt-2' : 'pt-3',
+          paddingBottom:
+            selectedOptions.value.length < 0
+              ? 'p-0'
+              : props.size === 'sm'
+              ? 'pb-1.5'
+              : props.size === 'md'
+              ? 'pb-2'
+              : 'pb-3',
           paddingX: 'px-3',
-          fontSize: 'text-base',
+          fontSize: props.size === 'sm' ? 'text-xs' : 'text-base',
+          lineHeight: props.size === 'sm' ? 'leading-4.5' : 'leading-6',
           textColor: 'text-secondary-600',
           borderWidth: 'border',
           borderColor: 'border-secondary-200',
-          borderRadius: 'rounded-lg',
+          borderRadius: props.rounded ? 'rounded-lg' : '',
           backgroundColor: 'bg-white',
-          width: 'w-72',
+          width: 'w-80',
           focus: 'focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary-100',
+          disabled:
+            'disabled:border-secondary-300 disabled:text-secondary-600 disabled:bg-secondary-100',
         },
         options: {
           backgroundColor: 'bg-white',
-          borderRadius: 'rounded-lg',
+          borderRadius: props.rounded ? 'rounded-lg' : '',
           borderWidth: 'border',
           borderColor: 'border-secondary-200',
           paddingBottom: 'pb-2',
           boxShadow: 'shadow-md',
           marginTop: 'mt-2',
         },
-        optionItem: {
-          marginLeft: 'ml-2',
-          marginRight: 'mr-2',
-          marginTop: 'mt-2',
-          padding: 'p-2',
-          borderRadius: 'rounded-lg',
-          cursor: 'cursor-pointer',
-          textColor: `text-secondary-600 hover:text-primary`,
-          backgroundColor: 'bg-white hover:bg-primary-100',
-          // padding: parentProps.size === 'sm' ? 'p-1.5' : parentProps.size === 'md' ? 'p-2' : 'p-3',
-          // borderRadius: parentProps.rounded ? 'rounded-lg' : '',
-          // cursor: !props.disabled ? 'cursor-pointer' : 'cursor-not-allowed',
-          // backgroundColor: !props.disabled ? `hover:bg-${parentProps.variant}-100` : '',
-          // fontSize: parentProps.size === 'sm' ? 'text-xs' : 'text-base',
-          // lineHeight: props.size === 'sm' ? 'leading-4.5' : 'leading-6',
-          // fontColor: props.disabled
-          //   ? 'text-secondary-300'
-          //   : `text-secondary-600 hover:text-${parentProps.variant}`,
-          display: 'block',
-          outline: 'focus:outline-none',
-          // ring: !props.disabled ? `focus:ring-2 focus:ring-${parentProps.variant}` : '',
-          // width: 'w-full',
-        },
         multipleWrapper: {
           display: 'flex',
           flexWrap: 'flex-wrap',
           // flexGrow: 'flex-grow',
           marginLeft: '-ml-2',
+          marginBottom: '-mb-2',
         },
         multipleItem: {
-          backgroundColor: 'bg-primary-100',
-          textColor: 'text-primary',
-          borderRadius: 'rounded-lg',
-          paddingX: 'px-2',
-          paddingY: 'py-1',
-          fontSize: 'text-sm',
+          // display: 'flex',
+          // alignItems: 'items-center',
+          // backgroundColor: 'bg-primary-100',
+          // textColor: 'text-primary',
+          // borderRadius: 'rounded-lg',
+          // paddingX: 'px-2',
+          // paddingY: 'py-1',
+          // fontSize: 'text-sm',
           marginLeft: 'ml-2',
           marginBottom: 'mb-2',
-          display: 'flex',
-          alignItems: 'items-center',
+          // lineHeiht: 'leading-6',
+        },
+        icon: {
+          size: props.size === 'sm' ? 'text-base' : props.size === 'md' ? 'text-xl' : 'text-2xl',
+          marginLeft: 'ml-1',
+          lineHeight: 'leading-none',
         },
       }
       return {
         button: generateClasses([{ ...classes.button }]),
         options: generateClasses([{ ...classes.options }]),
-        optionItem: generateClasses([{ ...classes.optionItem }]),
         multipleItem: generateClasses([{ ...classes.multipleItem }]),
         multipleWrapper: generateClasses([{ ...classes.multipleWrapper }]),
+        icon: generateClasses([{ ...classes.icon }]),
       }
     })
-    
+
     return {
       computedClasses,
       optionsActive,
@@ -235,7 +289,9 @@ export default {
       openOptions,
       optionsArr,
       selectedOptions,
-      deleteOption
+      deleteOption,
+      iconName,
+      chipSize,
     }
   },
 }

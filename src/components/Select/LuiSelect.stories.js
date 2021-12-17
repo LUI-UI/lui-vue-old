@@ -9,10 +9,28 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   argTypes: {
     // onClick: {},
-    // size: {
-    //   control: { type: 'select' },
-    //   options: ['xxsm', 'xsm', 'sm', 'lg', 'xlg'],
-    // },
+    placeholder: {
+      control: {type: 'text'}
+    },
+    textField: {
+      control: {type: 'text'}
+    },
+    valueField: {
+      control: {type: 'text'}
+    },
+    multiple: {
+      control: {type: 'boolean'}
+    },
+    disabled: {
+      control: {type: 'boolean'}
+    },
+    rounded: {
+      control: {type: 'boolean'}
+    },
+    size: {
+      control: { type: 'select' },
+      options: ['sm', 'md', 'lg'],
+    },
     // variant: {
     //   control: { type: 'select' },
     //   options: ['primary', 'secondary', 'info', 'success', 'warning', 'danger'],
@@ -35,7 +53,7 @@ const Template = (args) => ({
     return { args, options }
   },
   // And then the `args` are bound to your component with `v-bind="args"`
-  template: `<lui-select v-bind="args" :options="options" text-field="text" class="m-20"> </lui-select>`,
+  template: `<lui-select v-bind="args" :options="options" text-field="text"> </lui-select>`,
 })
 
 export const Tets = Template.bind({})
