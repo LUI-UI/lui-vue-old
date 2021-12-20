@@ -61,5 +61,7 @@ export default {
       :options="options"
       multiple
     />
+    <hr class="my-8">
+    <input type="checkbox">
   </div>
 </template>
