@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div :class="parentClasses">
+  <div :class="attrClasses">
+    <div :class="[parentClasses]">
       <lui-icon
         v-if="prepend !== 'none'"
         :name="prepend"
@@ -9,7 +9,6 @@
       />
       <input
         ref="Linput"
-        type="text"
         v-bind="$attrs"
         :class="computedClasses"
         :value="modelValue"
@@ -70,6 +69,9 @@ export default {
   },
   emits: ['update:modelValue'],
   setup(props, context) {
+    const attrClasses = computed(() => {
+      return context.attrs.class
+    })
     const computedClasses = computed(() => {
       const classes = {
         paddingLeft:
@@ -189,12 +191,13 @@ export default {
             : 'right-8',
       }
     })
-    const parentClasses = 'relative w-max'
+    const parentClasses = 'relative'
     return {
       computedClasses,
       descriptionClasses,
       iconClasses,
       parentClasses,
+      attrClasses
     }
   },
 }

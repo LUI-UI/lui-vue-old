@@ -4,6 +4,7 @@ import LuiButton from './components/Button/LuiButton.vue'
 import Dropdown from './components/Dropdown/LuiDropdown.vue'
 import DItem from './components/Dropdown/LuiDropdownItem.vue'
 import LuiSelect from './components/Select/LuiSelect.vue'
+
 export default {
   components: { LuiInput, LuiButton, Dropdown, DItem, LuiSelect },
   data() {
@@ -12,11 +13,11 @@ export default {
       label: '',
       selectedCity: 'Edirne',
       options: [
-        { text: 'Edirne', value: 22 },
-        { text: 'Tekirdag', value: 59 },
-        { text: 'Kırklareli', value: 39 },
-        { text: 'Izmir', value: 35 },
-        { text: 'Mugla', value: 48 },
+        { text: 'Edirne', value: 22, isSelected: false },
+        { text: 'Tekirdag', value: 59, isSelected: false },
+        { text: 'Kırklareli', value: 39, isSelected: false },
+        { text: 'Izmir', value: 35, isSelected: false },
+        { text: 'Mugla', value: 48, isSelected: false },
       ],
     }
   },
@@ -54,8 +55,9 @@ export default {
       <d-item>test</d-item>
     </dropdown>
     <hr class="my-8">
-    <lui-select 
+    <lui-select
       v-model="selectedCity"
+      placeholder="Placeholder test"
       :options="options"
       multiple
     />

@@ -40,7 +40,7 @@ const Template = (args) => ({
     return { args }
   },
   // And then the `args` are bound to your component with `v-bind="args"`
-  template: `<l-input v-bind="args" :disabled="args.disable" placeholder="Placeholder"> {{ args.label }} </l-input>`,
+  template: `<l-input v-bind="args" :disabled="args.disable"> {{ args.label }} </l-input>`,
 })
 
 export const Default = Template.bind({})

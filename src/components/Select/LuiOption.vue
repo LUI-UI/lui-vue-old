@@ -8,21 +8,25 @@
 </template>
 <script>
 import { generateClasses } from '../../mixins/methods'
-import { computed, inject, ref, watch } from 'vue'
+import { computed, inject } from 'vue'
 export default {
   props: {
     selected: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     value: {
       type: String,
       default: '',
     },
+    selectedValue: {
+      type: [String,Number],
+      default: '',
+    },
   },
   setup(props) {
     const parentProps = inject('parentProps')
-    const isSelected = ref(props.selected)
+
     const computedClasses = computed(() => {
       const styles = {
         marginLeft: 'ml-2',
@@ -45,16 +49,8 @@ export default {
       return generateClasses([{ ...styles }])
     })
 
-    watch(isSelected, (value) => { 
-      console.log("isSelected",value)
-      if(value) isSelected.value = true
-      else isSelected.value = false
-
-
-    })
-
     const selectedStyles = computed(() => {
-      return isSelected.value
+      return props.selected
         ? 'bg-primary text-white'
         : 'bg-white hover:bg-primary-100 text-secondary-600 hover:text-primary'
     })

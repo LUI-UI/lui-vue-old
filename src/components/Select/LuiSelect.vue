@@ -79,7 +79,7 @@
           class="flex items-center"
           tabindex="0"
           role="option"
-          :selected="selectedOptions.includes(s => s.text === option.text)"
+          :selected="isOptionSelected(option)"
           @click="selectOption(option)"
         >
           <lui-icon
@@ -89,19 +89,14 @@
           <span class="ml-2">
             {{ option[textField] }}
           </span>
+          <lui-icon
+            v-if="isOptionSelected(option)"
+            name="check"
+            line
+            class="ml-auto"
+          />
         </lui-option>
-        <!-- <li
-          v-for="(option, index) in options"
-          id="exp_elem_Np"
-          :key="index"
-          tabindex="0"
-          role="option"
-          :class="computedClasses.optionItem"
-          @click="selectOption(option)"
-        >
-          {{ option[textField] }}
-        </li> -->
-        <slot name="options" />
+        <!-- <slot /> -->
       </ul>
     </div>
   </div>
@@ -133,7 +128,7 @@
 import LuiOption from './LuiOption.vue'
 import LuiIcon from '../Icon/LuiIcon.vue'
 import LuiChip from '../Chip/LuiChip.vue'
-import { computed, ref, provide } from 'vue'
+import { computed, ref, provide, watch } from 'vue'
 import { generateClasses } from '../../mixins/methods'
 import * as prop from '../../mixins/props'
 export default {
@@ -149,27 +144,56 @@ export default {
   inheritAttrs: false,
   props: {
     //UniqField, optionDisable? ?, STATES?,seperatedButton,
-    //keyEvents(a11n), optionsGroup,selectedOptionsUniq,onChange,defaultValue
+    //keyEvents(a11n), optionsGroup,selectedOptions have to be uniq?,onChange,defaultValue
+    //Select button stlyles?(with prepends ), label, description
     options: {
       type: Array,
       default: () => [],
     },
     modelValue: {
-      type: [String, Array],
+      type: [String, Number, Array],
       default: '',
+    },
+    state: {
+      type: [String, Boolean, null],
+      default: null,
+      validator(value) {
+        return [null, 'warning', true, false].includes(value)
+      },
     },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
+
+// If the initial value of your v-model expression does not 
+// match any of the options, the <select> element will render in an 
+// “unselected” state. On iOS, this will prevent the user from being 
+// able to select the first item, because iOS does not fire a 
+// change event in this case. It is therefore recommended to 
+// provide a disabled option with an empty value, 
+// as demonstrated in the example above.
+
+
     const selectArea = ref(null)
     const selectButton = ref(null)
     const optionsActive = ref(false)
     const optionsArr = ref(props.options)
     let selectedOption = ref(props.placeholder)
     let selectedOptions = ref([])
-    const parentProps = ref({ size: props.size, rounded: props.rounded })
+    let parentProps = ref({ size: props.size, rounded: props.rounded })
+
 
     provide('parentProps', parentProps.value)
+
+
+    watch(() => parentProps, (value) => {
+      console.log("from provide: ",value)
+    })
+
+    function isOptionSelected(option){
+      const is = selectedOptions.value.findIndex(s => s.text === option.text)
+      return is === -1 ? false : true
+    }
 
     function openOptions() {
       optionsActive.value = !optionsActive.value
@@ -188,7 +212,7 @@ export default {
         } else {
           selectedOptions.value.splice(index,1)
         }
-        
+
         emit('update:modelValue', selectedOptions.value)
       }
       if (!props.multiple) {
@@ -292,6 +316,7 @@ export default {
       deleteOption,
       iconName,
       chipSize,
+      isOptionSelected,
     }
   },
 }
