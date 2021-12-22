@@ -1,7 +1,7 @@
 <template>
-  <div :class="classes.tabMenuContainer">
+  <div :class="computedClasses.tabMenuContainer">
     <div
-      :class="classes.tabContainer"
+      :class="computedClasses.tabContainer"
       role="tablist"
     >
       <button
@@ -13,17 +13,17 @@
         :aria-selected="selectedTitle === prop.title ? true : false"
         :disabled="prop.disabled !== undefined ? true : false"
         :class="[
-          classes.tab,
-          selectedTitle === prop.title ? classes.activeTab : classes.defaultTab,
+          computedClasses.tab,
+          selectedTitle === prop.title ? computedClasses.activeTab : computedClasses.defaultTab,
         ]"
         @click="selectedTitle = prop.title"
         @keydown="handleKeyEvents($event, index)"
       >
-        <span :class="classes.tabText">{{ prop.title }}</span>
+        <span :class="computedClasses.tabText">{{ prop.title }}</span>
       </button>
     </div>
 
-    <div :class="classes.panel">
+    <div :class="computedClasses.panel">
       <slot />
     </div>
   </div>
@@ -70,7 +70,7 @@ export default {
       }
     }
 
-    const classes = computed(() => {
+    const computedClasses = computed(() => {
       const tabContainer = {
         width: 'w-full',
         display: 'flex',
@@ -121,7 +121,7 @@ export default {
       tabProps,
       selectedTitle,
       elements,
-      classes,
+      computedClasses,
       handleKeyEvents,
     }
   },

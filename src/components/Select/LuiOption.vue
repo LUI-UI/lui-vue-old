@@ -19,14 +19,13 @@ export default {
       type: String,
       default: '',
     },
-    selectedValue: {
-      type: [String,Number],
-      default: '',
-    },
+    disabled: {
+      type: Boolean,
+      default: false
+    }
   },
   setup(props) {
     const parentProps = inject('parentProps')
-
     const computedClasses = computed(() => {
       const styles = {
         marginLeft: 'ml-2',
@@ -40,19 +39,21 @@ export default {
             : parentProps.size === 'lg'
             ? 'p-3'
             : '',
+        fontSize: props.size === 'sm' ? 'text-xs' : 'text-base',
         borderRadius: parentProps.rounded ? 'rounded-lg' : '',
-        cursor: 'cursor-pointer',
-        // textColor: `text-secondary-600 hover:text-primary`,
-        // backgroundColor: 'bg-white hover:bg-primary-100',
-        display: 'block',
+        cursor: props.disabled === false ? 'cursor-pointer' : '',
+        display: 'flex',
+        alignItems: 'items-center',
+        outline: 'outline-none'
       }
       return generateClasses([{ ...styles }])
     })
 
     const selectedStyles = computed(() => {
       return props.selected
-        ? 'bg-primary text-white'
-        : 'bg-white hover:bg-primary-100 text-secondary-600 hover:text-primary'
+        ? 'bg-primary text-white focus:ring-2 focus:ring-offset-2 focus:ring-primary'
+        : props.disabled ? 'bg-secondary-100 text-secondary-300'
+        : 'bg-white hover:bg-primary-100 focus:bg-primary-100 text-secondary-600 hover:text-primary focus:text-primary'
     })
     return { computedClasses, selectedStyles }
   },

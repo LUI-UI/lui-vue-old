@@ -4,7 +4,7 @@ export default {
   title: 'LuiSelect',
   component: LuiSelect,
   args: {
-    label: 'Select',
+    // label: 'Select',
   },
   // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
   argTypes: {
@@ -31,10 +31,42 @@ export default {
       control: { type: 'select' },
       options: ['sm', 'md', 'lg'],
     },
-    // variant: {
-    //   control: { type: 'select' },
-    //   options: ['primary', 'secondary', 'info', 'success', 'warning', 'danger'],
-    // },
+    state: {
+      control: { type: 'select' },
+      options: [null,'warning',false,true]
+    },
+    selectPrepend: {
+      control: { type: 'select' },
+      options: [null,'Icon','Badge'],
+      mapping: {
+        Icon: { tag: 'lui-icon',name: 'map-2', line: true },
+        Badge: { tag: 'lui-badge',variant: 'danger' },
+      },
+    },
+    selectAppend: {
+      control: { type: 'select' },
+      options: [null,'Icon','Badge'],
+      mapping: {
+        Icon: { tag: 'lui-icon',name: 'arrow-down-s', line: true },
+        Badge: { tag: 'lui-badge',variant: 'danger' },
+      },
+    },
+    optionPrepend: {
+      control: { type: 'select' },
+      options: [null,'Icon','Badge'],
+      mapping: {
+        Icon: { tag: 'lui-icon',name: 'map-2', line: true },
+        Badge: { tag: 'lui-badge',variant: 'danger' },
+      },
+    },
+    optionAppend: {
+      control: { type: 'select' },
+      options: [null,'Icon','Badge'],
+      mapping: {
+        Icon: { tag: 'lui-icon',name: 'map-2', line: true },
+        Badge: { tag: 'lui-badge',variant: 'danger' },
+      },
+    },
   },
 }
 
@@ -56,7 +88,7 @@ const Template = (args) => ({
   template: `<lui-select v-bind="args" :options="options" text-field="text"> </lui-select>`,
 })
 
-export const Tets = Template.bind({})
+export const Default = Template.bind({})
 // More on args: https://storybook.js.org/docs/vue/writing-stories/args
 // BaseSelect.args = {
 //   size: 'sm',

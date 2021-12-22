@@ -4,9 +4,11 @@ import LuiButton from './components/Button/LuiButton.vue'
 import Dropdown from './components/Dropdown/LuiDropdown.vue'
 import DItem from './components/Dropdown/LuiDropdownItem.vue'
 import LuiSelect from './components/Select/LuiSelect.vue'
+import LuiTabs from './components/Tabs/LuiTabs.vue'
+import LuiTab from './components/Tabs/LuiTab.vue'
 
 export default {
-  components: { LuiInput, LuiButton, Dropdown, DItem, LuiSelect },
+  components: { LuiInput, LuiButton, Dropdown, DItem, LuiSelect, LuiTabs, LuiTab },
   data() {
     return {
       form: 'test',
@@ -14,11 +16,21 @@ export default {
       selectedCity: 'Edirne',
       options: [
         { text: 'Edirne', value: 22, isSelected: false },
-        { text: 'Tekirdag', value: 59, isSelected: false },
-        { text: 'Kırklareli', value: 39, isSelected: false },
-        { text: 'Izmir', value: 35, isSelected: false },
-        { text: 'Mugla', value: 48, isSelected: false },
+        { text: 'Tekirdag', value: 59 },
+        { text: 'Kırklareli', value: 39 },
+        { text: 'Izmir', value: 35 },
+        { text: 'Mugla', value: 48 },
       ],
+      optPrepend: {
+        tag: "lui-icon",
+        name: "map-2",
+        line: true
+      },
+      selectAppend: {
+        tag: 'lui-icon',
+        name: 'arrow-down-s',
+        line: true
+      }
     }
   },
   methods: {
@@ -59,9 +71,23 @@ export default {
       v-model="selectedCity"
       placeholder="Placeholder test"
       :options="options"
-      multiple
+      :multiple="true"
+      :option-prepend="optPrepend"
+      :select-append="selectAppend"
+      :select-prepend="optPrepend"
+      size="lg"
     />
     <hr class="my-8">
-    <input type="checkbox">
+    <lui-tabs>
+      <lui-tab title="tab1">
+        test 1
+      </lui-tab>
+      <lui-tab title="tab2">
+        test 2
+      </lui-tab>
+      <lui-tab title="tab3">
+        test 3
+      </lui-tab>
+    </lui-tabs>
   </div>
 </template>
