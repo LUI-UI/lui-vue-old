@@ -1,6 +1,9 @@
 <template>
-  <div :class="attrClasses">
-    <div :class="[parentClasses]">
+  <div
+    :class="attrClasses"
+    class="w-max"
+  >
+    <div :class="parentClasses">
       <lui-icon
         v-if="prepend !== 'none'"
         :name="prepend"
@@ -121,6 +124,7 @@ export default {
         fontSize: props.size === 'sm' ? 'text-xs' : 'text-base',
         lineHeight: props.size === 'sm' ? 'leading-4.5' : 'leading-6',
         fontColor: 'placeholder-secondary-400 text-secondary-600',
+        width: 'w-44'
       }
       const stateClasses = {
         focus: {

@@ -6,9 +6,10 @@
     >Label</label> -->
     <div>
       <button
-        id="exp_button"
+        type="button"
         aria-haspopup="listbox"
         aria-labelledby="exp_elem exp_button"
+        :aria-expanded="optionsActive"
         :class="computedClasses.button"
         v-bind="$attrs"
         @click.stop="optionsActive = !optionsActive"
@@ -47,16 +48,16 @@
       </button>
       <ul
         v-show="optionsActive"
-        id="exp_elem_list"
-        tabindex="1"
+        tabindex="-1"
         role="listbox"
         aria-labelledby="exp_elem"
+        :aria-activedescendant="selectedOption"
         :class="computedClasses.options"
         @keydown.stop="handleOptionsKeyEvents($event)"
       >
         <lui-option
           v-for="(option, i) in options"
-          id="exp_elem_Np"
+          :id="option.text"
           :ref="(el) => (optionsRef[i] = el)"
           :key="i"
           tabindex="-1"
@@ -122,9 +123,13 @@ export default {
   inheritAttrs: false,
   props: {
     //UniqField(v-fors etc.),seperatedButton,
-    //keyEvents(a11n), optionsGroup,onChange,defaultValue
+    //optionsGroup,onChange,defaultValue
     //label, description
     //should we handle chips disable states ?
+    // max height ?, open options according pozisition on page.
+    // check icon on selected option
+    // dynamic selec button arrow icons.
+    // check all aria attrs 
     options: {
       type: Array,
       default: () => [],
@@ -177,6 +182,15 @@ export default {
 
     provide('parentProps', parentProps.value)
 
+    if(props.modelValue !== '') {
+      const initalValue = ref(props.modelValue)
+      if(!props.multiple) {
+        selectedOption.value = initalValue
+      }else {
+        selectedOptions.value.push({text:initalValue.value, value:59})
+      }
+    }
+
     onMounted(() => {
       document.addEventListener('click', closeSelect)
     })
@@ -211,6 +225,7 @@ export default {
         } else {
           emit('update:modelValue', option[props.textField])
           selectedOption.value = option[props.textField]
+          optionsActive.value = false
         }
       }
     }
