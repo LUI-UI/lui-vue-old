@@ -6,9 +6,10 @@ import DItem from './components/Dropdown/LuiDropdownItem.vue'
 import LuiSelect from './components/Select/LuiSelect.vue'
 import LuiTabs from './components/Tabs/LuiTabs.vue'
 import LuiTab from './components/Tabs/LuiTab.vue'
+import LuiCheckbox from './components/Checkbox/LuiCheckbox.vue'
 
 export default {
-  components: { LuiInput, LuiButton, Dropdown, DItem, LuiSelect, LuiTabs, LuiTab },
+  components: { LuiInput, LuiButton, Dropdown, DItem, LuiSelect, LuiTabs, LuiTab, LuiCheckbox },
   data() {
     return {
       form: 'test',
@@ -89,5 +90,11 @@ export default {
         test 3
       </lui-tab>
     </lui-tabs>
+    <hr class="my-12">
+    <div class="p-3 bg-warning">
+      <lui-checkbox />
+    </div>
+    <hr class="my-12">
+    <input type="checkbox">
   </div>
 </template>
