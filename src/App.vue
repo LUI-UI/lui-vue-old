@@ -23,15 +23,15 @@ export default {
         { text: 'Mugla', value: 48 },
       ],
       optPrepend: {
-        tag: "lui-icon",
-        name: "map-2",
-        line: true
+        tag: 'lui-icon',
+        name: 'map-2',
+        line: true,
       },
       selectAppend: {
         tag: 'lui-icon',
         name: 'arrow-down-s',
-        line: true
-      }
+        line: true,
+      },
     }
   },
   methods: {
@@ -91,10 +91,24 @@ export default {
       </lui-tab>
     </lui-tabs>
     <hr class="my-12">
-    <div class="p-3 bg-warning">
-      <lui-checkbox />
+    <div class="p-3 flex items-center justify-evenly">
+      <lui-checkbox
+        id="checkbox"
+        label="check1labeltest"
+        variant="success"
+        size="sm"
+      />
+      <lui-checkbox
+        id="check2"
+        label="test"
+        variant="danger"
+        size="md"
+      />
+      <lui-checkbox
+        id="check3"
+        label="check3LabelTest"
+        size="lg"
+      />
     </div>
-    <hr class="my-12">
-    <input type="checkbox">
   </div>
 </template>

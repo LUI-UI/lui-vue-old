@@ -1,38 +1,93 @@
 <template>
-  <input
-    id="check_1"
-    type="checkbox"
-    name="Checkbox"
-    :class="computedClasses.input"
-  >
-  <label
-    for="check_1"
-    :class="computedClasses.label"
-  > Checkbox </label>
+  <div :class="computedClasses.parent">
+    <input
+      type="checkbox"
+      :class="computedClasses.input"
+      v-bind="$attrs"
+    >
+    <svg
+      :width="iconSizes.width"
+      :height="iconSizes.height"
+      :viewBox="size === 'sm' ? '0 0 8 6' : size === 'md' ? '0 0 12 10' : '0 0 14 12'"
+      fill="none"
+      :class="computedClasses.icon"
+    >
+      <path
+        :d="
+          size === 'sm'
+            ? 'M1 3.4L2.71429 5L7 1'
+            : size === 'md'
+              ? 'M2 5.6L4.28571 8L10 2'
+              : 'M2 6.8L4.85714 10L12 2'
+        "
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+    <label
+      v-if="label !== 'none'"
+      :for="computedFor"
+      :class="computedClasses.label"
+    />
+  </div>
 </template>
 <script>
 import { computed } from 'vue'
 import { generateClasses } from '../../mixins/methods'
+import * as prop from '../../mixins/props'
 export default {
-  setup() {
-    //variant?, size, focusState?, checkbox? ,a11n
+  mixins: [prop.size('sm', ['sm', 'md', 'lg'])],
+  inheritAttrs: false,
+  props: {
+    state: {
+      type: [String, Boolean, null],
+      default: null,
+      validator(value) {
+        return [null, 'warning', true, false].includes(value)
+      },
+    },
+  },
+  setup(props, { attrs }) {
+    function findSize(sizes) {
+      return sizes[props.size]
+    }
+
+    const computedFor = computed(() => {
+      return attrs.id
+    })
+
+    const iconSizes = computed(() => {
+      const sizes = {
+        width: findSize({ sm: '8px', md: '12px', lg: '14px' }),
+        height: findSize({ sm: '6px', md: '10px', lg: '12px' }),
+      }
+      return { width: sizes.width, height: sizes.height }
+    })
+
     const computedClasses = computed(() => {
       const classes = {
+        parent: {
+          display: 'flex items-center',
+        },
         input: {
           position: 'absolute',
           overflow: 'overflow-hidden',
+          outline: 'outline-none',
+          width: props.size === 'sm' ? 'w-4' : props.size === 'md' ? 'w-5' : 'w-6',
+          height: props.size === 'sm' ? 'h-4' : props.size === 'md' ? 'h-5' : 'h-6',
+          zIndex: 'z-20',
           // want to hide input without display-none
-          opactity: 'opacity-0',
+          opacity: 'opacity-0',
           // peer for tailwind: to catch checked from siblings.
           peer: 'peer',
         },
         label: {
-          display: 'flex items-center',
           position: 'relative',
-          // before:
-            // "before:content-[''] before:relative before:inline-block before:mr-1 before:w-4 before:h-4 before:ring-2 before:ring-white before:border before:bg-white before:border-primary before:rounded-xs peer-checked:before:bg-primary peer-checked:before:border-white peer-checked:before:ring-primary",
-          fontSize: 'text-xs',
-          lineHeight: 'leading-4.5',
+          display: 'inline-flex',
+          alignItems: 'items-center',
+          fontSize: findSize({ sm: 'text-xs', md: 'text-sm', lg: 'text-base' }),
           color: 'text-secondary-600',
           cursor: 'cursor-pointer',
         },
@@ -40,87 +95,63 @@ export default {
           content: "before:content-['']",
           position: 'before:relative',
           display: 'before:inline-block',
-          marginRight: 'before:mr-1',
-          width: 'before:w-4',
-          height: 'before:h-4',
-          ringWidth: 'before:ring-2',
-          ringColor: 'before:ring-white peer-checked:before:ring-primary',
+          marginRight: findSize({ sm: 'before:mr-1', md: 'before:mr-1.5', lg: 'before:mr-2' }),
+          width: findSize({ sm: 'before:w-4', md: 'before:w-5', lg: 'before:w-6' }),
+          height: findSize({ sm: 'before:h-4', md: 'before:h-5', lg: 'before:h-6' }),
+          ringWidth: 'peer-focus:before:ring-2',
+          ringOffset: 'peer-focus:before:ring-offset-2',
+          ringColor:
+            props.state === null
+              ? 'peer-focus:before:ring-primary'
+              : props.state === 'warning'
+              ? 'peer-focus:before:ring-warning'
+              : props.state === false
+              ? 'peer-focus:before:ring-danger'
+              : 'peer-focus:before:ring-success',
           borderWidth: 'before:border',
-          bordercolor: 'before:border-primary peer-checked:before:border-white',
-          borderRadius: 'before:rounded-xs',
-          backgroundColor: 'before:bg-white peer-checked:before:bg-primary',
-        }
+          borderColorDisabled: 'peer-disabled:before:border-secondary-300',
+          borderColorChecked: 'peer-checked:before:border-white',
+          borderColor:
+            props.state === null
+              ? 'before:border-primary'
+              : props.state === 'warning'
+              ? 'before:border-warning'
+              : props.state === false
+              ? 'before:border-danger'
+              : 'before:border-success',
+          borderRadius: findSize({
+            sm: 'before:rounded-xs',
+            md: 'before:rounded-xs',
+            lg: 'before:rounded-sm',
+          }),
+          backgroundColorDisabled: 'peer-disabled:before:bg-secondary-100',
+          backgroundColorChecked:
+            props.state === null
+              ? 'peer-checked:before:bg-primary'
+              : props.state === 'warning'
+              ? 'peer-checked:before:bg-warning'
+              : props.state === false
+              ? 'peer-checked:before:bg-danger'
+              : 'peer-checked:before:bg-success',
+          backgroundColor: `before:bg-white`,
+        },
+        icon: {
+          display: 'opacity-0 peer-checked:opacity-100',
+          position: 'absolute',
+          left: props.size === 'sm' ? 'left-5' : props.size === 'md' ? 'left-5' : 'left-4.5',
+          zIndex: 'z-10',
+          color: 'text-white peer-disabled:text-secondary-300',
+        },
       }
       return {
+        parent: generateClasses([{ ...classes.parent }]),
         input: generateClasses([{ ...classes.input }]),
-        label: generateClasses([{ ...classes.label },{...classes.labelBefore}]),
+        label: generateClasses([{ ...classes.label }, { ...classes.labelBefore }]),
+        icon: generateClasses([{ ...classes.icon }]),
       }
     })
-    return { computedClasses }
+
+    return { computedClasses, computedFor, iconSizes }
   },
 }
 </script>
-
-<style scoped>
-/* input[type='checkbox']:checked + label::after{
-  content: "\eb7b";
-} */
-/* HIDE INPUT */
-/* input[type='checkbox'] {
-  position: absolute !important;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(1px 1px 1px 1px); 
-  clip: rect(1px, 1px, 1px, 1px);
-} */
-
-/* input[type='checkbox'] + label {
-  display: block;
-  position: relative;
-  padding: 0 1.5rem;
-} */
-
-/* input[type='checkbox'] + label::before {
-  content: '';
-  position: relative;
-  display: inline-block;
-  margin-right: 1px;
-  width: 20px;
-  height: 20px;
-  background: white;
-  border: 1px solid salmon;
-} */
-
-/* input[type='checkbox']:checked + label::before {
-  background: #5ac5c9;
-}
-
-input[type='checkbox']:checked + label::after {
-  
-  content: '';
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  border-left: 2px solid black;
-  border-bottom: 2px solid black;
-  height: 6px;
-  width: 13px;
-  transform: rotate(-45deg);
-}
-
-
-input[type='checkbox']:focus + label::before {
-  outline: #5d9dd5 solid 1px;
-  box-shadow: 0 0px 8px #5e9ed6;
-}
-
-
-input[type='checkbox']:disabled + label {
-  color: #575757;
-}
-
-input[type='checkbox']:disabled + label::before {
-  background: #ddd;
-} */
-</style>

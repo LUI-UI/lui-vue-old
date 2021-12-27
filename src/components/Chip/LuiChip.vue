@@ -39,6 +39,7 @@ export default {
     prop.string('icon'),
     prop.string('type',['default', 'outline'])
   ],
+  inheritAttrs: false,
   setup(props) {
     const computedClasses = computed(() => {
       const classes = {

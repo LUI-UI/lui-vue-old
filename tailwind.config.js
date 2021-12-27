@@ -60,10 +60,14 @@ module.exports = {
         3.5: '0.875rem', // button da kullanildi deigecek mi ?
         4.5: '1.125rem', // button da kullanildi deigecek mi ?
       },
+      inset: {
+        4.5: '1.30rem'
+      }
     },
     colors: color,
     fontFamily: {
       worksans: ['"Work Sans"', 'sans-serif'],
+      remixicon: ['remixicon']
     },
   },
   variants: {
@@ -101,7 +105,10 @@ module.exports = {
         'hover:ring-{colors}',
         'focus:ring-{colors}',
         'disabled:ring-{colors}',
-        'rounded-{borderRadius}'
+        'rounded-{borderRadius}',
+        'peer-checked:before:bg-{colors}',
+        'peer-focus:before:ring-{colors}',
+        'before:border-{colors}',
       ],
     }),
   ],
