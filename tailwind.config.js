@@ -62,7 +62,11 @@ module.exports = {
       },
       inset: {
         4.5: '1.30rem'
-      }
+      },
+      borderWidth: {
+        1.5: '1.5px',
+        2.5: '2.5px',
+      },
     },
     colors: color,
     fontFamily: {
