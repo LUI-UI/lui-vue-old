@@ -75,7 +75,7 @@ export default {
       }
       return {
         input: generateClasses([{ ...classes.input }]),
-        container: generateClasses([{ ...classes.span }, { ...classes.spanBefore }]),
+        span: generateClasses([{ ...classes.span }, { ...classes.spanBefore }]),
       }
     })
 
