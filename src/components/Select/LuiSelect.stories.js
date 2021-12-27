@@ -76,16 +76,18 @@ const Template = (args) => ({
   // The story's `args` need to be mapped into the template through the `setup()` method
   setup() {
     const options = [
+      {text: 'Select a city', value: 0, disabled:true},
       { text: 'Edirne', value: 22 },
       { text: 'Tekirdag', value: 59 },
       { text: 'Kırklareli', value: 39 },
       { text: 'Izmir', value: 35 },
       { text: 'Mugla', value: 48 },
-    ]
-    return { args, options }
+    ];
+    const selectedOption = {text: 'Edirne', value: 22}
+    return { args, options, selectedOption }
   },
   // And then the `args` are bound to your component with `v-bind="args"`
-  template: `<lui-select v-bind="args" :options="options" text-field="text"> </lui-select>`,
+  template: `<lui-select v-bind="args" :options="options" v-model="selectedOption" text-field="text"> </lui-select>`,
 })
 
 export const Default = Template.bind({})

@@ -1,9 +1,5 @@
 <template>
   <div class="select-wrapper w-max">
-    <!-- <label
-      for="$"
-      class="label"
-    >Label</label> -->
     <div>
       <button
         type="button"
@@ -15,6 +11,13 @@
         @click.stop="optionsActive = !optionsActive"
         @keydown="handleButtonKeyEvents($event)"
       >
+        <content-template
+          class="mr-2"
+          :prepend="selectPrepend"
+          :size="size"
+          :options-active="optionsActive"
+          :text-active="false"
+        />
         <div
           v-if="multiple && selectedOptions.length > 0"
           :class="computedClasses.multipleWrapper"
@@ -38,7 +41,6 @@
         </div>
 
         <content-template
-          :prepend="selectPrepend"
           :append="selectAppend"
           :text="selectedOption"
           :size="size"
@@ -74,7 +76,6 @@
             :options-active="optionsActive"
           />
         </lui-option>
-        <!-- <slot /> -->
       </ul>
     </div>
   </div>
@@ -185,9 +186,9 @@ export default {
     if(props.modelValue !== '') {
       const initalValue = ref(props.modelValue)
       if(!props.multiple) {
-        selectedOption.value = initalValue
+        selectedOption.value = initalValue.value[props.textField]
       }else {
-        selectedOptions.value.push({text:initalValue.value, value:59})
+        selectedOptions.value.push(props.modelValue)
       }
     }
 
@@ -327,7 +328,7 @@ export default {
           display: 'flex',
           flexWrap: 'flex-wrap',
           // flexGrow: 'flex-grow',
-          marginLeft: '-ml-2',
+          marginLeft: props.selectPrepend !== null ? '-ml-1' : '-ml-2',
           marginBottom: '-mb-2',
         },
         multipleItem: {
