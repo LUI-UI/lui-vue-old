@@ -8,12 +8,8 @@ export default {
     // onClick: {},
     size: {
       control: { type: 'select' },
-      options: ['sm', 'md','lg'],
+      options: ['sm','lg'],
     },
-    state: {
-      control: { type: 'select' },
-      options: [null,true,false,'warning']
-    }
   },
 }
 
@@ -34,14 +30,8 @@ export const Small = Template.bind({})
 Small.args = {
   size: 'sm',
 }
-// export const Large = Template.bind({})
-// // More on args: https://storybook.js.org/docs/vue/writing-stories/args
-// Large.args = {
-//   size: 'lg',
-// }
-// export const Warning = Template.bind({})
-// // More on args: https://storybook.js.org/docs/vue/writing-stories/args
-// Warning.args = {
-//   size: 'lg',
-//   variant: 'warning'
-// }
+export const Large = Template.bind({})
+// More on args: https://storybook.js.org/docs/vue/writing-stories/args
+Large.args = {
+  size: 'lg',
+}
